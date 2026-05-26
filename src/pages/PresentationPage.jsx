@@ -257,7 +257,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
     <div style={{ width:'100vw', height:'100vh', display:'flex', flexDirection:'column', fontFamily:"'Noto Sans KR', sans-serif", background:'#D5E8F0' }}>
       {/* Top bar */}
       <div style={{ display:'flex', alignItems:'center', padding:'13px 30px', gap:14, background:'white', boxShadow:'0 2px 12px rgba(0,0,0,0.07)', zIndex:10, flexShrink:0 }}>
-        <img src="/logo2.png" style={{ height:42 }} alt=""/>
+        <img src="/logo2.png" style={{ height:42, cursor:'pointer' }} alt="" onClick={() => window.location.reload()} title="처음으로"/>
         <div>
           <p style={{ fontWeight:900, fontSize:'1rem', color:'#1A1A1A', lineHeight:1.2 }}>리라초등학교 5학년 2반 명예교사</p>
           <p style={{ fontSize:'0.78rem', color:'#888' }}>함께 알아보는 치과의 세계 🦷</p>
