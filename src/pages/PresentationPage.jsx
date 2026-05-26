@@ -231,7 +231,7 @@ export default function PresentationPage({ onGoIntro }) {
 /* ── MAIN HUB: 치과 진료실 일러스트 ── */
 function MainHub({ onEnter, onHomework, onGoIntro }) {
   const [hovered, setHovered] = useState(null)
-  const labels = ['🦷 치과의사의 하루','🔬 진료실 엿보기','🎓 치과의사가 되는 길','✨ 치아의 놀라운 비밀']
+  const labels = ['🦷 치과의사의 하루','🔬 무섭지 않은 진료실','🎓 치과의사가 되는 길','🌍 더 넓은 세계로!']
   const glow = id => ({ cursor:'pointer', filter: hovered===id ? 'drop-shadow(0 0 18px rgba(245,200,0,0.95))' : 'none', transition:'filter 0.18s' })
 
   return (
@@ -351,8 +351,9 @@ function MainHub({ onEnter, onHomework, onGoIntro }) {
             <ellipse cx="180" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
             </g>
             {/* 라벨 */}
-            <rect x="82" y="420" width="148" height="30" rx="15" fill="#1A5C3A"/>
-            <text x="156" y="440" textAnchor="middle" fontSize="13" fill="white" fontWeight="bold">치과의사의 하루 →</text>
+            <rect x="66" y="412" width="180" height="42" rx="15" fill="#1A5C3A"/>
+            <text x="156" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 하루 →</text>
+            <text x="156" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">하는 일</text>
           </g>
 
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
@@ -395,8 +396,9 @@ function MainHub({ onEnter, onHomework, onGoIntro }) {
             <ellipse cx="302" cy="308" rx="26" ry="24" fill="#FFCEA0" opacity="0.75"/>
             </g>
             {/* 라벨 */}
-            <rect x="320" y="420" width="158" height="30" rx="15" fill="#1A5C3A"/>
-            <text x="399" y="440" textAnchor="middle" fontSize="13" fill="white" fontWeight="bold">진료실 엿보기 →</text>
+            <rect x="294" y="412" width="210" height="42" rx="15" fill="#1A5C3A"/>
+            <text x="399" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">무섭지 않은 진료실 →</text>
+            <text x="399" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류</text>
           </g>
 
           {/* ── ZONE 3: 공룡 액자 + 현미경 ── */}
@@ -422,8 +424,9 @@ function MainHub({ onEnter, onHomework, onGoIntro }) {
             <rect x="675" y="346" width="44" height="6" rx="2" fill="#555"/>
             </g>
             {/* 라벨 */}
-            <rect x="587" y="420" width="148" height="30" rx="15" fill="#4A1A7C"/>
-            <text x="661" y="440" textAnchor="middle" fontSize="13" fill="white" fontWeight="bold">치아의 놀라운 비밀 →</text>
+            <rect x="571" y="412" width="180" height="42" rx="15" fill="#1A7C5C"/>
+            <text x="661" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">더 넓은 세계로! →</text>
+            <text x="661" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">종류와 연구</text>
           </g>
 
           {/* ── ZONE 2: 책장 ── */}
@@ -465,8 +468,9 @@ function MainHub({ onEnter, onHomework, onGoIntro }) {
             <rect x="940" y="364" width="26" height="36" rx="4" fill="#8ABE6A"/>
             </g>
             {/* 라벨 */}
-            <rect x="812" y="420" width="130" height="30" rx="15" fill="#1A3A7C"/>
-            <text x="877" y="440" textAnchor="middle" fontSize="13" fill="white" fontWeight="bold">치과의사가 되는 길 →</text>
+            <rect x="787" y="412" width="180" height="42" rx="15" fill="#1A3A7C"/>
+            <text x="877" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는 길 →</text>
+            <text x="877" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">꿈을 향해</text>
           </g>
         </svg>
       </div>
@@ -688,7 +692,7 @@ function ToolsSection({ onBack }) {
       {/* 헤더 */}
       <div style={{ padding:'16px 40px', display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
         <span style={{ color:'white' }}><BackBtn onClick={onBack} /></span>
-        <h1 style={{ fontSize:'1.8rem', fontWeight:900, color:'white' }}>진료실 <span style={{ color:'#F5C800' }}>엿보기</span></h1>
+        <h1 style={{ fontSize:'1.8rem', fontWeight:900, color:'white' }}>무섭지 않은 <span style={{ color:'#F5C800' }}>진료실</span></h1>
         <p style={{ color:'rgba(255,255,255,0.5)', marginLeft:10, fontSize:'0.88rem' }}>도구를 클릭해서 알아봐요!</p>
       </div>
 
@@ -1052,7 +1056,7 @@ function FactsSection({ onBack }) {
 
       <div style={{ padding:'22px 40px', display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
         <BackBtn onClick={onBack} />
-        <h1 style={{ fontSize:'1.9rem', fontWeight:900, color:'#1A1A1A' }}>치아의 <span style={{ color:'#1A5C3A' }}>놀라운 비밀</span></h1>
+        <h1 style={{ fontSize:'1.9rem', fontWeight:900, color:'#1A1A1A' }}>더 넓은 <span style={{ color:'#1A5C3A' }}>세계로!</span></h1>
         <div style={{ marginLeft:'auto', display:'flex', gap:6 }}>
           {facts.map((_,i) => (
             <div key={i} onClick={() => setIdx(i)} style={{ width:i===idx?28:8, height:8, borderRadius:4, background:i===idx?'#1A5C3A':'rgba(0,0,0,0.2)', cursor:'pointer', transition:'all 0.3s' }}/>
