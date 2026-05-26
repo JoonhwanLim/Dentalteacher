@@ -80,10 +80,18 @@ export default function IntroScreen({ onEnter }) {
         </div>
 
         {/* 메인 타이틀 */}
+        <style>{`
+          @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px) rotate(-0.4deg); }
+            50%       { transform: translateY(-9px) rotate(0.4deg); }
+          }
+        `}</style>
         <h1 style={{
           fontSize: mob ? '2rem' : '2.8rem', fontWeight: 900, color: '#FFCA28',
           lineHeight: 1.25, marginBottom: 10,
           textShadow: '0 2px 0 rgba(180,120,0,0.18)',
+          animation: 'titleFloat 3.2s ease-in-out infinite',
+          display: 'inline-block',
         }}>
           치과의사는 도대체<br />어떠한 삶을<br />살고 있을까?
         </h1>
