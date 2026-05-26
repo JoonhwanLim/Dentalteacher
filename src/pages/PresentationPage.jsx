@@ -847,6 +847,18 @@ function ToolsContent() {
 
 /* ── SECTION 2: 치과의사가 되는 법 — 교육 여정 ── */
 function CareerSection({ onBack }) {
+  const [selected, setSelected] = useState(null)
+  const [hovered,  setHovered]  = useState(null)
+  const active = hovered !== null ? hovered : selected
+  const stepColors = ['#E53935','#1565C0','#00695C','#F9A825','#2E7D32','#E53935','#1A5C3A']
+
+  const bs = (i) => ({
+    cursor: 'pointer',
+    filter: active === i ? `drop-shadow(0 0 22px ${stepColors[i]}FF) drop-shadow(0 0 8px ${stepColors[i]}AA)` : 'none',
+    transition: 'filter 0.22s',
+  })
+  const bClick = (i) => () => setSelected(selected === i ? null : i)
+
   return (
     <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A3A7C,#0A1E40)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
       <div style={{ padding:'16px 40px', display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
@@ -895,7 +907,7 @@ function CareerSection({ onBack }) {
           ))}
 
           {/* Building 1: 초등학교 */}
-          <g>
+          <g style={bs(0)} onClick={bClick(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
             <rect x="42" y="158" width="74" height="92" rx="2" fill="#FFF176" stroke="#F9A825" strokeWidth="1.5"/>
             <polygon points="28,160 118,160 73,110" fill="#E53935"/>
             <rect x="92" y="118" width="10" height="24" fill="#BDBDBD"/>
@@ -919,7 +931,7 @@ function CareerSection({ onBack }) {
           <ellipse cx="155" cy="220" rx="9" ry="10" fill="#66BB6A"/>
 
           {/* Building 2: 중학교 */}
-          <g>
+          <g style={bs(1)} onClick={bClick(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
             <rect x="195" y="138" width="80" height="112" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1.5"/>
             <rect x="190" y="133" width="90" height="9" rx="2" fill="#1565C0"/>
             {[148,174].map((y,ri) => [202,226,250].map((x,ci) => (
@@ -937,7 +949,7 @@ function CareerSection({ onBack }) {
           <ellipse cx="327" cy="220" rx="9" ry="10" fill="#66BB6A"/>
 
           {/* Building 3: 고등학교 */}
-          <g>
+          <g style={bs(2)} onClick={bClick(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
             <rect x="362" y="118" width="86" height="132" rx="2" fill="#80CBC4" stroke="#00695C" strokeWidth="1.5"/>
             <rect x="357" y="113" width="96" height="9" rx="2" fill="#00695C"/>
             {[128,155,182].map((y,ri) => [369,393,418].map((x,ci) => (
@@ -952,7 +964,7 @@ function CareerSection({ onBack }) {
           <text x="500" y="243" textAnchor="middle" fontSize="20" fill="#F5C800" fontWeight="bold">→</text>
 
           {/* Building 4: 치과대학 */}
-          <g>
+          <g style={bs(3)} onClick={bClick(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
             {[0,22,44,66,88,110,132,154,176,198,220,242,264,286,308,330].map((deg,i) => {
               const r = deg * Math.PI / 180
               return <line key={i} x1={585+Math.cos(r)*58} y1={148+Math.sin(r)*58} x2={585+Math.cos(r)*76} y2={148+Math.sin(r)*76} stroke="#F5C800" strokeWidth="3" opacity="0.4"/>
@@ -981,7 +993,7 @@ function CareerSection({ onBack }) {
           <ellipse cx="689" cy="220" rx="9" ry="10" fill="#66BB6A"/>
 
           {/* Building 5: 국가면허시험 */}
-          <g>
+          <g style={bs(4)} onClick={bClick(4)} onMouseEnter={()=>setHovered(4)} onMouseLeave={()=>setHovered(null)}>
             <rect x="720" y="148" width="76" height="102" rx="2" fill="#A5D6A7" stroke="#2E7D32" strokeWidth="1.5"/>
             <polygon points="710,150 806,150 758,108" fill="#2E7D32"/>
             <text x="758" y="198" textAnchor="middle" fontSize="32">📋</text>
@@ -997,7 +1009,7 @@ function CareerSection({ onBack }) {
           <ellipse cx="851" cy="220" rx="9" ry="10" fill="#66BB6A"/>
 
           {/* Building 6: 인턴·레지던트 */}
-          <g>
+          <g style={bs(5)} onClick={bClick(5)} onMouseEnter={()=>setHovered(5)} onMouseLeave={()=>setHovered(null)}>
             <rect x="874" y="118" width="90" height="132" rx="2" fill="white" stroke="#E53935" strokeWidth="2"/>
             <rect x="870" y="113" width="98" height="9" rx="2" fill="#E53935"/>
             <rect x="900" y="130" width="16" height="38" rx="2" fill="#E53935"/>
@@ -1014,7 +1026,7 @@ function CareerSection({ onBack }) {
           <text x="1018" y="243" textAnchor="middle" fontSize="20" fill="#F5C800" fontWeight="bold">→</text>
 
           {/* Building 7: 치과의사! */}
-          <g>
+          <g style={bs(6)} onClick={bClick(6)} onMouseEnter={()=>setHovered(6)} onMouseLeave={()=>setHovered(null)}>
             {[0,30,60,90,120,150,180,210,240,270,300,330].map((deg,i) => {
               const r = deg * Math.PI / 180
               return <line key={i} x1={1091+Math.cos(r)*62} y1={178+Math.sin(r)*62} x2={1091+Math.cos(r)*78} y2={178+Math.sin(r)*78} stroke="#F5C800" strokeWidth="3" opacity="0.6"/>
@@ -1047,13 +1059,28 @@ function CareerSection({ onBack }) {
       {/* Career steps summary */}
       <div style={{ flex:1, overflowY:'auto', padding:'8px 28px 20px' }}>
         <div style={{ display:'grid', gridTemplateColumns: mob() ? 'repeat(2,1fr)' : 'repeat(7,1fr)', gap:10 }}>
-          {careerSteps.map((s, i) => (
-            <div key={i} style={{ background: s.highlight ? 'rgba(245,200,0,0.18)' : s.final ? 'rgba(26,92,58,0.25)' : 'rgba(255,255,255,0.08)', borderRadius:14, padding:'12px 10px', textAlign:'center', border: s.highlight ? '2px solid rgba(245,200,0,0.5)' : s.final ? '2px solid rgba(26,92,58,0.5)' : '1px solid rgba(255,255,255,0.1)' }}>
-              <div style={{ fontSize:'1.6rem', marginBottom:4 }}>{s.emoji}</div>
-              <p style={{ fontWeight:800, fontSize:'0.8rem', color: s.highlight ? '#F5C800' : s.final ? '#A5D6A7' : 'white', lineHeight:1.3, marginBottom:3, whiteSpace:'pre-line' }}>{s.label}</p>
-              <p style={{ fontSize:'0.7rem', color:'rgba(255,255,255,0.5)', lineHeight:1.4 }}>{s.desc}</p>
-            </div>
-          ))}
+          {careerSteps.map((s, i) => {
+            const isActive = active === i
+            const col = stepColors[i]
+            return (
+              <div key={i}
+                onClick={bClick(i)}
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
+                style={{
+                  background: isActive ? `${col}28` : s.highlight ? 'rgba(245,200,0,0.18)' : s.final ? 'rgba(26,92,58,0.25)' : 'rgba(255,255,255,0.08)',
+                  borderRadius:14, padding:'12px 10px', textAlign:'center',
+                  border: isActive ? `2px solid ${col}CC` : s.highlight ? '2px solid rgba(245,200,0,0.5)' : s.final ? '2px solid rgba(26,92,58,0.5)' : '1px solid rgba(255,255,255,0.1)',
+                  boxShadow: isActive ? `0 0 24px ${col}88, 0 4px 16px ${col}55` : 'none',
+                  cursor: 'pointer', transition: 'all 0.22s',
+                  transform: isActive ? 'translateY(-3px) scale(1.04)' : 'none',
+                }}>
+                <div style={{ fontSize: isActive ? '2rem' : '1.6rem', marginBottom:4, transition:'font-size 0.2s' }}>{s.emoji}</div>
+                <p style={{ fontWeight:800, fontSize:'0.8rem', color: isActive ? col : s.highlight ? '#F5C800' : s.final ? '#A5D6A7' : 'white', lineHeight:1.3, marginBottom:3, whiteSpace:'pre-line', transition:'color 0.2s' }}>{s.label}</p>
+                <p style={{ fontSize:'0.7rem', color: isActive ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.5)', lineHeight:1.4, transition:'color 0.2s' }}>{s.desc}</p>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>
