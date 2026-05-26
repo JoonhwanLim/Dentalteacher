@@ -553,7 +553,7 @@ function ClinicSection({ onBack }) {
   return (
     <div style={{ width:'100vw', height:'100vh', display:'flex', flexDirection:'column', fontFamily:"'Noto Sans KR',sans-serif" }}>
       {/* Header */}
-      <div style={{ display:'flex', alignItems:'center', gap:12, padding: isMob ? '12px 16px' : '14px 32px', background:'linear-gradient(135deg,#0A2416,#1A5C3A)', boxShadow:'0 2px 16px rgba(0,0,0,0.2)', flexShrink:0, flexWrap: isMob ? 'wrap' : 'nowrap' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:12, padding: isMob ? '12px 16px' : '14px 32px', background:'linear-gradient(135deg,#0A2416,#1A5C3A)', boxShadow:'0 2px 16px rgba(0,0,0,0.2)', flexShrink:0, flexWrap: isMob ? 'wrap' : 'nowrap', color:'white' }}>
         <BackBtn onClick={onBack} />
         <h1 style={{ fontSize: isMob ? '1.2rem' : '1.7rem', fontWeight:900, color:'white', whiteSpace:'nowrap' }}>치료와 <span style={{ color:'#F5C800' }}>비밀 무기</span></h1>
         <div style={{ marginLeft: isMob ? 0 : 'auto', display:'flex', gap:8, flexShrink:0 }}>
@@ -596,6 +596,21 @@ function TreatmentsContent() {
         {[['-8%','6%',130,0.16],['-4%','78%',80,0.13],['72%','12%',60,0.18],['65%','82%',95,0.14],['38%','46%',50,0.11]].map(([t,l,s,o],i)=>(
           <div key={i} style={{ position:'absolute', top:t, left:l, width:s, height:s, borderRadius:'50%', background:`rgba(255,255,255,${o})`, backdropFilter:'blur(2px)', pointerEvents:'none' }}/>
         ))}
+
+        {/* 상단 타이틀 */}
+        <div style={{
+          textAlign:'center', marginBottom: isMob ? 10 : 14,
+          position:'relative', zIndex:1, flexShrink:0,
+        }}>
+          <span style={{
+            display:'inline-block',
+            background:'rgba(255,255,255,0.72)', backdropFilter:'blur(10px)',
+            border:'1.5px solid rgba(255,255,255,0.9)',
+            borderRadius:50, padding: isMob ? '6px 18px' : '8px 26px',
+            fontSize: isMob ? '0.82rem' : '0.95rem', fontWeight:800, color:'#1A5C3A',
+            boxShadow:'0 4px 16px rgba(0,0,0,0.08)',
+          }}>🦷 치과 진료의 종류</span>
+        </div>
 
         {/* 카드 행 */}
         <div style={{
