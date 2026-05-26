@@ -482,14 +482,6 @@ function DaySection({ onBack }) {
       <div style={{ display:'flex', alignItems:'center', gap:16, padding:'18px 40px', flexShrink:0 }}>
         <BackBtn onClick={onBack} />
         <h1 style={{ fontSize:'2rem', fontWeight:900 }}>치과의사의 <span style={{ color:'#1A5C3A' }}>하루</span></h1>
-        <div style={{ marginLeft:'auto', display:'flex', gap:10 }}>
-          {[['09:00','진료 시작'],['12:30','점심 30분'],['18:00','진료 마감'],['평균','30명 진료']].map(([t,l],i) => (
-            <div key={i} style={{ background:'white', borderRadius:12, padding:'8px 16px', textAlign:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.08)', minWidth:80 }}>
-              <div style={{ fontWeight:900, fontSize:'1rem', color:'#1A5C3A' }}>{t}</div>
-              <div style={{ fontSize:'0.78rem', color:'#888' }}>{l}</div>
-            </div>
-          ))}
-        </div>
       </div>
 
       <div style={{ flex:1, padding:'0 14px 14px' }}>
