@@ -154,13 +154,13 @@ const facts = [
 
 /* ── CAREER DATA ── */
 const careerSteps = [
-  { emoji:'📚', label:'초등학교',     desc:'수학·과학 기초' },
-  { emoji:'🔭', label:'중학교',       desc:'생물·화학 탐구' },
-  { emoji:'⚗️', label:'고등학교',    desc:'이과·화학·생물' },
-  { emoji:'🦷', label:'치과대학(6년)', desc:'기초+임상+실습', highlight:true },
-  { emoji:'📋', label:'국가면허시험', desc:'치과의사 면허' },
-  { emoji:'🏥', label:'인턴·레지던트', desc:'전문의 취득(선택)' },
-  { emoji:'👨‍⚕️', label:'치과의사',  desc:'개업 or 취직', final:true },
+  { emoji:'📚', label:'초등학교',      desc:'수학·과학 기초',      detail:'수학과 과학에 흥미를 갖는 시간이에요.\n호기심이 많고 꼼꼼한 어린이가 되어보세요!',                           color:'#E53935', years:'6년'  },
+  { emoji:'🔭', label:'중학교',        desc:'생물·화학 탐구',      detail:'생물·화학 과목을 열심히 공부해요.\n인체와 세포에 대한 호기심을 키워가는 시간이에요!',                        color:'#1976D2', years:'3년'  },
+  { emoji:'⚗️', label:'고등학교',     desc:'이과·화학·생물',      detail:'이과를 선택하고 화학·생물을 집중 공부해요.\n수능을 열심히 준비하는 중요한 시간이에요!',                       color:'#00897B', years:'3년'  },
+  { emoji:'🦷', label:'치과대학',      desc:'기초·임상·실습',      detail:'치의학의 모든 것을 배워요!\n해부학·치과재료부터 환자 실습까지 6년 동안 공부해요.',                          color:'#F9A825', years:'6년', highlight:true },
+  { emoji:'📋', label:'국가면허시험',  desc:'치과의사 면허 취득',  detail:'대학 졸업 후 국가고시에 응시해요.\n합격하면 드디어 치과의사 면허증을 받아요!',                               color:'#2E7D32', years:'시험'  },
+  { emoji:'🏥', label:'인턴·레지던트', desc:'전문의 취득 (선택)',  detail:'병원에서 1~4년 더 수련하면 전문의가 돼요.\n교정·소아치과 등 전문 분야를 선택할 수 있어요!',                  color:'#C62828', years:'1~4년' },
+  { emoji:'👨‍⚕️', label:'치과의사!',   desc:'개업 or 취직',        detail:'드디어 치과의사가 됐어요! 🎉\n자신의 치과를 열거나 병원에 취직해요.',                                        color:'#1A8C5A', years:'완성!', final:true },
 ]
 
 /* ── SPECIALTIES DATA ── */
@@ -1006,240 +1006,216 @@ function ToolsContent() {
 
 /* ── SECTION 2: 치과의사가 되는 법 — 교육 여정 ── */
 function CareerSection({ onBack }) {
-  const [selected, setSelected] = useState(null)
-  const [hovered,  setHovered]  = useState(null)
-  const active = hovered !== null ? hovered : selected
-  const stepColors = ['#E53935','#1565C0','#00695C','#F9A825','#2E7D32','#E53935','#1A5C3A']
+  const [idx, setIdx]               = useState(0)
+  const [hoveredIdx, setHoveredIdx] = useState(null)
+  const [bounceKey, setBounceKey]   = useState(0)
+  const [bounceDir, setBounceDir]   = useState(null)
+  const dragRef    = useRef(null)
+  const wasDragRef = useRef(false)
+  const isMob = mob()
+  const s    = careerSteps[idx]
+  const cardW = isMob ? 255 : 420
+  const cardH = isMob ? 400 : 490
+  const gap   = isMob ? 152 : 270
 
-  const bs = (i) => ({
-    cursor: 'pointer',
-    filter: active === i ? `drop-shadow(0 0 22px ${stepColors[i]}FF) drop-shadow(0 0 8px ${stepColors[i]}AA)` : 'none',
-    transition: 'filter 0.22s',
-  })
-  const bClick = (i) => () => setSelected(selected === i ? null : i)
+  function go(n) {
+    if (n < 0 || n >= careerSteps.length) {
+      setBounceDir(n < 0 ? 'right' : 'left')
+      setBounceKey(k => k + 1)
+      setTimeout(() => setBounceDir(null), 500)
+      return
+    }
+    setIdx(n)
+  }
+
+  function onPtrDown(x) { dragRef.current = { x, moved: false } }
+  function onPtrMove(x) {
+    if (dragRef.current && Math.abs(x - dragRef.current.x) > 8)
+      dragRef.current.moved = true
+  }
+  function onPtrUp(x) {
+    if (!dragRef.current) return
+    const { x: startX, moved } = dragRef.current
+    dragRef.current = null
+    if (!moved) return
+    const dx = x - startX
+    if (Math.abs(dx) > 50) {
+      wasDragRef.current = true
+      go(dx < 0 ? idx + 1 : idx - 1)
+      requestAnimationFrame(() => { wasDragRef.current = false })
+    }
+  }
 
   return (
-    <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A3A7C,#0A1E40)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
-      <div style={{ padding:'16px 40px', display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
+    <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A2A6C,#0A1230)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
+      <style>{`
+        @keyframes careerBounceLeft {
+          0%   { transform: translateX(0px); }
+          28%  { transform: translateX(-52px); }
+          58%  { transform: translateX(16px); }
+          78%  { transform: translateX(-8px); }
+          92%  { transform: translateX(3px); }
+          100% { transform: translateX(0px); }
+        }
+        @keyframes careerBounceRight {
+          0%   { transform: translateX(0px); }
+          28%  { transform: translateX(52px); }
+          58%  { transform: translateX(-16px); }
+          78%  { transform: translateX(8px); }
+          92%  { transform: translateX(-3px); }
+          100% { transform: translateX(0px); }
+        }
+      `}</style>
+
+      {/* 헤더 */}
+      <div style={{ padding: isMob?'12px 16px':'16px 40px', display:'flex', alignItems:'center', gap:12, flexShrink:0, color:'white' }}>
         <BackBtn onClick={onBack} />
-        <h1 style={{ fontSize:'1.8rem', fontWeight:900, color:'white' }}>치과의사가 되는 <span style={{ color:'#F5C800' }}>법</span></h1>
-        <p style={{ color:'rgba(255,255,255,0.5)', marginLeft:10, fontSize:'0.88rem' }}>초등학교부터 치과의사까지 거치는 여정</p>
+        <h1 style={{ fontSize: isMob?'1.2rem':'1.8rem', fontWeight:900, color:'white' }}>
+          치과의사가 되는 <span style={{ color:'#F5C800' }}>법</span>
+        </h1>
+        <p style={{ color:'rgba(255,255,255,0.45)', marginLeft:6, fontSize:'0.82rem' }}>초등학교부터 치과의사까지 7단계 여정</p>
       </div>
 
-      <div style={{ flex:'0 0 auto', padding:'0 16px 6px', minHeight:0 }}>
-        <svg viewBox="0 0 1200 320" style={{ width:'100%', display:'block', maxHeight:'44vh' }} preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <linearGradient id="cg_sky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#5BAEE8"/>
-              <stop offset="100%" stopColor="#C5E8FA"/>
-            </linearGradient>
-            <linearGradient id="cg_gnd" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#5DB830"/>
-              <stop offset="100%" stopColor="#3A8A1A"/>
-            </linearGradient>
-          </defs>
-          <rect x="0" y="0" width="1200" height="270" fill="url(#cg_sky)"/>
-          <circle cx="58" cy="52" r="32" fill="#FFE566" opacity="0.95"/>
-          <circle cx="58" cy="52" r="24" fill="#FFD700"/>
-          <g opacity="0.85">
-            <ellipse cx="200" cy="44" rx="50" ry="20" fill="white"/>
-            <ellipse cx="230" cy="37" rx="36" ry="22" fill="white"/>
-            <ellipse cx="168" cy="50" rx="30" ry="16" fill="white"/>
-          </g>
-          <g opacity="0.72">
-            <ellipse cx="745" cy="36" rx="44" ry="17" fill="white"/>
-            <ellipse cx="773" cy="30" rx="32" ry="19" fill="white"/>
-            <ellipse cx="720" cy="42" rx="28" ry="14" fill="white"/>
-          </g>
-          <g opacity="0.65">
-            <ellipse cx="1096" cy="48" rx="38" ry="15" fill="white"/>
-            <ellipse cx="1122" cy="42" rx="28" ry="17" fill="white"/>
-          </g>
-          <rect x="0" y="265" width="1200" height="55" fill="url(#cg_gnd)"/>
-          {[...Array(30)].map((_,i) => (
-            <ellipse key={i} cx={20+i*40} cy="266" rx="12" ry="5" fill="#6CC82C" opacity="0.65"/>
-          ))}
-          <rect x="0" y="248" width="1200" height="20" fill="#9A9A9A"/>
-          <rect x="0" y="250" width="1200" height="16" fill="#ABABAB"/>
-          {[...Array(22)].map((_,i) => (
-            <rect key={i} x={i*56+4} y={256} width={34} height={4} rx="2" fill="#FFD700" opacity="0.8"/>
-          ))}
+      {/* 카드 스테이지 */}
+      <div
+        style={{ flex:1, position:'relative', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center', userSelect:'none', touchAction:'none', cursor:'grab' }}
+        onMouseDown={e => onPtrDown(e.clientX)}
+        onMouseMove={e => onPtrMove(e.clientX)}
+        onMouseUp={e => onPtrUp(e.clientX)}
+        onMouseLeave={e => { onPtrUp(e.clientX); dragRef.current = null }}
+        onTouchStart={e => onPtrDown(e.touches[0].clientX)}
+        onTouchMove={e => onPtrMove(e.touches[0].clientX)}
+        onTouchEnd={e => onPtrUp(e.changedTouches[0].clientX)}
+      >
+        {/* 화살표 버튼 */}
+        {[[-1,'←',isMob?10:36],[1,'→',isMob?10:36]].map(([dir, label, edge]) => {
+          const target = idx + dir
+          const ok = target >= 0 && target < careerSteps.length
+          return (
+            <button key={dir} onClick={() => go(target)}
+              style={{
+                position:'absolute', [dir===-1?'left':'right']: edge, zIndex:30,
+                width: isMob?42:54, height: isMob?42:54, borderRadius:'50%',
+                background: ok ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
+                border:`1.5px solid rgba(255,255,255,${ok?0.22:0.07})`,
+                backdropFilter:'blur(10px)', color:'white',
+                fontSize: isMob?'1.2rem':'1.5rem',
+                cursor: ok ? 'pointer' : 'default',
+                opacity: ok ? 1 : 0.25, transition:'all 0.18s',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                fontFamily:'inherit',
+              }}
+            >{label}</button>
+          )
+        })}
 
-          {/* Building 1: 초등학교 */}
-          <g style={bs(0)} onClick={bClick(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
-            <rect x="42" y="158" width="74" height="92" rx="2" fill="#FFF176" stroke="#F9A825" strokeWidth="1.5"/>
-            <polygon points="28,160 118,160 73,110" fill="#E53935"/>
-            <rect x="92" y="118" width="10" height="24" fill="#BDBDBD"/>
-            <rect x="50" y="174" width="20" height="18" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1"/>
-            <rect x="88" y="174" width="20" height="18" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1"/>
-            <line x1="60" y1="174" x2="60" y2="192" stroke="#1565C0" strokeWidth="0.7"/>
-            <line x1="50" y1="183" x2="70" y2="183" stroke="#1565C0" strokeWidth="0.7"/>
-            <line x1="98" y1="174" x2="98" y2="192" stroke="#1565C0" strokeWidth="0.7"/>
-            <line x1="88" y1="183" x2="108" y2="183" stroke="#1565C0" strokeWidth="0.7"/>
-            <rect x="65" y="215" width="22" height="35" rx="3" fill="#A5D6A7" stroke="#388E3C" strokeWidth="1"/>
-            <circle cx="83" cy="232" r="2" fill="#388E3C"/>
-            <rect x="38" y="200" width="86" height="14" rx="7" fill="#E53935"/>
-            <text x="81" y="210" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">초등학교</text>
-            <text x="81" y="196" textAnchor="middle" fontSize="11" fill="#E53935" fontWeight="bold">①</text>
-            <line x1="100" y1="110" x2="100" y2="87" stroke="#AAA" strokeWidth="1.5"/>
-            <rect x="100" y="87" width="22" height="13" rx="1" fill="#E53935" opacity="0.9"/>
-          </g>
-          <text x="156" y="243" textAnchor="middle" fontSize="20" fill="#F5C800" fontWeight="bold">→</text>
-          <rect x="153" y="232" width="5" height="18" fill="#6D4C41"/>
-          <ellipse cx="155" cy="224" rx="12" ry="14" fill="#43A047"/>
-          <ellipse cx="155" cy="220" rx="9" ry="10" fill="#66BB6A"/>
+        {/* 카드 트랙 — 바운스 wrapper */}
+        <div key={bounceKey} style={{
+          position:'absolute', inset:0,
+          display:'flex', alignItems:'center', justifyContent:'center',
+          animation: bounceDir ? `careerBounce${bounceDir === 'left' ? 'Left' : 'Right'} 0.50s cubic-bezier(0.36,0.07,0.19,0.97) both` : 'none',
+          pointerEvents:'none',
+        }}>
+          {careerSteps.map((cs, i) => {
+            const diff      = i - idx
+            const abs       = Math.abs(diff)
+            const isHov     = hoveredIdx === i && abs > 0
+            const baseScale = abs === 0 ? 1 : abs === 1 ? 0.70 : abs === 2 ? 0.50 : 0.36
+            const scale     = isHov ? Math.min(baseScale + 0.10, 0.82) : baseScale
+            const tx        = diff * gap
+            const op        = abs === 0 ? 1 : abs === 1 ? 0.55 : abs === 2 ? 0.25 : 0
+            const zI        = 20 - abs * 5
+            const active    = abs === 0
 
-          {/* Building 2: 중학교 */}
-          <g style={bs(1)} onClick={bClick(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
-            <rect x="195" y="138" width="80" height="112" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1.5"/>
-            <rect x="190" y="133" width="90" height="9" rx="2" fill="#1565C0"/>
-            {[148,174].map((y,ri) => [202,226,250].map((x,ci) => (
-              <rect key={`${ri}-${ci}`} x={x} y={y} width="18" height="16" rx="1" fill="#E3F2FD" stroke="#1565C0" strokeWidth="0.8"/>
-            )))}
-            <rect x="222" y="218" width="26" height="32" rx="3" fill="#1565C0"/>
-            <circle cx="244" cy="234" r="2" fill="#90CAF9"/>
-            <rect x="196" y="200" width="78" height="14" rx="7" fill="#1565C0"/>
-            <text x="235" y="210" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">중학교</text>
-            <text x="235" y="196" textAnchor="middle" fontSize="11" fill="#1565C0" fontWeight="bold">②</text>
-          </g>
-          <text x="328" y="243" textAnchor="middle" fontSize="20" fill="#F5C800" fontWeight="bold">→</text>
-          <rect x="325" y="232" width="5" height="18" fill="#6D4C41"/>
-          <ellipse cx="327" cy="224" rx="12" ry="14" fill="#43A047"/>
-          <ellipse cx="327" cy="220" rx="9" ry="10" fill="#66BB6A"/>
-
-          {/* Building 3: 고등학교 */}
-          <g style={bs(2)} onClick={bClick(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
-            <rect x="362" y="118" width="86" height="132" rx="2" fill="#80CBC4" stroke="#00695C" strokeWidth="1.5"/>
-            <rect x="357" y="113" width="96" height="9" rx="2" fill="#00695C"/>
-            {[128,155,182].map((y,ri) => [369,393,418].map((x,ci) => (
-              <rect key={`${ri}-${ci}`} x={x} y={y} width="16" height="14" rx="1" fill="#E0F2F1" stroke="#00695C" strokeWidth="0.8"/>
-            )))}
-            <rect x="388" y="218" width="26" height="32" rx="3" fill="#00695C"/>
-            <circle cx="410" cy="234" r="2" fill="#80CBC4"/>
-            <rect x="363" y="200" width="84" height="14" rx="7" fill="#00695C"/>
-            <text x="405" y="210" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">고등학교</text>
-            <text x="405" y="196" textAnchor="middle" fontSize="11" fill="#00695C" fontWeight="bold">③</text>
-          </g>
-          <text x="500" y="243" textAnchor="middle" fontSize="20" fill="#F5C800" fontWeight="bold">→</text>
-
-          {/* Building 4: 치과대학 */}
-          <g style={bs(3)} onClick={bClick(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
-            {[0,22,44,66,88,110,132,154,176,198,220,242,264,286,308,330].map((deg,i) => {
-              const r = deg * Math.PI / 180
-              return <line key={i} x1={585+Math.cos(r)*58} y1={148+Math.sin(r)*58} x2={585+Math.cos(r)*76} y2={148+Math.sin(r)*76} stroke="#F5C800" strokeWidth="3" opacity="0.4"/>
-            })}
-            <rect x="532" y="52" width="106" height="198" rx="3" fill="#FFF9C4" stroke="#F5C800" strokeWidth="3"/>
-            <rect x="528" y="46" width="114" height="10" rx="2" fill="#F5C800"/>
-            {[532,550,568,586,604,622].map((x,i) => (
-              <rect key={i} x={x} y="32" width="12" height="18" rx="2" fill="#F5C800"/>
-            ))}
-            {[541,561,601,621].map((x,i) => (
-              <rect key={i} x={x} y="190" width="9" height="60" rx="4" fill="#F9A825" opacity="0.65"/>
-            ))}
-            {[64,90,116,142].map((y,ri) => [540,566,592,618].map((x,ci) => (
-              <rect key={`${ri}-${ci}`} x={x} y={y} width="18" height="16" rx="1" fill="#FFF176" stroke="#F9A825" strokeWidth="1"/>
-            )))}
-            <text x="585" y="198" textAnchor="middle" fontSize="36">🦷</text>
-            <rect x="572" y="214" width="26" height="36" rx="3" fill="#F9A825"/>
-            <circle cx="593" cy="232" r="2.5" fill="#FFF176"/>
-            <rect x="532" y="200" width="106" height="16" rx="8" fill="#F9A825"/>
-            <text x="585" y="211" textAnchor="middle" fontSize="9" fill="white" fontWeight="bold">치과대학 (6년)</text>
-            <text x="585" y="196" textAnchor="middle" fontSize="11" fill="#F9A825" fontWeight="bold">④</text>
-          </g>
-          <text x="690" y="243" textAnchor="middle" fontSize="20" fill="#F5C800" fontWeight="bold">→</text>
-          <rect x="687" y="232" width="5" height="18" fill="#6D4C41"/>
-          <ellipse cx="689" cy="224" rx="12" ry="14" fill="#43A047"/>
-          <ellipse cx="689" cy="220" rx="9" ry="10" fill="#66BB6A"/>
-
-          {/* Building 5: 국가면허시험 */}
-          <g style={bs(4)} onClick={bClick(4)} onMouseEnter={()=>setHovered(4)} onMouseLeave={()=>setHovered(null)}>
-            <rect x="720" y="148" width="76" height="102" rx="2" fill="#A5D6A7" stroke="#2E7D32" strokeWidth="1.5"/>
-            <polygon points="710,150 806,150 758,108" fill="#2E7D32"/>
-            <text x="758" y="198" textAnchor="middle" fontSize="32">📋</text>
-            <rect x="742" y="218" width="24" height="32" rx="3" fill="#2E7D32"/>
-            <circle cx="762" cy="234" r="2" fill="#A5D6A7"/>
-            <rect x="722" y="200" width="72" height="14" rx="7" fill="#2E7D32"/>
-            <text x="758" y="210" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">국가면허시험</text>
-            <text x="758" y="196" textAnchor="middle" fontSize="11" fill="#2E7D32" fontWeight="bold">⑤</text>
-          </g>
-          <text x="852" y="243" textAnchor="middle" fontSize="20" fill="#F5C800" fontWeight="bold">→</text>
-          <rect x="849" y="232" width="5" height="18" fill="#6D4C41"/>
-          <ellipse cx="851" cy="224" rx="12" ry="14" fill="#43A047"/>
-          <ellipse cx="851" cy="220" rx="9" ry="10" fill="#66BB6A"/>
-
-          {/* Building 6: 인턴·레지던트 */}
-          <g style={bs(5)} onClick={bClick(5)} onMouseEnter={()=>setHovered(5)} onMouseLeave={()=>setHovered(null)}>
-            <rect x="874" y="118" width="90" height="132" rx="2" fill="white" stroke="#E53935" strokeWidth="2"/>
-            <rect x="870" y="113" width="98" height="9" rx="2" fill="#E53935"/>
-            <rect x="900" y="130" width="16" height="38" rx="2" fill="#E53935"/>
-            <rect x="888" y="142" width="40" height="16" rx="2" fill="#E53935"/>
-            {[882,906,930].map((x,i) => (
-              <rect key={i} x={x} y="182" width="18" height="16" rx="1" fill="#BBDEFB" stroke="#1565C0" strokeWidth="0.8"/>
-            ))}
-            <rect x="903" y="216" width="24" height="34" rx="3" fill="#E53935"/>
-            <circle cx="923" cy="233" r="2" fill="white"/>
-            <rect x="875" y="200" width="88" height="14" rx="7" fill="#E53935"/>
-            <text x="919" y="210" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">인턴·레지던트</text>
-            <text x="919" y="196" textAnchor="middle" fontSize="11" fill="#E53935" fontWeight="bold">⑥</text>
-          </g>
-          <text x="1018" y="243" textAnchor="middle" fontSize="20" fill="#F5C800" fontWeight="bold">→</text>
-
-          {/* Building 7: 치과의사! */}
-          <g style={bs(6)} onClick={bClick(6)} onMouseEnter={()=>setHovered(6)} onMouseLeave={()=>setHovered(null)}>
-            {[0,30,60,90,120,150,180,210,240,270,300,330].map((deg,i) => {
-              const r = deg * Math.PI / 180
-              return <line key={i} x1={1091+Math.cos(r)*62} y1={178+Math.sin(r)*62} x2={1091+Math.cos(r)*78} y2={178+Math.sin(r)*78} stroke="#F5C800" strokeWidth="3" opacity="0.6"/>
-            })}
-            <rect x="1046" y="120" width="90" height="130" rx="4" fill="#E8F5E9" stroke="#1A5C3A" strokeWidth="2.5"/>
-            <rect x="1042" y="115" width="98" height="9" rx="3" fill="#1A5C3A"/>
-            <text x="1091" y="184" textAnchor="middle" fontSize="40">🦷</text>
-            <rect x="1058" y="188" width="66" height="18" rx="9" fill="#1A5C3A"/>
-            <text x="1091" y="200" textAnchor="middle" fontSize="8.5" fill="#F5C800" fontWeight="bold">치과의원 OPEN!</text>
-            {[1054,1076,1098,1120].map((x,i) => (
-              <rect key={i} x={x} y="128" width="16" height="15" rx="1" fill="#A5D6A7" stroke="#1A5C3A" strokeWidth="0.8"/>
-            ))}
-            <rect x="1074" y="211" width="26" height="39" rx="3" fill="#1A5C3A"/>
-            <circle cx="1096" cy="230" r="2.5" fill="#A5D6A7"/>
-            <rect x="1047" y="200" width="88" height="14" rx="7" fill="#1A5C3A"/>
-            <text x="1091" y="210" textAnchor="middle" fontSize="9" fill="white" fontWeight="bold">치과의사 완성!</text>
-            <text x="1091" y="196" textAnchor="middle" fontSize="11" fill="#1A5C3A" fontWeight="bold">⑦</text>
-          </g>
-
-          <text x="81"   y="283" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.7)">수학·과학 기초</text>
-          <text x="235"  y="283" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.7)">생물·화학 탐구</text>
-          <text x="405"  y="283" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.7)">이과·화학·생물</text>
-          <text x="585"  y="283" textAnchor="middle" fontSize="9" fill="#F5C800">기초·임상·실습</text>
-          <text x="758"  y="283" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.7)">치과의사 면허</text>
-          <text x="919"  y="283" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.7)">전문의 취득(선택)</text>
-          <text x="1091" y="283" textAnchor="middle" fontSize="9" fill="#A5D6A7">개업 or 취직</text>
-        </svg>
-      </div>
-
-      {/* Career steps summary */}
-      <div style={{ flex:1, overflowY:'auto', padding:'8px 28px 20px' }}>
-        <div style={{ display:'grid', gridTemplateColumns: mob() ? 'repeat(2,1fr)' : 'repeat(7,1fr)', gap:10 }}>
-          {careerSteps.map((s, i) => {
-            const isActive = active === i
-            const col = stepColors[i]
             return (
               <div key={i}
-                onClick={bClick(i)}
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
+                onClick={() => { if (wasDragRef.current) return; !active && go(i) }}
+                onMouseEnter={() => abs > 0 && setHoveredIdx(i)}
+                onMouseLeave={() => setHoveredIdx(null)}
                 style={{
-                  background: isActive ? `${col}28` : s.highlight ? 'rgba(245,200,0,0.18)' : s.final ? 'rgba(26,92,58,0.25)' : 'rgba(255,255,255,0.08)',
-                  borderRadius:14, padding:'12px 10px', textAlign:'center',
-                  border: isActive ? `2px solid ${col}CC` : s.highlight ? '2px solid rgba(245,200,0,0.5)' : s.final ? '2px solid rgba(26,92,58,0.5)' : '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: isActive ? `0 0 24px ${col}88, 0 4px 16px ${col}55` : 'none',
-                  cursor: 'pointer', transition: 'all 0.22s',
-                  transform: isActive ? 'translateY(-3px) scale(1.04)' : 'none',
-                }}>
-                <div style={{ fontSize: isActive ? '2rem' : '1.6rem', marginBottom:4, transition:'font-size 0.2s' }}>{s.emoji}</div>
-                <p style={{ fontWeight:800, fontSize:'0.8rem', color: isActive ? col : s.highlight ? '#F5C800' : s.final ? '#A5D6A7' : 'white', lineHeight:1.3, marginBottom:3, whiteSpace:'pre-line', transition:'color 0.2s' }}>{s.label}</p>
-                <p style={{ fontSize:'0.7rem', color: isActive ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.5)', lineHeight:1.4, transition:'color 0.2s' }}>{s.desc}</p>
+                  position:'absolute',
+                  width: cardW, height: cardH,
+                  transform: `translateX(${tx}px) scale(${scale})`,
+                  opacity: op,
+                  zIndex: zI,
+                  transition:'transform 0.40s cubic-bezier(0.22,0.8,0.36,1), opacity 0.40s, box-shadow 0.40s',
+                  cursor: active ? 'default' : 'pointer',
+                  pointerEvents: abs > 2 ? 'none' : 'auto',
+                  background: active
+                    ? `linear-gradient(160deg, ${cs.color}20, ${cs.color}08)`
+                    : 'rgba(255,255,255,0.05)',
+                  backdropFilter:'blur(20px)',
+                  borderRadius: isMob ? 28 : 36,
+                  border:`2px solid ${active ? cs.color+'88' : 'rgba(255,255,255,0.10)'}`,
+                  boxShadow: active
+                    ? `0 0 120px ${cs.color}2A, 0 24px 64px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.12)`
+                    : 'none',
+                  display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+                  textAlign:'center', padding: isMob?'28px 20px':'44px 48px', gap: isMob?12:18,
+                  overflow:'hidden',
+                }}
+              >
+                {/* 상단 뱃지 */}
+                <div style={{ display:'flex', gap:8, alignItems:'center', opacity: active?1:0, transition:'opacity 0.35s' }}>
+                  <div style={{ background:`${cs.color}28`, border:`1.5px solid ${cs.color}55`, borderRadius:50, padding: isMob?'3px 12px':'4px 16px', fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:cs.color }}>
+                    STEP {i + 1}
+                  </div>
+                  <div style={{ background:'rgba(255,255,255,0.10)', border:'1.5px solid rgba(255,255,255,0.18)', borderRadius:50, padding: isMob?'3px 12px':'4px 16px', fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:'rgba(255,255,255,0.75)' }}>
+                    {cs.years}
+                  </div>
+                </div>
+
+                {/* 이모지 */}
+                <div style={{
+                  fontSize: isMob?'4.2rem':'6.4rem', lineHeight:1,
+                  filter: active ? `drop-shadow(0 0 28px ${cs.color}CC)` : 'none',
+                  transition:'filter 0.4s',
+                }}>{cs.emoji}</div>
+
+                {/* 이름 */}
+                <p style={{
+                  fontWeight:900, margin:0, lineHeight:1.2,
+                  fontSize: active ? (isMob?'1.6rem':'2.3rem') : (isMob?'1.05rem':'1.45rem'),
+                  color: active ? cs.color : 'rgba(255,255,255,0.60)',
+                  transition:'all 0.4s',
+                }}>{cs.label}</p>
+
+                {/* 구분선 + 설명 (활성만 페이드인) */}
+                <div style={{ opacity: active?1:0, maxHeight: active ? 240 : 0, overflow:'hidden', transition:'opacity 0.35s 0.1s, max-height 0.40s', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?10:14 }}>
+                  <div style={{ width:44, height:3, background:cs.color, borderRadius:2, opacity:0.65 }}/>
+                  <p style={{ fontSize: isMob?'0.9rem':'1.05rem', color:'rgba(255,255,255,0.65)', fontWeight:700, margin:0 }}>{cs.desc}</p>
+                  <p style={{ fontSize: isMob?'0.82rem':'0.95rem', color:'rgba(255,255,255,0.78)', lineHeight:1.8, margin:0, whiteSpace:'pre-line' }}>{cs.detail}</p>
+                </div>
               </div>
             )
           })}
+        </div>
+      </div>
+
+      {/* 하단: 도트 + 슬라이더 */}
+      <div style={{ padding: isMob?'10px 24px 22px':'14px 60px 28px', display:'flex', flexDirection:'column', alignItems:'center', gap:12, flexShrink:0 }}>
+        <div style={{ display:'flex', gap:7 }}>
+          {careerSteps.map((cs, i) => (
+            <div key={i} onClick={() => go(i)} style={{
+              width: i===idx?26:8, height:8, borderRadius:4,
+              background: i===idx ? cs.color : 'rgba(255,255,255,0.20)',
+              cursor:'pointer', transition:'all 0.28s',
+            }}/>
+          ))}
+        </div>
+        <div
+          style={{ width: isMob?'88%':'68%', height:6, background:'rgba(255,255,255,0.10)', borderRadius:3, cursor:'pointer', position:'relative' }}
+          onClick={e => {
+            const r = e.currentTarget.getBoundingClientRect()
+            go(Math.round((e.clientX - r.left) / r.width * (careerSteps.length - 1)))
+          }}
+        >
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, borderRadius:3, transition:'width 0.28s, background 0.28s',
+            width:`${idx/(careerSteps.length-1)*100}%`, background:s.color }}/>
+          <div style={{ position:'absolute', top:'50%', transform:'translate(-50%,-50%)', transition:'left 0.28s, background 0.28s',
+            left:`${idx/(careerSteps.length-1)*100}%`,
+            width:18, height:18, borderRadius:'50%', background:s.color,
+            border:'2.5px solid white', boxShadow:`0 0 10px ${s.color}88` }}/>
         </div>
       </div>
     </div>
