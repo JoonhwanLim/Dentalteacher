@@ -1004,6 +1004,116 @@ function ToolsContent() {
   )
 }
 
+/* ── BUILDING ILLUSTRATIONS (each step's standalone SVG) ── */
+function BuildingIllustration({ step }) {
+  const id = `bld${step}`
+  const cfgs = [
+    { vb:'20 80 112 178', gY:248, gH:12, jsx: <>
+      <rect x="42" y="158" width="74" height="92" rx="2" fill="#FFF176" stroke="#F9A825" strokeWidth="1.5"/>
+      <polygon points="28,160 118,160 73,110" fill="#E53935"/>
+      <rect x="92" y="118" width="10" height="24" fill="#BDBDBD"/>
+      <rect x="50" y="174" width="20" height="18" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1"/>
+      <rect x="88" y="174" width="20" height="18" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1"/>
+      <line x1="60" y1="174" x2="60" y2="192" stroke="#1565C0" strokeWidth="0.7"/>
+      <line x1="50" y1="183" x2="70" y2="183" stroke="#1565C0" strokeWidth="0.7"/>
+      <line x1="98" y1="174" x2="98" y2="192" stroke="#1565C0" strokeWidth="0.7"/>
+      <line x1="88" y1="183" x2="108" y2="183" stroke="#1565C0" strokeWidth="0.7"/>
+      <rect x="65" y="215" width="22" height="35" rx="3" fill="#A5D6A7" stroke="#388E3C" strokeWidth="1"/>
+      <circle cx="83" cy="232" r="2" fill="#388E3C"/>
+      <line x1="100" y1="110" x2="100" y2="87" stroke="#AAA" strokeWidth="1.5"/>
+      <rect x="100" y="87" width="22" height="13" rx="1" fill="#E53935" opacity="0.9"/>
+    </> },
+    { vb:'183 128 108 128', gY:248, gH:9, jsx: <>
+      <rect x="195" y="138" width="80" height="112" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1.5"/>
+      <rect x="190" y="133" width="90" height="9" rx="2" fill="#1565C0"/>
+      {[148,174].map((y,ri) => [202,226,250].map((x,ci) => (
+        <rect key={`${ri}-${ci}`} x={x} y={y} width="18" height="16" rx="1" fill="#E3F2FD" stroke="#1565C0" strokeWidth="0.8"/>
+      )))}
+      <rect x="222" y="218" width="26" height="32" rx="3" fill="#1565C0"/>
+      <circle cx="244" cy="234" r="2" fill="#90CAF9"/>
+    </> },
+    { vb:'350 108 105 148', gY:248, gH:9, jsx: <>
+      <rect x="362" y="118" width="86" height="132" rx="2" fill="#80CBC4" stroke="#00695C" strokeWidth="1.5"/>
+      <rect x="357" y="113" width="96" height="9" rx="2" fill="#00695C"/>
+      {[128,155,182].map((y,ri) => [369,393,418].map((x,ci) => (
+        <rect key={`${ri}-${ci}`} x={x} y={y} width="16" height="14" rx="1" fill="#E0F2F1" stroke="#00695C" strokeWidth="0.8"/>
+      )))}
+      <rect x="388" y="218" width="26" height="32" rx="3" fill="#00695C"/>
+      <circle cx="410" cy="234" r="2" fill="#80CBC4"/>
+    </> },
+    { vb:'505 25 165 232', gY:248, gH:9, jsx: <>
+      {[0,22,44,66,88,110,132,154,176,198,220,242,264,286,308,330].map((deg,i) => {
+        const r = deg * Math.PI / 180
+        return <line key={i} x1={585+Math.cos(r)*58} y1={148+Math.sin(r)*58} x2={585+Math.cos(r)*76} y2={148+Math.sin(r)*76} stroke="#F5C800" strokeWidth="3" opacity="0.4"/>
+      })}
+      <rect x="532" y="52" width="106" height="198" rx="3" fill="#FFF9C4" stroke="#F5C800" strokeWidth="3"/>
+      <rect x="528" y="46" width="114" height="10" rx="2" fill="#F5C800"/>
+      {[532,550,568,586,604,622].map((x,i) => (
+        <rect key={i} x={x} y="32" width="12" height="18" rx="2" fill="#F5C800"/>
+      ))}
+      {[541,561,601,621].map((x,i) => (
+        <rect key={i} x={x} y="190" width="9" height="60" rx="4" fill="#F9A825" opacity="0.65"/>
+      ))}
+      {[64,90,116,142].map((y,ri) => [540,566,592,618].map((x,ci) => (
+        <rect key={`${ri}-${ci}`} x={x} y={y} width="18" height="16" rx="1" fill="#FFF176" stroke="#F9A825" strokeWidth="1"/>
+      )))}
+      <text x="585" y="198" textAnchor="middle" fontSize="36">🦷</text>
+      <rect x="572" y="214" width="26" height="36" rx="3" fill="#F9A825"/>
+      <circle cx="593" cy="232" r="2.5" fill="#FFF176"/>
+    </> },
+    { vb:'702 100 115 157', gY:248, gH:9, jsx: <>
+      <rect x="720" y="148" width="76" height="102" rx="2" fill="#A5D6A7" stroke="#2E7D32" strokeWidth="1.5"/>
+      <polygon points="710,150 806,150 758,108" fill="#2E7D32"/>
+      <text x="758" y="198" textAnchor="middle" fontSize="32">📋</text>
+      <rect x="742" y="218" width="24" height="32" rx="3" fill="#2E7D32"/>
+      <circle cx="762" cy="234" r="2" fill="#A5D6A7"/>
+    </> },
+    { vb:'862 106 110 150', gY:248, gH:9, jsx: <>
+      <rect x="874" y="118" width="90" height="132" rx="2" fill="white" stroke="#E53935" strokeWidth="2"/>
+      <rect x="870" y="113" width="98" height="9" rx="2" fill="#E53935"/>
+      <rect x="900" y="130" width="16" height="38" rx="2" fill="#E53935"/>
+      <rect x="888" y="142" width="40" height="16" rx="2" fill="#E53935"/>
+      {[882,906,930].map((x,i) => (
+        <rect key={i} x={x} y="182" width="18" height="16" rx="1" fill="#BBDEFB" stroke="#1565C0" strokeWidth="0.8"/>
+      ))}
+      <rect x="903" y="216" width="24" height="34" rx="3" fill="#E53935"/>
+      <circle cx="923" cy="233" r="2" fill="white"/>
+    </> },
+    { vb:'1004 92 180 165', gY:248, gH:9, jsx: <>
+      {[0,30,60,90,120,150,180,210,240,270,300,330].map((deg,i) => {
+        const r = deg * Math.PI / 180
+        return <line key={i} x1={1091+Math.cos(r)*62} y1={178+Math.sin(r)*62} x2={1091+Math.cos(r)*78} y2={178+Math.sin(r)*78} stroke="#F5C800" strokeWidth="3" opacity="0.6"/>
+      })}
+      <rect x="1046" y="120" width="90" height="130" rx="4" fill="#E8F5E9" stroke="#1A5C3A" strokeWidth="2.5"/>
+      <rect x="1042" y="115" width="98" height="9" rx="3" fill="#1A5C3A"/>
+      <text x="1091" y="184" textAnchor="middle" fontSize="40">🦷</text>
+      <rect x="1058" y="188" width="66" height="18" rx="9" fill="#1A5C3A"/>
+      <text x="1091" y="200" textAnchor="middle" fontSize="8.5" fill="#F5C800" fontWeight="bold">치과의원 OPEN!</text>
+      {[1054,1076,1098,1120].map((x,i) => (
+        <rect key={i} x={x} y="128" width="16" height="15" rx="1" fill="#A5D6A7" stroke="#1A5C3A" strokeWidth="0.8"/>
+      ))}
+      <rect x="1074" y="211" width="26" height="39" rx="3" fill="#1A5C3A"/>
+      <circle cx="1096" cy="230" r="2.5" fill="#A5D6A7"/>
+    </> },
+  ]
+  const c = cfgs[step]
+  if (!c) return null
+  const [vbX, vbY, vbW] = c.vb.split(' ').map(Number)
+  return (
+    <svg viewBox={c.vb} style={{ width:'100%', height:'100%', display:'block' }} preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id={`${id}sky`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#5BAEE8"/>
+          <stop offset="100%" stopColor="#C5E8FA"/>
+        </linearGradient>
+      </defs>
+      <rect x={vbX} y={vbY} width={vbW} height={c.gY - vbY} fill={`url(#${id}sky)`}/>
+      <rect x={vbX} y={c.gY} width={vbW} height={c.gH} fill="#5DB830"/>
+      {c.jsx}
+    </svg>
+  )
+}
+
 /* ── SECTION 2: 치과의사가 되는 법 — 교육 여정 ── */
 function CareerSection({ onBack }) {
   const [idx, setIdx]               = useState(0)
@@ -1151,12 +1261,12 @@ function CareerSection({ onBack }) {
                     ? `0 0 120px ${cs.color}2A, 0 24px 64px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.12)`
                     : 'none',
                   display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-                  textAlign:'center', padding: isMob?'28px 20px':'44px 48px', gap: isMob?12:18,
+                  textAlign:'center', padding: isMob?'16px 14px':'24px 36px', gap: isMob?8:12,
                   overflow:'hidden',
                 }}
               >
                 {/* 상단 뱃지 */}
-                <div style={{ display:'flex', gap:8, alignItems:'center', opacity: active?1:0, transition:'opacity 0.35s' }}>
+                <div style={{ display:'flex', gap:8, alignItems:'center', opacity: active?1:0, transition:'opacity 0.35s', flexShrink:0 }}>
                   <div style={{ background:`${cs.color}28`, border:`1.5px solid ${cs.color}55`, borderRadius:50, padding: isMob?'3px 12px':'4px 16px', fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:cs.color }}>
                     STEP {i + 1}
                   </div>
@@ -1165,12 +1275,12 @@ function CareerSection({ onBack }) {
                   </div>
                 </div>
 
-                {/* 이모지 */}
-                <div style={{
-                  fontSize: isMob?'4.2rem':'6.4rem', lineHeight:1,
-                  filter: active ? `drop-shadow(0 0 28px ${cs.color}CC)` : 'none',
-                  transition:'filter 0.4s',
-                }}>{cs.emoji}</div>
+                {/* 건물 일러스트 */}
+                <div style={{ width:'100%', height: isMob?96:138, flexShrink:0, borderRadius:12, overflow:'hidden',
+                  filter: active ? `drop-shadow(0 4px 16px ${cs.color}66)` : 'none',
+                  transition:'filter 0.4s', opacity: active ? 1 : 0.72 }}>
+                  <BuildingIllustration step={i} />
+                </div>
 
                 {/* 이름 */}
                 <p style={{
