@@ -28,7 +28,7 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<PresentationPage />} />
+      <Route path="/" element={<PresentationPage onGoIntro={() => setEntered(false)} />} />
       <Route path="/homework" element={<HomeworkPage />} />
       <Route path="/quiz" element={<RequireStudent><QuizPage /></RequireStudent>} />
       <Route path="/certificate" element={<RequireQuiz><CertificatePage /></RequireQuiz>} />

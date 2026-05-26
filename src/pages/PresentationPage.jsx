@@ -196,7 +196,7 @@ function BackBtn({ onClick }) {
 }
 
 /* ── PRESENTATION PAGE ── */
-export default function PresentationPage() {
+export default function PresentationPage({ onGoIntro }) {
   const [section, setSection] = useState(null)
   const [visible, setVisible] = useState(true)
   const navigate = useNavigate()
@@ -216,7 +216,7 @@ export default function PresentationPage() {
 
   return (
     <div style={style}>
-      {section === null && <MainHub onEnter={s => goTo(s)} onHomework={() => navigate('/homework')} />}
+      {section === null && <MainHub onEnter={s => goTo(s)} onHomework={() => navigate('/homework')} onGoIntro={onGoIntro} />}
       {section === 0 && <DaySection onBack={() => goTo(null)} />}
       {section === 1 && <ToolsSection onBack={() => goTo(null)} />}
       {section === 2 && <CareerSection onBack={() => goTo(null)} />}
@@ -226,7 +226,7 @@ export default function PresentationPage() {
 }
 
 /* ── MAIN HUB: 치과 진료실 일러스트 ── */
-function MainHub({ onEnter, onHomework }) {
+function MainHub({ onEnter, onHomework, onGoIntro }) {
   const [hovered, setHovered] = useState(null)
   const labels = ['🦷 치과의사의 하루','🔬 진료실 엿보기','🎓 치과의사가 되는 길','✨ 치아의 놀라운 비밀']
   const glow = id => ({ cursor:'pointer', filter: hovered===id ? 'drop-shadow(0 0 18px rgba(245,200,0,0.95))' : 'none', transition:'filter 0.18s' })
@@ -240,7 +240,10 @@ function MainHub({ onEnter, onHomework }) {
           <p style={{ fontWeight:900, fontSize:'1rem', color:'#1A1A1A', lineHeight:1.2 }}>리라초등학교 5학년 2반 명예교사</p>
           <p style={{ fontSize:'0.78rem', color:'#888' }}>함께 알아보는 치과의 세계 🦷</p>
         </div>
-        <button onClick={onHomework} style={{ marginLeft:'auto', background:'#F5C800', border:'none', borderRadius:50, padding:'9px 20px', fontFamily:'inherit', fontWeight:700, fontSize:'0.88rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A' }}>학생 참여 →</button>
+        <div style={{ marginLeft:'auto', display:'flex', gap:8 }}>
+          <button onClick={onGoIntro} style={{ background:'white', border:'1.5px solid #E0E0E0', borderRadius:50, padding:'9px 18px', fontFamily:'inherit', fontWeight:700, fontSize:'0.88rem', cursor:'pointer', color:'#888' }}>🏠 처음으로</button>
+          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding:'9px 20px', fontFamily:'inherit', fontWeight:700, fontSize:'0.88rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A' }}>학생 참여 →</button>
+        </div>
       </div>
 
       {/* Room */}
