@@ -571,112 +571,164 @@ function ClinicSection({ onBack }) {
 }
 
 function TreatmentsContent() {
-  const [selected, setSelected] = useState(null)
-  const [hovIdx,   setHovIdx]   = useState(null)
+  const [selected,  setSelected]  = useState(null)
+  const [hovIdx,    setHovIdx]    = useState(null)
+  const [jellySet,  setJellySet]  = useState(() => new Set())
   const isMob = mob()
 
-  const cardStyles = [
-    { bg:'rgba(196,242,214,0.60)', border:'rgba(100,200,140,0.45)', glow:'rgba(26,92,58,0.22)'   },
-    { bg:'rgba(190,224,255,0.60)', border:'rgba(100,160,220,0.45)', glow:'rgba(74,144,217,0.22)'  },
-    { bg:'rgba(255,244,195,0.60)', border:'rgba(230,180,80,0.45)',  glow:'rgba(230,126,34,0.22)'  },
-    { bg:'rgba(234,210,255,0.60)', border:'rgba(180,120,220,0.45)', glow:'rgba(142,68,173,0.22)'  },
-    { bg:'rgba(255,210,215,0.60)', border:'rgba(220,130,140,0.45)', glow:'rgba(231,76,60,0.22)'   },
-    { bg:'rgba(228,228,232,0.60)', border:'rgba(160,160,170,0.45)', glow:'rgba(85,85,85,0.15)'    },
+  const clay = [
+    { top:'#A8F5C0', mid:'#6EE09A', shadow:'#38A85E', glow:'rgba(80,210,130,0.55)'  },
+    { top:'#A8E5FF', mid:'#68C8F5', shadow:'#3098CC', glow:'rgba(80,180,240,0.55)'  },
+    { top:'#FFEEA0', mid:'#FFD84D', shadow:'#C8A020', glow:'rgba(255,200,50,0.55)'  },
+    { top:'#E0BEFF', mid:'#C088F8', shadow:'#8848D0', glow:'rgba(180,100,240,0.55)' },
+    { top:'#FFBFD0', mid:'#FF88AA', shadow:'#D04870', glow:'rgba(240,90,130,0.55)'  },
+    { top:'#D8D8F0', mid:'#B0B0D0', shadow:'#7878A8', glow:'rgba(150,150,200,0.55)' },
   ]
 
-  const R   = isMob ? 118 : 162
-  const csz = isMob ? 86  : 116
+  const R   = isMob ? 138 : 194
+  const csz = isMob ? 100 : 132
+
+  function fireJelly(i) {
+    setJellySet(prev => new Set([...prev, i]))
+    setTimeout(() => setJellySet(prev => { const n = new Set(prev); n.delete(i); return n }), 700)
+  }
 
   return (
     <>
+      <style>{`
+        @keyframes clayFloat {
+          0%,100% { transform: translateY(0px) rotate(0deg); }
+          50%      { transform: translateY(-10px) rotate(1deg); }
+        }
+        @keyframes clayLift {
+          0%,100% { transform: translateY(-14px) rotate(-1deg); }
+          50%      { transform: translateY(-20px) rotate(1.5deg); }
+        }
+        @keyframes clayJelly {
+          0%   { transform: scale(1,1)       rotate(0deg);   }
+          18%  { transform: scale(1.28,0.76) rotate(-6deg);  }
+          36%  { transform: scale(0.80,1.24) rotate(5deg);   }
+          54%  { transform: scale(1.14,0.88) rotate(-2.5deg);}
+          72%  { transform: scale(0.95,1.07) rotate(1deg);   }
+          88%  { transform: scale(1.03,0.98) rotate(0deg);   }
+          100% { transform: scale(1,1)       rotate(0deg);   }
+        }
+        @keyframes hubPulse {
+          0%,100% { box-shadow: 0 10px 0 #C8A020, 0 16px 28px rgba(255,200,60,0.45), inset 0 4px 10px rgba(255,255,255,0.9); }
+          50%      { box-shadow: 0 14px 0 #C8A020, 0 22px 36px rgba(255,200,60,0.55), inset 0 4px 10px rgba(255,255,255,0.9); }
+        }
+      `}</style>
+
       <div style={{
         flex:1, position:'relative', overflow:'hidden',
-        background:'linear-gradient(180deg,#7EC8E3 0%,#B3E5FC 35%,#DCF3FF 70%,#F0FAFF 100%)',
+        background:'radial-gradient(ellipse at 35% 25%, #D8F5FF 0%, #C0EAFF 45%, #D4F5E4 100%)',
         display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
       }}>
-        {/* 배경 버블 */}
-        {[['-8%','6%',130,0.16],['-4%','78%',80,0.13],['72%','12%',60,0.18],['65%','82%',95,0.14],['38%','46%',50,0.11]].map(([t,l,s,o],i)=>(
-          <div key={i} style={{ position:'absolute', top:t, left:l, width:s, height:s, borderRadius:'50%', background:`rgba(255,255,255,${o})`, backdropFilter:'blur(2px)', pointerEvents:'none' }}/>
+        {/* 배경 원 장식 */}
+        {[['8%','4%',180,0.18],['75%','80%',120,0.14],['60%','8%',90,0.20],['15%','82%',140,0.12]].map(([t,l,s,o],i)=>(
+          <div key={i} style={{ position:'absolute', top:t, left:l, width:s, height:s, borderRadius:'50%', background:`rgba(255,255,255,${o})`, pointerEvents:'none' }}/>
         ))}
 
         {/* 타이틀 */}
-        <div style={{ marginBottom: isMob ? 16 : 22, position:'relative', zIndex:2, flexShrink:0 }}>
+        <div style={{ marginBottom: isMob ? 18 : 26, position:'relative', zIndex:2, flexShrink:0 }}>
           <span style={{
             display:'inline-block',
-            background:'rgba(255,255,255,0.72)', backdropFilter:'blur(10px)',
-            border:'1.5px solid rgba(255,255,255,0.9)', borderRadius:50,
-            padding: isMob ? '6px 18px' : '8px 26px',
-            fontSize: isMob ? '0.82rem' : '0.95rem', fontWeight:800, color:'#1A5C3A',
-            boxShadow:'0 4px 16px rgba(0,0,0,0.08)',
+            background:'white', borderRadius:50,
+            padding: isMob ? '8px 22px' : '11px 34px',
+            fontSize: isMob ? '0.88rem' : '1.05rem', fontWeight:900, color:'#1A5C3A',
+            boxShadow:'0 6px 0 #c8e8d0, 0 10px 24px rgba(50,150,90,0.22)',
+            letterSpacing: 0.5,
           }}>🦷 치과 진료의 종류</span>
         </div>
 
-        {/* 원형 배치 컨테이너 */}
+        {/* 원형 배치 */}
         <div style={{ position:'relative', width: R*2+csz, height: R*2+csz, flexShrink:0, zIndex:1 }}>
 
-          {/* 중앙 장식 */}
-          <div style={{
-            position:'absolute', top:'50%', left:'50%',
-            transform:'translate(-50%,-50%)',
-            width: isMob ? 62 : 82, height: isMob ? 62 : 82,
-            borderRadius:'50%',
-            background:'rgba(255,255,255,0.82)', backdropFilter:'blur(12px)',
-            border:'2px solid rgba(255,255,255,0.95)',
-            boxShadow:'0 8px 28px rgba(74,144,217,0.22)',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            fontSize: isMob ? '1.7rem' : '2.2rem',
-            userSelect:'none',
-          }}>🏥</div>
-
-          {/* 연결선 */}
-          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none' }}>
+          {/* SVG 연결선 (중심에서 카드 바깥까지) */}
+          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', overflow:'visible' }}>
             {treatments.map((_, i) => {
-              const angle = (i * 60 - 90) * Math.PI / 180
-              const cx = R + csz/2
-              const cy = R + csz/2
-              const tx = cx + Math.cos(angle) * R
-              const ty = cy + Math.sin(angle) * R
-              return <line key={i} x1={cx} y1={cy} x2={tx} y2={ty} stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeDasharray="4 4"/>
+              const a  = (i*60 - 90) * Math.PI / 180
+              const cx = R + csz/2, cy = R + csz/2
+              const r0 = isMob ? 36 : 48
+              const r1 = R - csz/2 - 2
+              return (
+                <line key={i}
+                  x1={cx + Math.cos(a)*r0} y1={cy + Math.sin(a)*r0}
+                  x2={cx + Math.cos(a)*r1} y2={cy + Math.sin(a)*r1}
+                  stroke="rgba(80,180,120,0.30)" strokeWidth={isMob?2:2.5}
+                  strokeDasharray="6 5" strokeLinecap="round"
+                />
+              )
             })}
           </svg>
 
-          {/* 원형 카드 */}
+          {/* 중앙 허브 */}
+          <div style={{
+            position:'absolute', top:'50%', left:'50%',
+            transform:'translate(-50%,-50%)',
+            width: isMob ? 70 : 94, height: isMob ? 70 : 94,
+            borderRadius:'50%',
+            background:'linear-gradient(140deg, #FFF9D0, #FFE870)',
+            animation:'hubPulse 2.4s ease-in-out infinite',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            fontSize: isMob ? '2rem' : '2.7rem', userSelect:'none', zIndex:5,
+          }}>🏥</div>
+
+          {/* 클레이 카드 */}
           {treatments.map((t, i) => {
-            const angle = (i * 60 - 90) * Math.PI / 180
-            const x = R + csz/2 + Math.cos(angle) * R - csz/2
-            const y = R + csz/2 + Math.sin(angle) * R - csz/2
-            const cs = cardStyles[i]
-            const isHov = hovIdx === i
+            const a    = (i*60 - 90) * Math.PI / 180
+            const x    = R + csz/2 + Math.cos(a)*R - csz/2
+            const y    = R + csz/2 + Math.sin(a)*R - csz/2
+            const cc   = clay[i]
+            const isH  = hovIdx === i
+            const isJ  = jellySet.has(i)
+            const dur  = 2.0 + i * 0.20
+            const del  = -(i * 0.42)
+
             return (
               <div key={i}
                 onClick={() => setSelected(t)}
-                onMouseEnter={() => setHovIdx(i)}
+                onMouseEnter={() => { setHovIdx(i); fireJelly(i) }}
                 onMouseLeave={() => setHovIdx(null)}
                 style={{
                   position:'absolute', left: x, top: y,
                   width: csz, height: csz, borderRadius:'50%',
-                  background: cs.bg,
-                  backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)',
-                  border:`2px solid ${isHov ? 'rgba(255,255,255,0.95)' : cs.border}`,
-                  boxShadow: isHov
-                    ? `0 16px 40px ${cs.glow.replace('0.22','0.55')}, 0 0 0 3px rgba(255,255,255,0.3) inset`
-                    : `0 6px 20px ${cs.glow}, 0 0 0 1px rgba(255,255,255,0.25) inset`,
+                  background:`linear-gradient(140deg, ${cc.top} 0%, ${cc.mid} 70%)`,
+                  boxShadow: isH
+                    ? `0 ${isMob?20:26}px 0 ${cc.shadow}, 0 ${isMob?28:36}px 28px ${cc.glow}, inset 0 5px 12px rgba(255,255,255,0.80)`
+                    : `0 ${isMob?11:15}px 0 ${cc.shadow}, 0 ${isMob?16:22}px 22px ${cc.glow}, inset 0 5px 12px rgba(255,255,255,0.75)`,
                   display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-                  cursor:'pointer',
-                  transition:'transform 0.26s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s',
-                  transform: isHov ? 'scale(1.18)' : 'scale(1)',
-                  userSelect:'none',
+                  cursor:'pointer', userSelect:'none', position:'absolute',
+                  animation: isJ
+                    ? 'clayJelly 0.70s cubic-bezier(0.34,1.56,0.64,1) both'
+                    : isH
+                      ? `clayLift ${dur}s ease-in-out ${del}s infinite`
+                      : `clayFloat ${dur}s ease-in-out ${del}s infinite`,
+                  transition: 'box-shadow 0.22s',
+                  zIndex: isH ? 10 : 2,
+                  left: x, top: y,
                 }}
               >
+                {/* 상단 하이라이트 (클레이 광택) */}
+                <div style={{
+                  position:'absolute', top:'10%', left:'18%',
+                  width:'38%', height:'26%', borderRadius:'50%',
+                  background:'rgba(255,255,255,0.62)',
+                  filter:'blur(4px)', transform:'rotate(-28deg)',
+                  pointerEvents:'none',
+                }}/>
                 <span style={{
-                  fontSize: isMob ? '1.9rem' : '2.6rem', lineHeight:1,
-                  transition:'transform 0.26s cubic-bezier(0.34,1.56,0.64,1)',
-                  transform: isHov ? 'scale(1.12) translateY(-2px)' : 'scale(1)',
+                  fontSize: isMob ? '2.4rem' : '3.2rem', lineHeight:1,
+                  position:'relative', zIndex:1,
+                  filter:`drop-shadow(0 3px 6px ${cc.shadow}88)`,
                 }}>{t.emoji}</span>
                 <p style={{
-                  fontSize: isMob ? '0.58rem' : '0.66rem', fontWeight:800,
-                  color:'#1A1A1A', marginTop: isMob ? 3 : 5,
-                  textAlign:'center', lineHeight:1.2, padding:'0 4px',
+                  fontSize: isMob ? '0.66rem' : '0.76rem', fontWeight:900,
+                  color:'rgba(0,0,0,0.58)', marginTop: isMob ? 5 : 7,
+                  textAlign:'center', lineHeight:1.25,
+                  padding:`0 ${isMob?6:10}px`,
+                  position:'relative', zIndex:1,
+                  textShadow:'0 1px 2px rgba(255,255,255,0.7)',
                 }}>{t.name}</p>
               </div>
             )
