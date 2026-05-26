@@ -1248,26 +1248,17 @@ function CareerSection({ onBack }) {
 
 /* ── SECTION 3: 치과의사의 다양한 종류 ── */
 function SpecialtiesSection({ onBack }) {
-  const [idx,      setIdx]      = useState(0)
-  const [animKey,  setAnimKey]  = useState(0)
-  const [slideDir, setSlideDir] = useState(1)
+  const [idx, setIdx] = useState(0)
   const isMob = mob()
   const s = specialties[idx]
+  const cardW  = isMob ? 230 : 400
+  const cardH  = isMob ? 330 : 400
+  const gap    = isMob ? 138 : 250   // center-to-center offset per step
 
-  function go(newIdx) {
-    if (newIdx < 0 || newIdx >= specialties.length) return
-    setSlideDir(newIdx > idx ? 1 : -1)
-    setIdx(newIdx)
-    setAnimKey(k => k + 1)
-  }
+  function go(n) { if (n >= 0 && n < specialties.length) setIdx(n) }
 
   return (
     <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A3A7C,#0A1E40)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
-      <style>{`
-        @keyframes slideFromRight { from{transform:translateX(70px);opacity:0} to{transform:translateX(0);opacity:1} }
-        @keyframes slideFromLeft  { from{transform:translateX(-70px);opacity:0} to{transform:translateX(0);opacity:1} }
-        .nav-btn:not(:disabled):hover { background:rgba(255,255,255,0.22) !important; transform:scale(1.08); }
-      `}</style>
 
       {/* 헤더 */}
       <div style={{ padding: isMob?'12px 16px':'16px 40px', display:'flex', alignItems:'center', gap:12, flexShrink:0, color:'white' }}>
@@ -1278,118 +1269,120 @@ function SpecialtiesSection({ onBack }) {
         <p style={{ color:'rgba(255,255,255,0.45)', marginLeft:6, fontSize:'0.82rem' }}>8가지 전문 분야</p>
       </div>
 
-      {/* 카드 영역 */}
-      <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', overflow:'hidden', padding:'0 10px' }}>
+      {/* 카드 스테이지 */}
+      <div style={{ flex:1, position:'relative', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center' }}>
 
-        {/* 왼쪽 버튼 */}
-        <button
-          className="nav-btn"
-          onClick={() => go(idx - 1)}
-          disabled={idx === 0}
-          style={{
-            position:'absolute', left: isMob?6:32, zIndex:10,
-            width: isMob?44:58, height: isMob?44:58, borderRadius:'50%',
-            background:'rgba(255,255,255,0.10)', border:'1.5px solid rgba(255,255,255,0.18)',
-            backdropFilter:'blur(10px)', color:'white',
-            fontSize: isMob?'1.3rem':'1.6rem', cursor: idx===0?'default':'pointer',
-            opacity: idx===0 ? 0.22 : 1, transition:'all 0.18s',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            fontFamily:'inherit',
-          }}
-        >←</button>
+        {/* 화살표 버튼 */}
+        {[[-1,'←',isMob?10:36],[1,'→',isMob?10:36]].map(([dir, label, edge]) => {
+          const target = idx + dir
+          const ok = target >= 0 && target < specialties.length
+          return (
+            <button key={dir} onClick={() => go(target)}
+              style={{
+                position:'absolute', [dir===-1?'left':'right']: edge, zIndex:30,
+                width: isMob?42:54, height: isMob?42:54, borderRadius:'50%',
+                background: ok ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
+                border:`1.5px solid rgba(255,255,255,${ok?0.22:0.07})`,
+                backdropFilter:'blur(10px)', color:'white',
+                fontSize: isMob?'1.2rem':'1.5rem',
+                cursor: ok ? 'pointer' : 'default',
+                opacity: ok ? 1 : 0.25, transition:'all 0.18s',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                fontFamily:'inherit',
+              }}
+            >{label}</button>
+          )
+        })}
 
-        {/* 슬라이드 카드 */}
-        <div
-          key={animKey}
-          style={{
-            animation: `${slideDir > 0 ? 'slideFromRight' : 'slideFromLeft'} 0.34s cubic-bezier(0.22,0.8,0.36,1)`,
-            background:'rgba(255,255,255,0.08)', backdropFilter:'blur(24px)',
-            borderRadius: isMob?24:36,
-            border:`2px solid ${s.color}55`,
-            boxShadow:`0 0 80px ${s.color}28, inset 0 1px 0 rgba(255,255,255,0.14)`,
-            padding: isMob?'28px 22px':'52px 68px',
-            maxWidth: isMob?'80vw':560, width:'100%',
-            textAlign:'center', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?14:20,
-          }}
-        >
-          {/* 번호 뱃지 */}
-          <div style={{
-            background:`${s.color}28`, border:`1.5px solid ${s.color}66`,
-            borderRadius:50, padding: isMob?'4px 14px':'5px 18px',
-            fontSize: isMob?'0.72rem':'0.80rem', fontWeight:800, color: s.color,
-          }}>{idx + 1} / {specialties.length}</div>
+        {/* 카드들 */}
+        {specialties.map((sp, i) => {
+          const diff   = i - idx
+          const abs    = Math.abs(diff)
+          const scale  = abs === 0 ? 1 : abs === 1 ? 0.72 : abs === 2 ? 0.52 : 0.38
+          const tx     = diff * gap
+          const op     = abs === 0 ? 1 : abs === 1 ? 0.60 : abs === 2 ? 0.28 : 0
+          const zI     = 20 - abs * 5
+          const active = abs === 0
 
-          {/* 이모지 */}
-          <div style={{
-            fontSize: isMob?'4.5rem':'6.5rem', lineHeight:1,
-            filter:`drop-shadow(0 0 28px ${s.color}AA)`,
-          }}>{s.emoji}</div>
+          return (
+            <div key={i}
+              onClick={() => !active && go(i)}
+              style={{
+                position:'absolute',
+                width: cardW, height: cardH,
+                transform: `translateX(${tx}px) scale(${scale})`,
+                opacity: op,
+                zIndex: zI,
+                transition:'transform 0.40s cubic-bezier(0.22,0.8,0.36,1), opacity 0.40s, box-shadow 0.40s',
+                cursor: active ? 'default' : 'pointer',
+                pointerEvents: abs > 2 ? 'none' : 'auto',
+                background: active ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.06)',
+                backdropFilter:'blur(20px)',
+                borderRadius: isMob ? 24 : 32,
+                border:`2px solid ${active ? sp.color+'66' : 'rgba(255,255,255,0.10)'}`,
+                boxShadow: active ? `0 0 100px ${sp.color}38, 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15)` : 'none',
+                display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+                textAlign:'center', padding: isMob?'22px 16px':'36px 44px', gap: isMob?10:16,
+                overflow:'hidden',
+              }}
+            >
+              {/* 번호 뱃지 (활성만) */}
+              <div style={{ opacity: active?1:0, transition:'opacity 0.35s',
+                background:`${sp.color}28`, border:`1.5px solid ${sp.color}55`,
+                borderRadius:50, padding: isMob?'3px 12px':'4px 16px',
+                fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:sp.color }}>
+                {i+1} / {specialties.length}
+              </div>
 
-          {/* 이름 */}
-          <h2 style={{ fontSize: isMob?'1.7rem':'2.3rem', fontWeight:900, color:s.color, margin:0, lineHeight:1.2 }}>{s.name}</h2>
+              {/* 이모지 */}
+              <div style={{
+                fontSize: isMob?'3.8rem':'5.8rem', lineHeight:1,
+                filter: active ? `drop-shadow(0 0 24px ${sp.color}BB)` : 'none',
+                transition:'filter 0.4s',
+              }}>{sp.emoji}</div>
 
-          {/* 구분선 */}
-          <div style={{ width:52, height:3, background:s.color, borderRadius:2, opacity:0.6 }}/>
+              {/* 이름 */}
+              <p style={{
+                fontWeight:900, margin:0, lineHeight:1.2,
+                fontSize: active ? (isMob?'1.5rem':'2.1rem') : (isMob?'1.0rem':'1.4rem'),
+                color: active ? sp.color : 'rgba(255,255,255,0.65)',
+                transition:'all 0.4s',
+              }}>{sp.name}</p>
 
-          {/* 설명 */}
-          <p style={{ fontSize: isMob?'0.95rem':'1.1rem', color:'rgba(255,255,255,0.84)', lineHeight:1.75, margin:0, maxWidth:400 }}>{s.desc}</p>
-        </div>
-
-        {/* 오른쪽 버튼 */}
-        <button
-          className="nav-btn"
-          onClick={() => go(idx + 1)}
-          disabled={idx === specialties.length - 1}
-          style={{
-            position:'absolute', right: isMob?6:32, zIndex:10,
-            width: isMob?44:58, height: isMob?44:58, borderRadius:'50%',
-            background:'rgba(255,255,255,0.10)', border:'1.5px solid rgba(255,255,255,0.18)',
-            backdropFilter:'blur(10px)', color:'white',
-            fontSize: isMob?'1.3rem':'1.6rem', cursor: idx===specialties.length-1?'default':'pointer',
-            opacity: idx===specialties.length-1 ? 0.22 : 1, transition:'all 0.18s',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            fontFamily:'inherit',
-          }}
-        >→</button>
+              {/* 구분선 + 설명 (활성만 페이드인) */}
+              <div style={{ opacity: active?1:0, maxHeight: active ? 200 : 0, overflow:'hidden', transition:'opacity 0.35s 0.1s, max-height 0.35s', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?8:12 }}>
+                <div style={{ width:44, height:3, background:sp.color, borderRadius:2, opacity:0.65 }}/>
+                <p style={{ fontSize: isMob?'0.88rem':'1.02rem', color:'rgba(255,255,255,0.82)', lineHeight:1.70, margin:0 }}>{sp.desc}</p>
+              </div>
+            </div>
+          )
+        })}
       </div>
 
       {/* 하단: 도트 + 슬라이더 */}
-      <div style={{ padding: isMob?'12px 24px 24px':'16px 60px 32px', display:'flex', flexDirection:'column', alignItems:'center', gap:14, flexShrink:0 }}>
-
-        {/* 도트 인디케이터 */}
+      <div style={{ padding: isMob?'10px 24px 22px':'14px 60px 28px', display:'flex', flexDirection:'column', alignItems:'center', gap:12, flexShrink:0 }}>
         <div style={{ display:'flex', gap:7 }}>
           {specialties.map((sp, i) => (
             <div key={i} onClick={() => go(i)} style={{
-              width: i===idx ? 26 : 8, height:8, borderRadius:4,
-              background: i===idx ? sp.color : 'rgba(255,255,255,0.22)',
+              width: i===idx?26:8, height:8, borderRadius:4,
+              background: i===idx ? sp.color : 'rgba(255,255,255,0.20)',
               cursor:'pointer', transition:'all 0.28s',
             }}/>
           ))}
         </div>
-
-        {/* 슬라이더 트랙 */}
         <div
-          style={{ width: isMob?'85%':'70%', height:6, background:'rgba(255,255,255,0.12)', borderRadius:3, cursor:'pointer', position:'relative' }}
+          style={{ width: isMob?'88%':'68%', height:6, background:'rgba(255,255,255,0.10)', borderRadius:3, cursor:'pointer', position:'relative' }}
           onClick={e => {
-            const rect = e.currentTarget.getBoundingClientRect()
-            go(Math.round((e.clientX - rect.left) / rect.width * (specialties.length - 1)))
+            const r = e.currentTarget.getBoundingClientRect()
+            go(Math.round((e.clientX - r.left) / r.width * (specialties.length - 1)))
           }}
         >
-          <div style={{
-            position:'absolute', left:0, top:0, bottom:0,
-            width:`${(idx / (specialties.length - 1)) * 100}%`,
-            background:`linear-gradient(90deg, ${specialties[0].color}, ${s.color})`,
-            borderRadius:3, transition:'width 0.28s',
-          }}/>
-          <div style={{
-            position:'absolute', top:'50%',
-            left:`${(idx / (specialties.length - 1)) * 100}%`,
-            transform:'translate(-50%,-50%)',
-            width:18, height:18, borderRadius:'50%',
-            background:s.color, border:'2.5px solid white',
-            boxShadow:`0 0 12px ${s.color}88`,
-            transition:'left 0.28s, background 0.28s',
-          }}/>
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, borderRadius:3, transition:'width 0.28s, background 0.28s',
+            width:`${idx/(specialties.length-1)*100}%`, background:s.color }}/>
+          <div style={{ position:'absolute', top:'50%', transform:'translate(-50%,-50%)', transition:'left 0.28s, background 0.28s',
+            left:`${idx/(specialties.length-1)*100}%`,
+            width:18, height:18, borderRadius:'50%', background:s.color,
+            border:'2.5px solid white', boxShadow:`0 0 10px ${s.color}88` }}/>
         </div>
       </div>
     </div>
