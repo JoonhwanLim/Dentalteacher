@@ -242,7 +242,7 @@ function MainHub({ onEnter, onHomework, onGoIntro }) {
         </div>
         <div style={{ marginLeft:'auto', display:'flex', gap:8 }}>
           <button onClick={onGoIntro} style={{ background:'white', border:'1.5px solid #E0E0E0', borderRadius:50, padding:'9px 18px', fontFamily:'inherit', fontWeight:700, fontSize:'0.88rem', cursor:'pointer', color:'#888' }}>🏠 처음으로</button>
-          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding:'9px 20px', fontFamily:'inherit', fontWeight:700, fontSize:'0.88rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A' }}>학생 참여 →</button>
+          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding:'9px 20px', fontFamily:'inherit', fontWeight:700, fontSize:'0.88rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A' }}>학생 참여 (퀴즈 & 게임)</button>
         </div>
       </div>
 
