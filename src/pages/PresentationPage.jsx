@@ -571,203 +571,209 @@ function ClinicSection({ onBack }) {
 }
 
 function TreatmentsContent() {
-  const [selected, setSelected] = useState(null)
-  const [hovIdx,   setHovIdx]   = useState(null)
-  const [jellySet, setJellySet] = useState(() => new Set())
+  const [selected,  setSelected]  = useState(null)
+  const [jellyIdx,  setJellyIdx]  = useState(-1)
+  const containerRef = useRef(null)
+  const domRefs      = useRef([])
+  const physRef      = useRef(null)
+  const rafRef       = useRef(null)
   const isMob = mob()
+  const csz = isMob ? 90 : 122
+  const bR  = csz / 2
 
-  const bubbles = [
-    { bg:'rgba(160,238,196,0.52)', shine:'rgba(220,255,240,0.88)', glow:'rgba(60,200,120,0.52)'  },
-    { bg:'rgba(160,212,252,0.52)', shine:'rgba(215,242,255,0.88)', glow:'rgba(60,158,235,0.52)'  },
-    { bg:'rgba(255,232,136,0.52)', shine:'rgba(255,252,210,0.88)', glow:'rgba(232,188,30,0.52)'  },
-    { bg:'rgba(216,175,255,0.52)', shine:'rgba(242,225,255,0.88)', glow:'rgba(165,95,242,0.52)'  },
-    { bg:'rgba(255,182,202,0.52)', shine:'rgba(255,225,238,0.88)', glow:'rgba(232,88,128,0.52)'  },
-    { bg:'rgba(192,222,255,0.52)', shine:'rgba(228,244,255,0.88)', glow:'rgba(100,165,242,0.52)' },
+  const bStyles = [
+    { bg:'rgba(155,235,190,0.54)', shine:'rgba(215,255,238,0.90)', glow:'rgba(50,195,115,0.55)'  },
+    { bg:'rgba(155,208,252,0.54)', shine:'rgba(212,240,255,0.90)', glow:'rgba(50,155,235,0.55)'  },
+    { bg:'rgba(255,228,130,0.54)', shine:'rgba(255,250,205,0.90)', glow:'rgba(228,185,25,0.55)'  },
+    { bg:'rgba(212,170,255,0.54)', shine:'rgba(240,220,255,0.90)', glow:'rgba(160,88,242,0.55)'  },
+    { bg:'rgba(255,178,198,0.54)', shine:'rgba(255,222,235,0.90)', glow:'rgba(228,82,125,0.55)'  },
+    { bg:'rgba(188,218,255,0.54)', shine:'rgba(225,242,255,0.90)', glow:'rgba(95,160,242,0.55)'  },
   ]
 
-  /* desktop layout constants */
-  const R   = 172,  csz  = 138
-  const lSH = 118,  lSV  = 68
-  const offX = lSH, offY = lSV
-  const bigW = R*2 + csz + lSH*2
-  const bigH = R*2 + csz + lSV*2
-  const cx = offX + R + csz/2
-  const cy = offY + R + csz/2
-
-  /* mobile grid constants */
-  const mcsz = 100
-
   function fireJelly(i) {
-    setJellySet(prev => new Set([...prev, i]))
-    setTimeout(() => setJellySet(prev => { const n = new Set(prev); n.delete(i); return n }), 720)
+    setJellyIdx(i)
+    setTimeout(() => setJellyIdx(p => p === i ? -1 : p), 720)
   }
 
-  function BubbleCircle({ t, i, size }) {
-    const bb  = bubbles[i]
-    const isJ = jellySet.has(i)
-    const isH = hovIdx === i
-    const dur = 2.1 + i * 0.19
-    const del = -(i * 0.43)
-    return (
-      <div
-        onClick={() => setSelected(t)}
-        onMouseEnter={() => { setHovIdx(i); fireJelly(i) }}
-        onMouseLeave={() => setHovIdx(null)}
-        style={{
-          width: size, height: size, borderRadius: '50%', flexShrink: 0,
-          background: `radial-gradient(circle at 30% 26%, ${bb.shine} 0%, ${bb.bg} 55%, ${bb.bg.replace('0.52','0.25')} 100%)`,
-          border: `2.5px solid rgba(255,255,255,${isH ? 0.95 : 0.75})`,
-          boxShadow: isH
-            ? `inset 0 6px 18px rgba(255,255,255,0.78), inset 0 -5px 12px rgba(0,0,0,0.06), 0 22px 52px ${bb.glow}, 0 6px 18px rgba(0,0,0,0.10)`
-            : `inset 0 6px 18px rgba(255,255,255,0.65), inset 0 -5px 12px rgba(0,0,0,0.06), 0 10px 32px ${bb.glow}, 0 4px 12px rgba(0,0,0,0.08)`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', userSelect: 'none', position: 'relative',
-          animation: isJ
-            ? 'bJelly 0.72s cubic-bezier(0.34,1.56,0.64,1) both'
-            : isH
-              ? `bLift ${dur}s ease-in-out ${del}s infinite`
-              : `bFloat ${dur}s ease-in-out ${del}s infinite`,
-          transition: 'box-shadow 0.22s, border-color 0.18s',
-        }}
-      >
-        <div style={{ position:'absolute', top:'10%', left:'18%', width:'38%', height:'26%', borderRadius:'50%', background:'rgba(255,255,255,0.76)', filter:'blur(5px)', transform:'rotate(-26deg)', pointerEvents:'none' }}/>
-        <span style={{ fontSize: size * 0.31, lineHeight:1, position:'relative', zIndex:1, filter:`drop-shadow(0 4px 10px ${bb.glow})` }}>{t.emoji}</span>
-      </div>
-    )
-  }
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const W = container.offsetWidth
+    const H = container.offsetHeight
+    const r = bR
+
+    /* 초기 위치: 겹치지 않게 격자 배치 후 랜덤 흩뿌리기 */
+    const phys = treatments.map((_, i) => {
+      const col = i % 3, row = Math.floor(i / 3)
+      const baseX = (col + 0.5) / 3 * W
+      const baseY = (row + 0.5) / 2 * H
+      const spd   = 1.4 + Math.random() * 0.9
+      const dir   = Math.random() * Math.PI * 2
+      return {
+        x:  Math.max(r, Math.min(W - r, baseX + (Math.random() - 0.5) * 90)),
+        y:  Math.max(r, Math.min(H - r, baseY + (Math.random() - 0.5) * 60)),
+        vx: Math.cos(dir) * spd,
+        vy: Math.sin(dir) * spd,
+      }
+    })
+    physRef.current = phys
+
+    /* 충돌 시 jelly 트리거용 콜백 (ref로 최신 함수 유지) */
+    const jellyRef = { fire: (i) => {} }
+
+    function step() {
+      const ps = physRef.current
+      if (!ps) { rafRef.current = requestAnimationFrame(step); return }
+      const W = container.offsetWidth
+      const H = container.offsetHeight
+
+      /* 이동 */
+      for (const b of ps) { b.x += b.vx; b.y += b.vy }
+
+      /* 벽 반사 */
+      for (const b of ps) {
+        if (b.x - r < 0)  { b.x = r;     b.vx =  Math.abs(b.vx) }
+        if (b.x + r > W)  { b.x = W - r; b.vx = -Math.abs(b.vx) }
+        if (b.y - r < 0)  { b.y = r;     b.vy =  Math.abs(b.vy) }
+        if (b.y + r > H)  { b.y = H - r; b.vy = -Math.abs(b.vy) }
+      }
+
+      /* 버블끼리 충돌 (탄성 충돌) */
+      for (let i = 0; i < ps.length; i++) {
+        for (let j = i + 1; j < ps.length; j++) {
+          const a = ps[i], b = ps[j]
+          const dx = b.x - a.x, dy = b.y - a.y
+          const d2 = dx*dx + dy*dy
+          const minD = r * 2
+          if (d2 < minD * minD && d2 > 0.001) {
+            const d  = Math.sqrt(d2)
+            const nx = dx/d, ny = dy/d
+            /* 분리 */
+            const ov = (minD - d) * 0.52
+            a.x -= nx * ov; a.y -= ny * ov
+            b.x += nx * ov; b.y += ny * ov
+            /* 속도 교환 */
+            const rv = (b.vx - a.vx)*nx + (b.vy - a.vy)*ny
+            if (rv < 0) {
+              a.vx += rv * nx; a.vy += rv * ny
+              b.vx -= rv * nx; b.vy -= rv * ny
+            }
+            jellyRef.fire(i)
+            jellyRef.fire(j)
+          }
+        }
+      }
+
+      /* 속도 범위 유지 (너무 빠르거나 멈추지 않게) */
+      for (const b of ps) {
+        const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy)
+        if (spd > 3.2) { b.vx = b.vx/spd*3.2; b.vy = b.vy/spd*3.2 }
+        if (spd < 0.7) { b.vx = b.vx/spd*0.7; b.vy = b.vy/spd*0.7 }
+      }
+
+      /* DOM 직접 업데이트 (React 재렌더 없이 60fps) */
+      ps.forEach((b, i) => {
+        const el = domRefs.current[i]
+        if (el) { el.style.left = `${b.x - r}px`; el.style.top = `${b.y - r}px` }
+      })
+
+      rafRef.current = requestAnimationFrame(step)
+    }
+
+    /* 충돌 jelly — 너무 잦으면 무시 */
+    const jellyTimers = {}
+    jellyRef.fire = (i) => {
+      if (jellyTimers[i]) return
+      jellyTimers[i] = true
+      setJellyIdx(i)
+      setTimeout(() => { setJellyIdx(p => p === i ? -1 : p); delete jellyTimers[i] }, 680)
+    }
+
+    rafRef.current = requestAnimationFrame(step)
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+  }, [bR])
 
   return (
     <>
       <style>{`
-        @keyframes bFloat { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-11px) rotate(1.2deg)} }
-        @keyframes bLift  { 0%,100%{transform:translateY(-15px) rotate(-1deg)} 50%{transform:translateY(-22px) rotate(1.5deg)} }
         @keyframes bJelly {
-          0%  {transform:scale(1,1)       rotate(0deg)}
-          16% {transform:scale(1.32,0.72) rotate(-7deg)}
-          34% {transform:scale(0.76,1.30) rotate(6deg)}
-          52% {transform:scale(1.18,0.84) rotate(-3deg)}
-          70% {transform:scale(0.93,1.10) rotate(1.5deg)}
-          86% {transform:scale(1.04,0.97) rotate(0deg)}
-          100%{transform:scale(1,1)       rotate(0deg)}
-        }
-        @keyframes hubBob {
-          0%,100%{transform:translate(-50%,-50%) scale(1)   rotate(0deg)}
-          50%    {transform:translate(-50%,-56%) scale(1.06) rotate(3deg)}
+          0%  {transform:scale(1,1)       rotate(0deg)  }
+          16% {transform:scale(1.34,0.70) rotate(-8deg) }
+          34% {transform:scale(0.74,1.32) rotate(7deg)  }
+          52% {transform:scale(1.20,0.82) rotate(-3deg) }
+          70% {transform:scale(0.92,1.12) rotate(1.5deg)}
+          86% {transform:scale(1.05,0.96) rotate(0deg)  }
+          100%{transform:scale(1,1)       rotate(0deg)  }
         }
         @keyframes cloudDrift {
-          0%,100%{transform:translateX(0px) translateY(0px)}
-          33%    {transform:translateX(12px) translateY(-8px)}
-          66%    {transform:translateX(-8px) translateY(6px)}
+          0%,100%{transform:translate(0,0)}
+          40%    {transform:translate(14px,-10px)}
+          70%    {transform:translate(-10px,8px)}
         }
       `}</style>
 
-      <div style={{
-        flex:1, overflow:'hidden', position:'relative',
-        background:'linear-gradient(155deg, #FFD0EC 0%, #F0BEFF 45%, #CAD4FF 100%)',
-        display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-      }}>
-        {/* 몽환 구름 배경 */}
-        {[
-          ['8%','5%','220px','170px',0.28,'0s'],
-          ['60%','72%','180px','140px',0.22,'1.2s'],
-          ['65%','10%','150px','120px',0.24,'2.1s'],
-          ['18%','68%','200px','155px',0.20,'0.7s'],
-          ['40%','40%','120px','100px',0.15,'1.8s'],
+      <div
+        ref={containerRef}
+        style={{
+          flex:1, overflow:'hidden', position:'relative',
+          background:'linear-gradient(155deg, #FFD0EC 0%, #F0BEFF 46%, #CAD4FF 100%)',
+        }}
+      >
+        {/* 몽환 구름 */}
+        {[['6%','4%','230px','180px',0.26,'0s'],['58%','70%','185px','145px',0.21,'1.3s'],
+          ['62%','8%','155px','125px',0.23,'2.2s'],['16%','66%','205px','160px',0.19,'0.8s']
         ].map(([t,l,w,h,o,d],i)=>(
           <div key={i} style={{
             position:'absolute', top:t, left:l, width:w, height:h,
             borderRadius:'50%', background:`rgba(255,255,255,${o})`,
-            filter:'blur(22px)', pointerEvents:'none',
-            animation:`cloudDrift ${7+i*1.3}s ease-in-out ${d} infinite`,
+            filter:'blur(24px)', pointerEvents:'none',
+            animation:`cloudDrift ${7.5+i*1.4}s ease-in-out ${d} infinite`,
           }}/>
         ))}
 
-        {/* 타이틀 */}
-        <div style={{ marginBottom: isMob ? 16 : 22, position:'relative', zIndex:2, flexShrink:0 }}>
-          <span style={{
-            display:'inline-flex', alignItems:'center', gap:8,
-            background:'rgba(255,255,255,0.82)', backdropFilter:'blur(12px)',
-            border:'2px solid rgba(255,255,255,0.95)', borderRadius:50,
-            padding: isMob ? '9px 24px' : '12px 38px',
-            fontSize: isMob ? '0.92rem' : '1.12rem', fontWeight:900, color:'#2A6A48',
-            boxShadow:'0 6px 24px rgba(100,200,150,0.28)',
-            letterSpacing: 0.5,
-          }}>🦷 치과 진료의 종류</span>
-        </div>
+        {/* 클릭 힌트 */}
+        <div style={{
+          position:'absolute', top: isMob?10:14, left:'50%', transform:'translateX(-50%)',
+          background:'rgba(255,255,255,0.68)', backdropFilter:'blur(10px)',
+          border:'1.5px solid rgba(255,255,255,0.88)', borderRadius:50,
+          padding: isMob?'5px 16px':'7px 22px',
+          fontSize: isMob?'0.70rem':'0.80rem', fontWeight:700,
+          color:'rgba(80,40,120,0.72)', whiteSpace:'nowrap', zIndex:10, pointerEvents:'none',
+        }}>🫧 버블을 찾아서 클릭해봐요!</div>
 
-        {isMob ? (
-          /* ── 모바일: 2×3 버블 그리드 ── */
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:18, padding:'0 20px', zIndex:1 }}>
-            {treatments.map((t, i) => (
-              <div key={i} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:8 }}>
-                <BubbleCircle t={t} i={i} size={mcsz} />
-                <p style={{ fontSize:'0.72rem', fontWeight:900, color:'rgba(50,30,80,0.88)', textAlign:'center', lineHeight:1.3, textShadow:'0 1px 4px rgba(255,255,255,0.9)' }}>{t.name}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          /* ── 데스크탑: 원형 휠 + 바깥 라벨 ── */
-          <div style={{ position:'relative', width:bigW, height:bigH, flexShrink:0, zIndex:1 }}>
-
-            {/* SVG 연결선 */}
-            <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', overflow:'visible' }}>
-              {treatments.map((_, i) => {
-                const a  = (i*60-90)*Math.PI/180
-                const r0 = 52, r1 = R - csz/2 - 4
-                return (
-                  <line key={i}
-                    x1={cx+Math.cos(a)*r0} y1={cy+Math.sin(a)*r0}
-                    x2={cx+Math.cos(a)*r1} y2={cy+Math.sin(a)*r1}
-                    stroke="rgba(255,255,255,0.55)" strokeWidth="2.5"
-                    strokeDasharray="7 5" strokeLinecap="round"
-                  />
-                )
-              })}
-            </svg>
-
-            {/* 중앙 허브 */}
-            <div style={{
-              position:'absolute', top:'50%', left:'50%',
-              animation:'hubBob 3s ease-in-out infinite',
-              width:92, height:92, borderRadius:'50%',
-              background:'radial-gradient(circle at 32% 28%, rgba(255,252,220,0.95) 0%, rgba(255,235,150,0.88) 60%)',
-              border:'3px solid rgba(255,255,255,0.92)',
-              boxShadow:'0 10px 0 rgba(210,160,40,0.55), 0 18px 32px rgba(220,160,40,0.40), inset 0 4px 12px rgba(255,255,255,0.88)',
-              display:'flex', alignItems:'center', justifyContent:'center',
-              fontSize:'2.6rem', userSelect:'none', zIndex:5,
-            }}>🏥</div>
-
-            {/* 버블 + 라벨 */}
-            {treatments.flatMap((t, i) => {
-              const a    = (i*60-90)*Math.PI/180
-              const cosA = Math.cos(a), sinA = Math.sin(a)
-              const bx   = cx + cosA*R - csz/2
-              const by   = cy + sinA*R - csz/2
-              const lx   = cx + cosA*(R + csz/2 + 14)
-              const ly   = cy + sinA*(R + csz/2 + 14)
-
-              let lTx, lTy, tAlign
-              if (cosA > 0.3)       { lTx='0%';    lTy='-50%'; tAlign='left'   }
-              else if (cosA < -0.3) { lTx='-100%'; lTy='-50%'; tAlign='right'  }
-              else if (sinA < 0)    { lTx='-50%';  lTy='-100%'; tAlign='center' }
-              else                  { lTx='-50%';  lTy='0%';   tAlign='center' }
-
-              return [
-                <div key={`b${i}`} style={{ position:'absolute', left:bx, top:by, zIndex: hovIdx===i?10:3 }}>
-                  <BubbleCircle t={t} i={i} size={csz} />
-                </div>,
-                <div key={`l${i}`} style={{
-                  position:'absolute', left:lx, top:ly,
-                  transform:`translate(${lTx},${lTy})`,
-                  textAlign: tAlign, maxWidth:114, zIndex:4, pointerEvents:'none',
-                }}>
-                  <p style={{ fontSize:'0.86rem', fontWeight:900, color:'rgba(44,28,80,0.92)', lineHeight:1.3, textShadow:'0 1px 5px rgba(255,255,255,0.95)' }}>{t.name}</p>
-                  <p style={{ fontSize:'0.70rem', fontWeight:600, color:'rgba(70,50,110,0.60)', marginTop:3, lineHeight:1.3 }}>{t.english}</p>
-                </div>,
-              ]
-            })}
-          </div>
-        )}
+        {/* 자유 이동 버블 */}
+        {treatments.map((t, i) => {
+          const bb  = bStyles[i]
+          const isJ = jellyIdx === i
+          return (
+            <div
+              key={i}
+              ref={el => domRefs.current[i] = el}
+              onClick={() => { fireJelly(i); setSelected(t) }}
+              style={{
+                position:'absolute',
+                width:csz, height:csz, borderRadius:'50%',
+                background:`radial-gradient(circle at 30% 26%, ${bb.shine} 0%, ${bb.bg} 56%, ${bb.bg.replace('0.54','0.22')} 100%)`,
+                border:'2.5px solid rgba(255,255,255,0.82)',
+                boxShadow:`inset 0 6px 20px rgba(255,255,255,0.72), inset 0 -5px 12px rgba(0,0,0,0.05), 0 10px 38px ${bb.glow}, 0 4px 14px rgba(0,0,0,0.07)`,
+                display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+                cursor:'pointer', userSelect:'none',
+                animation: isJ ? 'bJelly 0.70s cubic-bezier(0.34,1.56,0.64,1) both' : 'none',
+                zIndex: isJ ? 10 : 2,
+              }}
+            >
+              <div style={{ position:'absolute', top:'10%', left:'18%', width:'38%', height:'26%', borderRadius:'50%', background:'rgba(255,255,255,0.78)', filter:'blur(5px)', transform:'rotate(-26deg)', pointerEvents:'none' }}/>
+              <span style={{ fontSize: csz*0.29, lineHeight:1, position:'relative', zIndex:1, filter:`drop-shadow(0 3px 9px ${bb.glow})` }}>{t.emoji}</span>
+              <p style={{
+                fontSize: isMob?'0.60rem':'0.70rem', fontWeight:900,
+                color:'rgba(44,28,80,0.82)', marginTop: isMob?4:6,
+                textAlign:'center', lineHeight:1.25, padding:`0 ${isMob?6:10}px`,
+                position:'relative', zIndex:1, textShadow:'0 1px 4px rgba(255,255,255,0.9)',
+              }}>{t.name}</p>
+            </div>
+          )
+        })}
       </div>
 
       {/* 상세 모달 */}
