@@ -584,42 +584,67 @@ function TreatmentsContent() {
     { bg:'rgba(228,228,232,0.60)', border:'rgba(160,160,170,0.45)', glow:'rgba(85,85,85,0.15)'    },
   ]
 
+  const R   = isMob ? 118 : 162
+  const csz = isMob ? 86  : 116
+
   return (
     <>
       <div style={{
         flex:1, position:'relative', overflow:'hidden',
         background:'linear-gradient(180deg,#7EC8E3 0%,#B3E5FC 35%,#DCF3FF 70%,#F0FAFF 100%)',
-        display:'flex', flexDirection:'column',
-        padding: isMob ? '14px 10px' : '20px 20px',
+        display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
       }}>
-        {/* 배경 버블 장식 */}
+        {/* 배경 버블 */}
         {[['-8%','6%',130,0.16],['-4%','78%',80,0.13],['72%','12%',60,0.18],['65%','82%',95,0.14],['38%','46%',50,0.11]].map(([t,l,s,o],i)=>(
           <div key={i} style={{ position:'absolute', top:t, left:l, width:s, height:s, borderRadius:'50%', background:`rgba(255,255,255,${o})`, backdropFilter:'blur(2px)', pointerEvents:'none' }}/>
         ))}
 
-        {/* 상단 타이틀 */}
-        <div style={{
-          textAlign:'center', marginBottom: isMob ? 10 : 14,
-          position:'relative', zIndex:1, flexShrink:0,
-        }}>
+        {/* 타이틀 */}
+        <div style={{ marginBottom: isMob ? 16 : 22, position:'relative', zIndex:2, flexShrink:0 }}>
           <span style={{
             display:'inline-block',
             background:'rgba(255,255,255,0.72)', backdropFilter:'blur(10px)',
-            border:'1.5px solid rgba(255,255,255,0.9)',
-            borderRadius:50, padding: isMob ? '6px 18px' : '8px 26px',
+            border:'1.5px solid rgba(255,255,255,0.9)', borderRadius:50,
+            padding: isMob ? '6px 18px' : '8px 26px',
             fontSize: isMob ? '0.82rem' : '0.95rem', fontWeight:800, color:'#1A5C3A',
             boxShadow:'0 4px 16px rgba(0,0,0,0.08)',
           }}>🦷 치과 진료의 종류</span>
         </div>
 
-        {/* 카드 행 */}
-        <div style={{
-          flex:1, display:'flex', gap: isMob ? 10 : 14,
-          overflowX: isMob ? 'auto' : 'hidden',
-          alignItems:'stretch', position:'relative', zIndex:1,
-          paddingBottom: isMob ? 6 : 0,
-        }}>
+        {/* 원형 배치 컨테이너 */}
+        <div style={{ position:'relative', width: R*2+csz, height: R*2+csz, flexShrink:0, zIndex:1 }}>
+
+          {/* 중앙 장식 */}
+          <div style={{
+            position:'absolute', top:'50%', left:'50%',
+            transform:'translate(-50%,-50%)',
+            width: isMob ? 62 : 82, height: isMob ? 62 : 82,
+            borderRadius:'50%',
+            background:'rgba(255,255,255,0.82)', backdropFilter:'blur(12px)',
+            border:'2px solid rgba(255,255,255,0.95)',
+            boxShadow:'0 8px 28px rgba(74,144,217,0.22)',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            fontSize: isMob ? '1.7rem' : '2.2rem',
+            userSelect:'none',
+          }}>🏥</div>
+
+          {/* 연결선 */}
+          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none' }}>
+            {treatments.map((_, i) => {
+              const angle = (i * 60 - 90) * Math.PI / 180
+              const cx = R + csz/2
+              const cy = R + csz/2
+              const tx = cx + Math.cos(angle) * R
+              const ty = cy + Math.sin(angle) * R
+              return <line key={i} x1={cx} y1={cy} x2={tx} y2={ty} stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeDasharray="4 4"/>
+            })}
+          </svg>
+
+          {/* 원형 카드 */}
           {treatments.map((t, i) => {
+            const angle = (i * 60 - 90) * Math.PI / 180
+            const x = R + csz/2 + Math.cos(angle) * R - csz/2
+            const y = R + csz/2 + Math.sin(angle) * R - csz/2
             const cs = cardStyles[i]
             const isHov = hovIdx === i
             return (
@@ -628,57 +653,31 @@ function TreatmentsContent() {
                 onMouseEnter={() => setHovIdx(i)}
                 onMouseLeave={() => setHovIdx(null)}
                 style={{
-                  flex: isMob ? '0 0 148px' : 1,
+                  position:'absolute', left: x, top: y,
+                  width: csz, height: csz, borderRadius:'50%',
                   background: cs.bg,
-                  backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)',
-                  borderRadius: isMob ? 20 : 26,
-                  border:`1.5px solid ${isHov ? 'rgba(255,255,255,0.88)' : cs.border}`,
+                  backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)',
+                  border:`2px solid ${isHov ? 'rgba(255,255,255,0.95)' : cs.border}`,
                   boxShadow: isHov
-                    ? `0 22px 50px ${cs.glow}, 0 0 0 2px rgba(255,255,255,0.32) inset`
-                    : `0 8px 28px ${cs.glow}, 0 0 0 1px rgba(255,255,255,0.22) inset`,
-                  display:'flex', flexDirection:'column', alignItems:'center',
-                  padding: isMob ? '14px 10px 12px' : '18px 14px 16px',
-                  cursor:'pointer', position:'relative', overflow:'hidden',
-                  transition:'transform 0.24s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s',
-                  transform: isHov ? 'translateY(-10px) scale(1.025)' : 'translateY(0) scale(1)',
+                    ? `0 16px 40px ${cs.glow.replace('0.22','0.55')}, 0 0 0 3px rgba(255,255,255,0.3) inset`
+                    : `0 6px 20px ${cs.glow}, 0 0 0 1px rgba(255,255,255,0.25) inset`,
+                  display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+                  cursor:'pointer',
+                  transition:'transform 0.26s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s',
+                  transform: isHov ? 'scale(1.18)' : 'scale(1)',
+                  userSelect:'none',
                 }}
               >
-                {/* 상단 하이라이트 */}
-                <div style={{ position:'absolute', top:0, left:0, right:0, height:'45%', background:'linear-gradient(180deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0) 100%)', borderRadius:'26px 26px 50% 50%', pointerEvents:'none' }}/>
-
-                {/* 뱃지 */}
-                <div style={{
-                  background:t.badgeColor, color:'white', borderRadius:50,
-                  padding: isMob ? '3px 10px' : '4px 14px',
-                  fontSize: isMob ? '0.63rem' : '0.72rem', fontWeight:800,
-                  marginBottom: isMob ? 10 : 14, flexShrink:0,
-                  boxShadow:`0 3px 10px ${cs.glow}`,
-                }}>{t.badge}</div>
-
-                {/* 이모지 */}
-                <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', width:'100%' }}>
-                  <div style={{ position:'absolute', width:'65%', aspectRatio:'1', borderRadius:'50%', background:`radial-gradient(circle, ${cs.glow.replace('0.22','0.38')} 0%, transparent 70%)`, top:'50%', left:'50%', transform:'translate(-50%,-50%)', pointerEvents:'none' }}/>
-                  <span style={{
-                    fontSize: isMob ? '3.2rem' : '4.8rem', lineHeight:1,
-                    filter:`drop-shadow(0 10px 20px ${cs.glow.replace('0.22','0.55')}) drop-shadow(0 2px 6px rgba(0,0,0,0.10))`,
-                    position:'relative', zIndex:1,
-                    transition:'transform 0.24s cubic-bezier(0.34,1.56,0.64,1)',
-                    transform: isHov ? 'scale(1.15) translateY(-6px)' : 'scale(1)',
-                  }}>{t.emoji}</span>
-                </div>
-
-                {/* 이름 + 버튼 */}
-                <div style={{ marginTop: isMob ? 10 : 14, textAlign:'center', width:'100%' }}>
-                  <p style={{ fontWeight:900, fontSize: isMob ? '0.88rem' : '1rem', color:'#1A1A1A', marginBottom:2, lineHeight:1.3 }}>{t.name}</p>
-                  <p style={{ fontSize: isMob ? '0.62rem' : '0.7rem', color:'rgba(0,0,0,0.42)', marginBottom: isMob ? 8 : 10 }}>{t.english}</p>
-                  <div style={{
-                    background:'rgba(255,255,255,0.68)', backdropFilter:'blur(4px)',
-                    border:'1.5px solid rgba(255,255,255,0.85)', borderRadius:50,
-                    padding: isMob ? '5px 12px' : '6px 18px',
-                    fontSize: isMob ? '0.68rem' : '0.77rem', fontWeight:700, color:'#333',
-                    boxShadow:'0 2px 8px rgba(0,0,0,0.07)',
-                  }}>자세히 보기 →</div>
-                </div>
+                <span style={{
+                  fontSize: isMob ? '1.9rem' : '2.6rem', lineHeight:1,
+                  transition:'transform 0.26s cubic-bezier(0.34,1.56,0.64,1)',
+                  transform: isHov ? 'scale(1.12) translateY(-2px)' : 'scale(1)',
+                }}>{t.emoji}</span>
+                <p style={{
+                  fontSize: isMob ? '0.58rem' : '0.66rem', fontWeight:800,
+                  color:'#1A1A1A', marginTop: isMob ? 3 : 5,
+                  textAlign:'center', lineHeight:1.2, padding:'0 4px',
+                }}>{t.name}</p>
               </div>
             )
           })}
