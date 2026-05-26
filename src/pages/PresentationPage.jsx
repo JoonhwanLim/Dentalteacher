@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+const mob = () => window.innerWidth < 768
+
 /* ── TREATMENT DATA ── */
 const treatments = [
   {
@@ -241,21 +243,21 @@ function MainHub({ onEnter, onHomework, onGoIntro }) {
           <p style={{ fontWeight:900, fontSize:'1rem', color:'#1A1A1A', lineHeight:1.2 }}>리라초등학교 5학년 2반 명예교사</p>
           <p style={{ fontSize:'0.78rem', color:'#888' }}>함께 알아보는 치과의 세계 🦷</p>
         </div>
-        <div style={{ marginLeft:'auto', display:'flex', gap:8 }}>
-          <button onClick={onGoIntro} style={{ background:'white', border:'1.5px solid #E0E0E0', borderRadius:50, padding:'9px 18px', fontFamily:'inherit', fontWeight:700, fontSize:'0.88rem', cursor:'pointer', color:'#888' }}>🏠 처음으로</button>
-          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding:'9px 20px', fontFamily:'inherit', fontWeight:700, fontSize:'0.88rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A' }}>학생 참여 (퀴즈 & 게임)</button>
+        <div style={{ marginLeft:'auto', display:'flex', gap:6, flexShrink:0 }}>
+          <button onClick={onGoIntro} style={{ background:'white', border:'1.5px solid #E0E0E0', borderRadius:50, padding:'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize:'0.82rem', cursor:'pointer', color:'#888' }}>🏠 처음으로</button>
+          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding:'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize:'0.82rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A', whiteSpace:'nowrap' }}>{mob() ? '학생 참여' : '학생 참여 (퀴즈 & 게임)'}</button>
         </div>
       </div>
 
       {/* Room */}
-      <div style={{ flex:1, position:'relative' }}>
+      <div style={{ flex:1, position:'relative', overflow: mob() ? 'auto' : 'hidden' }}>
         {hovered !== null && (
           <div style={{ position:'absolute', top:12, left:'50%', transform:'translateX(-50%)', background:'rgba(10,20,10,0.88)', color:'white', borderRadius:50, padding:'8px 26px', fontWeight:700, fontSize:'1rem', zIndex:20, pointerEvents:'none', whiteSpace:'nowrap', boxShadow:'0 4px 20px rgba(0,0,0,0.35)' }}>
             {labels[hovered]} — 클릭해서 탐험하기 →
           </div>
         )}
 
-        <svg viewBox="0 0 1000 520" style={{ width:'100%', height:'100%', display:'block' }} preserveAspectRatio="xMidYMid slice">
+        <svg viewBox="0 0 1000 520" style={{ width:'100%', height:'100%', display:'block', minWidth: mob() ? 700 : undefined }} preserveAspectRatio="xMidYMid meet">
           {/* ── 방 배경 ── */}
           <rect x="0" y="0" width="1000" height="385" fill="#D5E8F0"/>
           <rect x="0" y="0" width="1000" height="22" fill="#B0CCDA"/>
@@ -479,7 +481,7 @@ function DaySection({ onBack }) {
   const roomBgs = ['#FFFDE7','#E8F4FD','#FFF8EE','#F5EEFF','#FFF0F0','#F4F4F4']
 
   return (
-    <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#FFFBEA,#FFF3A0)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR',sans-serif" }}>
+    <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#FFFBEA,#FFF3A0)', display:'flex', flexDirection:'column', overflow: mob() ? 'auto' : 'hidden', fontFamily:"'Noto Sans KR',sans-serif" }}>
       <div style={{ display:'flex', alignItems:'center', gap:16, padding:'18px 40px', flexShrink:0 }}>
         <BackBtn onClick={onBack} />
         <h1 style={{ fontSize:'2rem', fontWeight:900 }}>치과의사의 <span style={{ color:'#1A5C3A' }}>하루</span></h1>
@@ -718,12 +720,12 @@ function ToolsSection({ onBack }) {
         </div>
       </div>
 
-      {/* 선택된 도구 상세 — 3열: 일러스트 | 실제사진 | 텍스트 */}
-      <div style={{ flex:1, display:'flex', background:'rgba(0,0,0,0.18)', borderTop:'2px solid #F5C800', margin:'0 32px', padding:'22px 28px', overflow:'hidden', gap:0 }}>
+      {/* 선택된 도구 상세 — 데스크탑: 3열 | 모바일: 세로 스택 */}
+      <div style={{ flex:1, display:'flex', flexDirection: mob() ? 'column' : 'row', background:'rgba(0,0,0,0.18)', borderTop:'2px solid #F5C800', margin: mob() ? '0 10px' : '0 32px', padding: mob() ? '14px 14px' : '22px 28px', overflowY:'auto', gap: mob() ? 12 : 0 }}>
 
         {/* 일러스트 + 소리 버튼 */}
-        <div style={{ flex:'0 0 120px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:16 }}>
-          <div key={selected} style={{ width:88, animation:'fadeScaleIn 0.35s ease' }}>
+        <div style={{ flex: mob() ? '0 0 auto' : '0 0 120px', display:'flex', flexDirection: mob() ? 'row' : 'column', alignItems:'center', justifyContent: mob() ? 'flex-start' : 'center', gap:16 }}>
+          <div key={selected} style={{ width: mob() ? 64 : 88, animation:'fadeScaleIn 0.35s ease', flexShrink:0 }}>
             <tool.Svg />
           </div>
           <button onClick={playSound} disabled={playing} style={{
@@ -737,7 +739,8 @@ function ToolsSection({ onBack }) {
           </button>
         </div>
 
-        {/* 실제 사진 */}
+        {/* 실제 사진 — 모바일에서 숨김 (공간 절약) */}
+        {!mob() && (
         <div style={{ flex:'0 0 200px', display:'flex', flexDirection:'column', gap:8, padding:'0 18px' }}>
           <p style={{ color:'rgba(255,255,255,0.4)', fontSize:'0.68rem', fontWeight:700, letterSpacing:2, textTransform:'uppercase', flexShrink:0 }}>실제 모습</p>
           <div style={{ flex:1, minHeight:0, position:'relative' }}>
@@ -757,9 +760,10 @@ function ToolsSection({ onBack }) {
             )}
           </div>
         </div>
+        )}
 
         {/* 텍스트 */}
-        <div style={{ flex:1, overflowY:'auto', paddingLeft:14 }}>
+        <div style={{ flex:1, overflowY:'auto', paddingLeft: mob() ? 0 : 14 }}>
           <p style={{ color:'#F5C800', fontWeight:700, letterSpacing:3, fontSize:'0.76rem', marginBottom:8 }}>
             TOOL {selected+1} / {tools.length}
           </p>
@@ -1056,11 +1060,11 @@ function FactsSection({ onBack }) {
         </div>
       </div>
 
-      <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'0 80px' }}>
+      <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding: mob() ? '0 20px' : '0 80px', overflowY:'auto' }}>
         <div key={idx} style={{ display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center' }}>
-          <div style={{ fontSize:'9rem', lineHeight:1, marginBottom:28, animation:'bounceIn 0.5s ease' }}>{fact.emoji}</div>
-          <p style={{ fontSize:'2.4rem', fontWeight:900, maxWidth:720, lineHeight:1.4, color:'#1A1A1A', marginBottom:18, whiteSpace:'pre-line' }}>{fact.text}</p>
-          <p style={{ fontSize:'1.15rem', color:'#555', maxWidth:580, lineHeight:1.75 }}>{fact.sub}</p>
+          <div style={{ fontSize: mob() ? '5rem' : '9rem', lineHeight:1, marginBottom: mob() ? 16 : 28, animation:'bounceIn 0.5s ease' }}>{fact.emoji}</div>
+          <p style={{ fontSize: mob() ? '1.6rem' : '2.4rem', fontWeight:900, maxWidth:720, lineHeight:1.4, color:'#1A1A1A', marginBottom: mob() ? 12 : 18, whiteSpace:'pre-line' }}>{fact.text}</p>
+          <p style={{ fontSize: mob() ? '0.95rem' : '1.15rem', color:'#555', maxWidth:580, lineHeight:1.75 }}>{fact.sub}</p>
         </div>
       </div>
 

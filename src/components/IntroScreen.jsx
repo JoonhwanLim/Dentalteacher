@@ -17,6 +17,7 @@ export default function IntroScreen({ onEnter }) {
   const [showModal, setShowModal]   = useState(false)
   const [fadeOut,   setFadeOut]     = useState(false)
   const [visible,   setVisible]     = useState(false)
+  const mob = window.innerWidth < 600
 
   useEffect(() => { setTimeout(() => setVisible(true), 60) }, [])
 
@@ -53,9 +54,9 @@ export default function IntroScreen({ onEnter }) {
 
       {/* 메인 카드 */}
       <div style={{
-        background: 'white', borderRadius: 32,
-        padding: '48px 52px 44px',
-        maxWidth: 560, width: '90%',
+        background: 'white', borderRadius: mob ? 24 : 32,
+        padding: mob ? '28px 22px 24px' : '48px 52px 44px',
+        maxWidth: 560, width: '92%',
         textAlign: 'center',
         boxShadow: '0 24px 72px rgba(180,120,0,0.28), 0 4px 20px rgba(0,0,0,0.08)',
         position: 'relative',
@@ -71,38 +72,38 @@ export default function IntroScreen({ onEnter }) {
         <div style={{
           display: 'inline-block',
           background: '#FFF8DC', border: '2px solid #FFCA28',
-          borderRadius: 50, padding: '7px 24px',
-          fontSize: '0.95rem', fontWeight: 800, color: '#8B6914',
-          marginBottom: 20, letterSpacing: 0.5,
+          borderRadius: 50, padding: mob ? '5px 16px' : '7px 24px',
+          fontSize: mob ? '0.78rem' : '0.95rem', fontWeight: 800, color: '#8B6914',
+          marginBottom: mob ? 14 : 20, letterSpacing: 0.5,
         }}>
           리라초등학교 · 5학년 2반 명예교사
         </div>
 
         {/* 메인 타이틀 */}
         <h1 style={{
-          fontSize: '2.8rem', fontWeight: 900, color: '#FFCA28',
-          lineHeight: 1.25, marginBottom: 12,
+          fontSize: mob ? '2rem' : '2.8rem', fontWeight: 900, color: '#FFCA28',
+          lineHeight: 1.25, marginBottom: 10,
           textShadow: '0 2px 0 rgba(180,120,0,0.18)',
         }}>
           치과의사는 도대체<br />어떠한 삶을<br />살고 있을까?
         </h1>
 
         <p style={{
-          fontSize: '1.25rem', fontWeight: 700, color: '#555',
-          marginBottom: 38, lineHeight: 1.5,
+          fontSize: mob ? '1rem' : '1.25rem', fontWeight: 700, color: '#555',
+          marginBottom: mob ? 24 : 38, lineHeight: 1.5,
         }}>
           치과의사에 대한 탐구
         </p>
 
         {/* 버튼 그룹 */}
-        <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
           {/* 강사소개 버튼 */}
           <button
             onClick={() => setShowModal(true)}
             style={{
               background: 'white', border: '2.5px solid #FFCA28',
-              borderRadius: 50, padding: '15px 36px',
-              fontFamily: 'inherit', fontWeight: 800, fontSize: '1.05rem',
+              borderRadius: 50, padding: mob ? '12px 22px' : '15px 36px',
+              fontFamily: 'inherit', fontWeight: 800, fontSize: mob ? '0.92rem' : '1.05rem',
               cursor: 'pointer', color: '#8B6914',
               transition: 'all 0.18s',
               boxShadow: '0 4px 12px rgba(255,180,0,0.18)',
@@ -118,8 +119,8 @@ export default function IntroScreen({ onEnter }) {
             onClick={handleEnter}
             style={{
               background: 'linear-gradient(135deg, #FFCA28, #FFB300)',
-              border: 'none', borderRadius: 50, padding: '15px 44px',
-              fontFamily: 'inherit', fontWeight: 900, fontSize: '1.05rem',
+              border: 'none', borderRadius: 50, padding: mob ? '12px 30px' : '15px 44px',
+              fontFamily: 'inherit', fontWeight: 900, fontSize: mob ? '0.92rem' : '1.05rem',
               cursor: 'pointer', color: '#5C3D00',
               boxShadow: '0 6px 20px rgba(255,180,0,0.45)',
               transition: 'all 0.18s',

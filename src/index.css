@@ -740,6 +740,48 @@ button {
 
 /* Game tab: layout handled in CavityGame component */
 
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  /* HomeworkPage */
+  .hw-page { padding: 28px 14px 40px; }
+  .hw-logo { height: 44px; }
+  .hw-title { font-size: 1.75rem; }
+  .hw-subtitle { font-size: 0.9rem; margin-bottom: 24px; }
+  .student-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 100%; }
+  .student-btn { padding: 12px 4px; font-size: 0.85rem; }
+
+  /* QuizPage */
+  .quiz-page { padding: 20px 14px 40px; }
+  .quiz-card { padding: 24px 16px; }
+  .quiz-header { gap: 10px; }
+  .quiz-logo { height: 32px; }
+  .quiz-question { font-size: 1.2rem; margin-bottom: 20px; }
+  .quiz-options { grid-template-columns: 1fr; gap: 8px; }
+  .quiz-option { padding: 14px 14px; font-size: 0.95rem; }
+
+  /* Certificate */
+  .cert-page { padding: 20px 14px; gap: 16px; }
+  .cert-inner { padding: 24px 14px; margin: 10px; }
+  .cert-title { font-size: 1.6rem; letter-spacing: 2px; }
+  .cert-name { font-size: 1.4rem; }
+  .cert-body { font-size: 0.9rem; line-height: 1.8; }
+  .cert-actions { gap: 8px; }
+  .cert-actions .btn-yellow,
+  .cert-actions .btn-green { padding: 11px 22px; font-size: 0.9rem; }
+
+  /* BoardPage */
+  .board-page { padding: 20px 14px; }
+  .board-header { flex-wrap: wrap; gap: 8px; }
+  .board-tab { font-size: 0.82rem; padding: 10px 6px; }
+  .comment-form { flex-direction: column; }
+  .comment-form .btn-yellow { width: 100%; justify-content: center; }
+
+  /* Modal */
+  .modal-box { padding: 28px 18px; }
+  .modal-box h2 { font-size: 1.5rem; }
+  .modal-name { font-size: 1.8rem; }
+}
+
 @media print {
   .cert-actions { display: none; }
   .cert-page { background: white; }
