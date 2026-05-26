@@ -1013,19 +1013,21 @@ function ToolsContent() {
   )
 }
 
-/* ── BOOK RAIN configs (stable, defined once) ── */
+/* ── BOOK RAIN configs — 순서대로 스텝별 추가됨 ── */
 const FALL_BOOKS = [
-  { left:'7%',  delay:'0s',    dur:'2.1s' },
-  { left:'18%', delay:'0.55s', dur:'1.85s' },
-  { left:'30%', delay:'0.25s', dur:'2.4s' },
-  { left:'42%', delay:'1.05s', dur:'2.0s' },
-  { left:'53%', delay:'0.7s',  dur:'2.25s' },
-  { left:'64%', delay:'0.15s', dur:'1.9s' },
-  { left:'75%', delay:'1.35s', dur:'2.1s' },
-  { left:'86%', delay:'0.45s', dur:'2.35s' },
-  { left:'93%', delay:'0.9s',  dur:'1.95s' },
-  { left:'47%', delay:'1.6s',  dur:'2.15s' },
+  { left:'22%', delay:'0s',    dur:'2.2s'  },  // 0 — 초등학교~
+  { left:'68%', delay:'0.40s', dur:'1.9s'  },  // 1 — 초등학교~
+  { left:'45%', delay:'1.10s', dur:'2.35s' },  // 2 — 중학교~
+  { left:'8%',  delay:'0.60s', dur:'2.0s'  },  // 3 — 고등학교~
+  { left:'85%', delay:'0.20s', dur:'2.1s'  },  // 4 — 고등학교~
+  { left:'55%', delay:'1.50s', dur:'1.85s' },  // 5 — 치과대학~
+  { left:'33%', delay:'0.80s', dur:'2.4s'  },  // 6 — 치과대학~
+  { left:'77%', delay:'0.30s', dur:'2.15s' },  // 7 — 국가면허~
+  { left:'15%', delay:'1.20s', dur:'2.05s' },  // 8 — 국가면허~
+  { left:'91%', delay:'0.90s', dur:'1.95s' },  // 9 — 인턴~
 ]
+// 스텝별 보이는 책 수: 초등(2)→중학(3)→고등(5)→치대(7)→면허(9)→인턴(10)→의사(0)
+const BOOK_COUNTS = [2, 3, 5, 7, 9, 10, 0]
 
 /* ── BUILDING ILLUSTRATIONS (each step's standalone SVG) ── */
 function BuildingIllustration({ step }) {
@@ -1241,7 +1243,7 @@ function CareerSection({ onBack }) {
             position:'absolute', left: b.left, fontSize: isMob?'1.6rem':'2.2rem',
             pointerEvents:'none', zIndex:5,
             animation: `bookFall ${b.dur} ${b.delay} linear infinite`,
-            opacity: idx === 3 ? 1 : 0,
+            opacity: bi < BOOK_COUNTS[idx] ? 1 : 0,
             transition: 'opacity 0.5s',
           }}>📚</span>
         ))}
