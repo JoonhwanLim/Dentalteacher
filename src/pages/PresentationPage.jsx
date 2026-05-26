@@ -278,288 +278,176 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
         )}
 
         <svg viewBox="0 0 1000 520" style={{ width:'100%', height:'100%', display:'block', minWidth: mob() ? 700 : undefined }} preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <linearGradient id="wallG" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#BDD8EE"/><stop offset="100%" stopColor="#D4EAF8"/>
-            </linearGradient>
-            <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#C98E56"/><stop offset="100%" stopColor="#A06030"/>
-            </linearGradient>
-            <linearGradient id="chairG" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#5BC0E8"/><stop offset="100%" stopColor="#2A88C0"/>
-            </linearGradient>
-            <linearGradient id="woodG" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#7A4E2A"/><stop offset="50%" stopColor="#A0692E"/><stop offset="100%" stopColor="#8A5828"/>
-            </linearGradient>
-            <linearGradient id="skinG" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#FFD8AE"/><stop offset="100%" stopColor="#F0B882"/>
-            </linearGradient>
-            <radialGradient id="lampGlow" cx="50%" cy="10%" r="60%">
-              <stop offset="0%" stopColor="rgba(255,255,210,0.55)"/><stop offset="100%" stopColor="rgba(255,255,210,0)"/>
-            </radialGradient>
-            <filter id="drop" x="-15%" y="-15%" width="130%" height="140%">
-              <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="rgba(0,0,0,0.14)"/>
-            </filter>
-          </defs>
+          {/* ── 방 배경 ── */}
+          <rect x="0" y="0" width="1000" height="385" fill="#D5E8F0"/>
+          <rect x="0" y="0" width="1000" height="22" fill="#B0CCDA"/>
+          <rect x="0" y="375" width="1000" height="10" fill="#B09070"/>
+          <rect x="0" y="385" width="1000" height="135" fill="#C4905C"/>
+          {[0,1,2,3,4,5,6,7,8,9].map(i=><line key={i} x1={i*110} y1="385" x2={i*110+180} y2="520" stroke="#B07040" strokeWidth="1" opacity="0.35"/>)}
+          {/* 천장 조명 */}
+          <rect x="464" y="0" width="14" height="58" rx="5" fill="#AAA"/>
+          <rect x="444" y="54" width="114" height="20" rx="5" fill="#CCC"/>
+          <rect x="434" y="71" width="134" height="24" rx="6" fill="#EEE" stroke="#CCC" strokeWidth="1"/>
+          <ellipse cx="501" cy="100" rx="85" ry="28" fill="rgba(255,255,215,0.32)"/>
+          {/* 왼쪽 창문 */}
+          <rect x="22" y="68" width="112" height="148" rx="4" fill="#A8D8F0" stroke="#7AAABB" strokeWidth="3"/>
+          <line x1="78" y1="68" x2="78" y2="216" stroke="#7AAABB" strokeWidth="2"/>
+          <line x1="22" y1="142" x2="134" y2="142" stroke="#7AAABB" strokeWidth="2"/>
+          <rect x="22" y="68" width="112" height="148" fill="rgba(255,255,255,0.15)" rx="4"/>
+          {/* 커튼 */}
+          <path d="M18,64 Q34,106 26,166 Q22,192 30,216" stroke="#E0CC9A" strokeWidth="11" fill="none" strokeLinecap="round" opacity="0.75"/>
+          <path d="M138,64 Q122,106 130,166 Q134,192 126,216" stroke="#E0CC9A" strokeWidth="11" fill="none" strokeLinecap="round" opacity="0.75"/>
 
-          {/* ── Room ── */}
-          <rect x="0" y="0" width="1000" height="390" fill="url(#wallG)"/>
-          <rect x="0" y="0" width="1000" height="16" fill="#A8C4D6"/>
-          <rect x="0" y="374" width="1000" height="18" fill="#AA8868" rx="2"/>
-          <rect x="0" y="390" width="1000" height="130" fill="url(#floorG)"/>
-          {[0,1,2,3,4,5,6,7,8,9,10].map(i=><line key={i} x1={i*100-20} y1="390" x2={i*100+130} y2="520" stroke="#8A5020" strokeWidth="1.2" opacity="0.22"/>)}
-
-          {/* Ceiling lamp */}
-          <rect x="490" y="0" width="10" height="52" rx="5" fill="#AAAAAA"/>
-          <rect x="458" y="50" width="74" height="14" rx="7" fill="#CCCCCC"/>
-          <rect x="450" y="62" width="90" height="20" rx="10" fill="#F0F0F0" stroke="#D0D0D0" strokeWidth="1.5"/>
-          <ellipse cx="495" cy="92" rx="88" ry="30" fill="url(#lampGlow)"/>
-
-          {/* Window */}
-          <rect x="18" y="62" width="120" height="160" rx="10" fill="#C8E2F4" stroke="#88AACC" strokeWidth="3"/>
-          <rect x="22" y="66" width="112" height="152" rx="7" fill="rgba(210,235,255,0.65)"/>
-          <line x1="78" y1="66" x2="78" y2="218" stroke="#88AACC" strokeWidth="2.5"/>
-          <line x1="22" y1="142" x2="138" y2="142" stroke="#88AACC" strokeWidth="2.5"/>
-          <rect x="24" y="68" width="26" height="68" rx="5" fill="rgba(255,255,255,0.25)"/>
-          {/* Curtains */}
-          <path d="M12,56 C24,92 18,138 22,176 C24,198 20,214 14,226" stroke="#EAD898" strokeWidth="24" fill="none" strokeLinecap="round" opacity="0.88"/>
-          <path d="M144,56 C132,92 138,138 134,176 C132,198 136,214 142,226" stroke="#EAD898" strokeWidth="24" fill="none" strokeLinecap="round" opacity="0.88"/>
-          <path d="M16,56 C26,92 20,134 24,172 C26,196 22,210 16,224" stroke="#C8B060" strokeWidth="5" fill="none" strokeLinecap="round" opacity="0.42"/>
-          <path d="M142,56 C132,92 138,134 134,172 C132,196 136,210 142,224" stroke="#C8B060" strokeWidth="5" fill="none" strokeLinecap="round" opacity="0.42"/>
-
-          {/* ── ZONE 0: Doctor ── */}
-          <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)} filter="url(#drop)">
-            {hovered===0 && <ellipse cx="162" cy="405" rx="78" ry="13" fill="rgba(245,200,0,0.35)"/>}
-            {/* Shadow */}
-            <ellipse cx="162" cy="392" rx="52" ry="9" fill="rgba(0,0,0,0.12)"/>
-            {/* Shoes */}
-            <ellipse cx="148" cy="392" rx="18" ry="9" fill="#2A2A2A"/>
-            <ellipse cx="176" cy="392" rx="18" ry="9" fill="#2A2A2A"/>
-            {/* Pants */}
-            <rect x="138" y="340" width="22" height="54" rx="11" fill="#3A5FA0"/>
-            <rect x="163" y="340" width="22" height="54" rx="11" fill="#3A5FA0"/>
-            {/* Coat body */}
-            <path d="M118,238 C116,300 116,338 118,362 L144,362 L144,268 L180,268 L180,362 L206,362 C208,338 208,300 206,238 Z" fill="white" stroke="#DCDCDC" strokeWidth="1.5"/>
-            {/* Lapels */}
-            <path d="M144,238 L162,256 L180,238" fill="#EBEBEB" stroke="#D0D0D0" strokeWidth="1"/>
-            {/* Pocket */}
-            <rect x="188" y="263" width="16" height="20" rx="3" fill="none" stroke="#D0D0D0" strokeWidth="1.5"/>
-            <rect x="190" y="260" width="3.5" height="12" rx="1.5" fill="#2563EB"/>
-            <rect x="196" y="260" width="3.5" height="12" rx="1.5" fill="#DC2626"/>
-            {/* Stethoscope */}
-            <path d="M144,256 C134,270 136,284 148,290 C160,296 167,284 180,256" stroke="#888" strokeWidth="4.5" fill="none" strokeLinecap="round"/>
-            <circle cx="148" cy="293" r="7" fill="#999" stroke="#777" strokeWidth="1.5"/>
-            {/* Left arm with clipboard */}
-            <path d="M118,250 C100,274 100,306 104,316" stroke="white" strokeWidth="22" fill="none" strokeLinecap="round"/>
-            <path d="M118,250 C100,274 100,306 104,316" stroke="#ECECEC" strokeWidth="19" fill="none" strokeLinecap="round"/>
-            <rect x="78" y="300" width="46" height="58" rx="7" fill="#FFF0C8" stroke="#D4A830" strokeWidth="2"/>
-            <rect x="90" y="292" width="22" height="13" rx="5" fill="#D4A830"/>
-            <line x1="84" y1="316" x2="118" y2="316" stroke="#D4A830" strokeWidth="1.5"/>
-            <line x1="84" y1="326" x2="118" y2="326" stroke="#D4A830" strokeWidth="1.5"/>
-            <line x1="84" y1="336" x2="112" y2="336" stroke="#D4A830" strokeWidth="1.5"/>
-            {/* Right arm */}
-            <path d="M206,250 C222,272 222,300 220,310" stroke="white" strokeWidth="22" fill="none" strokeLinecap="round"/>
-            <path d="M206,250 C222,272 222,300 220,310" stroke="#ECECEC" strokeWidth="19" fill="none" strokeLinecap="round"/>
-            <ellipse cx="220" cy="314" rx="11" ry="8" fill="url(#skinG)"/>
-            {/* Neck */}
-            <rect x="153" y="208" width="18" height="32" rx="9" fill="url(#skinG)"/>
-            {/* Head */}
-            <ellipse cx="162" cy="186" rx="40" ry="44" fill="url(#skinG)"/>
-            {/* Hair */}
-            <path d="M122,170 C120,140 132,118 162,112 C192,118 204,140 202,170" fill="#3E2412"/>
-            <path d="M122,170 C118,184 120,202 126,210" fill="#3E2412"/>
-            <path d="M202,170 C206,184 204,202 198,210" fill="#3E2412"/>
-            <path d="M138,116 C150,110 170,110 182,116" stroke="rgba(255,255,255,0.28)" strokeWidth="4" fill="none" strokeLinecap="round"/>
-            {/* Eyes */}
-            <ellipse cx="148" cy="186" rx="11" ry="12" fill="white"/>
-            <ellipse cx="176" cy="186" rx="11" ry="12" fill="white"/>
-            <circle cx="150" cy="187" r="7" fill="#3E2412"/>
-            <circle cx="178" cy="187" r="7" fill="#3E2412"/>
-            <circle cx="152" cy="185" r="2.8" fill="white"/>
-            <circle cx="180" cy="185" r="2.8" fill="white"/>
-            {/* Eyelashes */}
-            <path d="M137,180 C140,175 146,178" stroke="#3E2412" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-            <path d="M165,178 C171,175 174,180" stroke="#3E2412" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-            {/* Eyebrows */}
-            <path d="M138,174 C147,169 158,172" stroke="#3E2412" strokeWidth="3" fill="none" strokeLinecap="round"/>
-            <path d="M166,172 C177,169 186,174" stroke="#3E2412" strokeWidth="3" fill="none" strokeLinecap="round"/>
-            {/* Nose */}
-            <path d="M159,196 C161,202 164,196" stroke="#CC8860" strokeWidth="2" fill="none" strokeLinecap="round"/>
-            {/* Smile */}
-            <path d="M148,210 C156,220 168,220 176,210" stroke="#C07050" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-            {/* Cheeks */}
-            <ellipse cx="133" cy="202" rx="15" ry="9" fill="#FFB0A0" opacity="0.42"/>
-            <ellipse cx="191" cy="202" rx="15" ry="9" fill="#FFB0A0" opacity="0.42"/>
-            {/* Name badge */}
-            <rect x="124" y="282" width="40" height="26" rx="5" fill="#1A5C8A" stroke="white" strokeWidth="1.5"/>
-            <text x="144" y="292" textAnchor="middle" fontSize="6.5" fill="white" fontWeight="bold">Dr. 권민정</text>
-            <text x="144" y="303" textAnchor="middle" fontSize="5.5" fill="rgba(255,255,255,0.85)">보철과 원장</text>
-            {/* Label button */}
-            <rect x="68" y="410" width="188" height="44" rx="16" fill="#1A5C3A"/>
-            <text x="162" y="427" textAnchor="middle" fontSize="12.5" fill="white" fontWeight="bold">치과의사의 하루 →</text>
-            <text x="162" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.82)">출근부터 퇴근까지</text>
+          {/* ── ZONE 0: 여의사 캐릭터 ── */}
+          <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
+            {hovered===0 && <ellipse cx="155" cy="404" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <g transform="translate(34, 90) scale(0.78)">
+            <ellipse cx="135" cy="408" rx="19" ry="7" fill="#222"/>
+            <ellipse cx="174" cy="408" rx="19" ry="7" fill="#222"/>
+            <rect x="125" y="354" width="25" height="58" rx="10" fill="#3A5890"/>
+            <rect x="157" y="354" width="25" height="58" rx="10" fill="#3A5890"/>
+            <path d="M116,222 Q96,265 100,315 Q102,350 115,372" stroke="#4A2010" strokeWidth="28" fill="none" strokeLinecap="round"/>
+            <path d="M194,222 Q214,265 210,315 Q208,350 195,372" stroke="#4A2010" strokeWidth="28" fill="none" strokeLinecap="round"/>
+            <rect x="112" y="275" width="86" height="92" rx="14" fill="white" stroke="#DDD" strokeWidth="1.5"/>
+            <rect x="141" y="275" width="28" height="36" rx="4" fill="#5A9FD4"/>
+            <rect x="118" y="293" width="36" height="18" rx="3" fill="#4A90D9"/>
+            <text x="136" y="305" textAnchor="middle" fontSize="7" fill="white" fontWeight="bold">치과의사</text>
+            <path d="M141,285 Q131,308 124,320 Q118,330 123,338" stroke="#777" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
+            <circle cx="123" cy="340" r="6" fill="#777"/>
+            <path d="M169,285 Q179,308 186,320 Q192,330 187,338" stroke="#777" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
+            <circle cx="187" cy="340" r="6" fill="#777"/>
+            <rect x="93" y="282" width="21" height="60" rx="9" fill="white" stroke="#DDD" strokeWidth="1.5"/>
+            <rect x="196" y="282" width="21" height="60" rx="9" fill="white" stroke="#DDD" strokeWidth="1.5"/>
+            <circle cx="103" cy="347" r="11" fill="#FFCEA0"/>
+            <rect x="97" y="342" width="5" height="34" rx="2.5" fill="#C8C8C8"/>
+            <circle cx="99" cy="337" r="8" fill="#B8B8B8"/>
+            <circle cx="99" cy="337" r="6" fill="#E0E0E0"/>
+            <circle cx="207" cy="347" r="11" fill="#FFCEA0"/>
+            <rect x="143" y="252" width="24" height="27" rx="10" fill="#FFCEA0"/>
+            <ellipse cx="155" cy="232" rx="38" ry="39" fill="#FFCEA0"/>
+            <ellipse cx="155" cy="196" rx="40" ry="20" fill="#4A2010"/>
+            <rect x="115" y="198" width="80" height="22" rx="6" fill="#4A2010"/>
+            <ellipse cx="117" cy="234" rx="8" ry="10" fill="#FFCEA0"/>
+            <ellipse cx="193" cy="234" rx="8" ry="10" fill="#FFCEA0"/>
+            <circle cx="143" cy="232" r="9.5" fill="none" stroke="#555" strokeWidth="2"/>
+            <circle cx="170" cy="232" r="9.5" fill="none" stroke="#555" strokeWidth="2"/>
+            <line x1="152.5" y1="232" x2="160.5" y2="232" stroke="#555" strokeWidth="2"/>
+            <line x1="133.5" y1="230" x2="126" y2="228" stroke="#555" strokeWidth="2"/>
+            <line x1="179.5" y1="230" x2="187" y2="228" stroke="#555" strokeWidth="2"/>
+            <path d="M135,221 Q143,217 151,221" stroke="#4A2010" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <path d="M160,221 Q168,217 176,221" stroke="#4A2010" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <circle cx="143" cy="232" r="5" fill="#2A1808"/>
+            <circle cx="170" cy="232" r="5" fill="#2A1808"/>
+            <circle cx="144.5" cy="230" r="1.8" fill="white"/>
+            <circle cx="171.5" cy="230" r="1.8" fill="white"/>
+            <line x1="138" y1="224" x2="136.5" y2="221" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
+            <line x1="143" y1="222.5" x2="143" y2="219.5" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
+            <line x1="148" y1="224" x2="149.5" y2="221" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
+            <line x1="165" y1="224" x2="163.5" y2="221" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
+            <line x1="170" y1="222.5" x2="170" y2="219.5" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
+            <line x1="175" y1="224" x2="176.5" y2="221" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
+            <path d="M143,250 Q155,262 168,250" stroke="#C07050" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+            <ellipse cx="130" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
+            <ellipse cx="180" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
+            </g>
+            <rect x="66" y="412" width="182" height="42" rx="15" fill="#1A5C3A"/>
+            <text x="157" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 하루 →</text>
+            <text x="157" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">출근부터 퇴근까지</text>
           </g>
 
-          {/* ── ZONE 1: Dental Chair ── */}
-          <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)} filter="url(#drop)">
-            {hovered===1 && <ellipse cx="400" cy="405" rx="130" ry="13" fill="rgba(245,200,0,0.35)"/>}
-            <ellipse cx="395" cy="393" rx="112" ry="10" fill="rgba(0,0,0,0.1)"/>
-            {/* Pedestal base */}
-            <ellipse cx="382" cy="392" rx="44" ry="10" fill="#888"/>
-            <rect x="360" y="342" width="44" height="52" rx="22" fill="#A0A0A0" stroke="#888" strokeWidth="1.5"/>
-            <rect x="368" y="348" width="28" height="42" rx="14" fill="#B8B8B8"/>
-            {/* Chair back (reclined) */}
-            <rect x="274" y="254" width="186" height="70" rx="20" fill="url(#chairG)" stroke="#2070A8" strokeWidth="1.5"/>
-            <rect x="280" y="260" width="174" height="30" rx="10" fill="rgba(255,255,255,0.22)"/>
-            {/* Seat */}
-            <rect x="270" y="318" width="152" height="46" rx="18" fill="url(#chairG)" stroke="#2070A8" strokeWidth="1.5"/>
-            <rect x="276" y="324" width="140" height="16" rx="8" fill="rgba(255,255,255,0.22)"/>
-            {/* Footrest */}
-            <rect x="252" y="356" width="84" height="30" rx="14" fill="#3A9DD4" stroke="#2070A8" strokeWidth="1.5"/>
-            <rect x="258" y="362" width="72" height="10" rx="5" fill="rgba(255,255,255,0.22)"/>
-            {/* Armrest */}
-            <rect x="422" y="284" width="26" height="68" rx="13" fill="#3A90C8" stroke="#2070A8" strokeWidth="1.5"/>
-            {/* Headrest */}
-            <rect x="436" y="236" width="46" height="38" rx="18" fill="#3A90C8" stroke="#2070A8" strokeWidth="1.5" transform="rotate(-10 459 255)"/>
-            <rect x="442" y="242" width="34" height="26" rx="12" fill="rgba(255,255,255,0.22)" transform="rotate(-10 459 255)"/>
-            {/* Overhead arm */}
-            <line x1="402" y1="22" x2="402" y2="108" stroke="#C0C0C0" strokeWidth="10" strokeLinecap="round"/>
-            <line x1="402" y1="108" x2="358" y2="200" stroke="#C0C0C0" strokeWidth="10" strokeLinecap="round"/>
-            {/* Light head */}
-            <ellipse cx="345" cy="212" rx="48" ry="30" fill="#D5D5D5" stroke="#BBBBBB" strokeWidth="2"/>
-            <ellipse cx="345" cy="212" rx="36" ry="22" fill="#00CCFF" opacity="0.72"/>
-            <ellipse cx="345" cy="212" rx="20" ry="12" fill="white" opacity="0.9"/>
-            <ellipse cx="339" cy="207" rx="6" ry="4" fill="rgba(255,255,255,0.55)"/>
-            {/* Light beam */}
-            <path d="M308,228 L262,344 L436,344 L390,228 Z" fill="rgba(255,255,215,0.07)"/>
-            {/* Patient head */}
-            <ellipse cx="310" cy="314" rx="30" ry="28" fill="url(#skinG)" stroke="#F0BC80" strokeWidth="1.5"/>
-            <path d="M284,304 C286,282 310,278 310,278 C310,278 334,282 336,304" fill="#4A3020"/>
-            <ellipse cx="303" cy="311" rx="5.5" ry="6" fill="white"/>
-            <ellipse cx="317" cy="311" rx="5.5" ry="6" fill="white"/>
-            <circle cx="304" cy="312" r="3.5" fill="#3A2010"/>
-            <circle cx="318" cy="312" r="3.5" fill="#3A2010"/>
-            <path d="M304,322 C310,327 316,322" stroke="#C07050" strokeWidth="2" fill="none" strokeLinecap="round"/>
-            {/* Tray */}
-            <rect x="444" y="308" width="72" height="10" rx="5" fill="#C0C0C0" stroke="#AAAAAA" strokeWidth="1"/>
-            <rect x="450" y="318" width="5" height="28" rx="2.5" fill="#AAAAAA"/>
-            {[0,1,2,3,4].map(i=><rect key={i} x={460+i*11} y={296} width="5" height={22+i} rx="2.5" fill={['#C8D8F0','#B0C0E0','#4A90D9','#D0D0D0','#88BADF'][i]}/>)}
-            {/* Label */}
-            <rect x="283" y="410" width="234" height="44" rx="16" fill="#1A5C3A"/>
-            <text x="400" y="427" textAnchor="middle" fontSize="12.5" fill="white" fontWeight="bold">치료와 비밀 무기 →</text>
-            <text x="400" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.82)">치료 종류 &amp; 도구</text>
+          {/* ── ZONE 1: 치과 유닛 체어 ── */}
+          <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
+            {hovered===1 && <ellipse cx="398" cy="404" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <g transform="translate(88, 89) scale(0.78)">
+            <rect x="386" y="358" width="24" height="46" rx="5" fill="#777"/>
+            <ellipse cx="398" cy="404" rx="46" ry="9" fill="#666"/>
+            <rect x="276" y="316" width="188" height="46" rx="16" fill="#3A8DC4"/>
+            <rect x="279" y="319" width="182" height="40" rx="14" fill="#4A9DD4"/>
+            <rect x="438" y="244" width="50" height="88" rx="14" fill="#3A8DC4" transform="rotate(-18 463 288)"/>
+            <rect x="441" y="247" width="44" height="82" rx="12" fill="#4A9DD4" transform="rotate(-18 463 288)"/>
+            <rect x="460" y="218" width="38" height="30" rx="12" fill="#2A7DB4" transform="rotate(-18 479 233)"/>
+            <rect x="246" y="324" width="36" height="34" rx="10" fill="#4A9DD4"/>
+            <rect x="236" y="330" width="16" height="22" rx="8" fill="#3A8DC4"/>
+            <rect x="276" y="306" width="114" height="13" rx="6" fill="#2A7DB4"/>
+            <rect x="460" y="304" width="90" height="13" rx="6" fill="#2A7DB4"/>
+            <rect x="334" y="284" width="8" height="36" rx="4" fill="#999"/>
+            <rect x="304" y="278" width="74" height="10" rx="5" fill="#AAA"/>
+            <rect x="310" y="268" width="5" height="14" rx="2.5" fill="#C8C8C8"/>
+            <rect x="319" y="266" width="5" height="16" rx="2.5" fill="#B0B0B0"/>
+            <rect x="328" y="268" width="5" height="14" rx="2.5" fill="#4A90D9"/>
+            <rect x="337" y="267" width="5" height="15" rx="2.5" fill="#C0C0C0"/>
+            <rect x="346" y="268" width="5" height="14" rx="2.5" fill="#90BADF"/>
+            <line x1="396" y1="22" x2="396" y2="102" stroke="#AAA" strokeWidth="7" strokeLinecap="round"/>
+            <line x1="396" y1="102" x2="356" y2="188" stroke="#AAA" strokeWidth="7" strokeLinecap="round"/>
+            <ellipse cx="344" cy="198" rx="44" ry="27" fill="#CCC" transform="rotate(-20 344 198)"/>
+            <ellipse cx="344" cy="198" rx="31" ry="18" fill="#00CFFF" opacity="0.65" transform="rotate(-20 344 198)"/>
+            <ellipse cx="344" cy="198" rx="17" ry="10" fill="white" opacity="0.88" transform="rotate(-20 344 198)"/>
+            <path d="M316,210 L272,332 L422,332 L382,210 Z" fill="rgba(255,255,205,0.09)"/>
+            <ellipse cx="302" cy="308" rx="26" ry="24" fill="#FFCEA0" opacity="0.75"/>
+            </g>
+            <rect x="289" y="412" width="220" height="42" rx="15" fill="#1A5C3A"/>
+            <text x="399" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치료와 비밀 무기 →</text>
+            <text x="399" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
           </g>
 
-          {/* ── ZONE 3: Microscope & Lab ── */}
-          <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)} filter="url(#drop)">
-            {hovered===3 && <ellipse cx="660" cy="405" rx="108" ry="13" fill="rgba(245,200,0,0.35)"/>}
-            <ellipse cx="660" cy="393" rx="92" ry="9" fill="rgba(0,0,0,0.1)"/>
-            {/* Table */}
-            <rect x="566" y="338" width="232" height="14" rx="7" fill="#B08848" stroke="#906828" strokeWidth="1.5"/>
-            <rect x="572" y="352" width="8" height="44" rx="4" fill="#906828"/>
-            <rect x="786" y="352" width="8" height="44" rx="4" fill="#906828"/>
-            {/* Wall poster */}
-            <rect x="572" y="88" width="100" height="128" rx="8" fill="white" stroke="#D4D4D4" strokeWidth="2"/>
-            <rect x="578" y="94" width="88" height="16" rx="4" fill="#2E7D32"/>
-            <text x="622" y="106" textAnchor="middle" fontSize="7.5" fill="white" fontWeight="bold">치아 구조도</text>
-            <ellipse cx="622" cy="152" rx="24" ry="30" fill="#F8F8F8" stroke="#E0E0E0" strokeWidth="1.5"/>
-            <ellipse cx="622" cy="148" rx="17" ry="20" fill="#EEEEEE"/>
-            <rect x="610" y="170" width="11" height="28" rx="5" fill="#E0E0E0" stroke="#CCCCCC" strokeWidth="1"/>
-            <rect x="625" y="170" width="11" height="28" rx="5" fill="#E0E0E0" stroke="#CCCCCC" strokeWidth="1"/>
-            {[0,1,2].map(i=><>
-              <circle key={`d${i}`} cx="582" cy={200+i*10} r="4" fill={['#5B9BD5','#ED7D31','#70AD47'][i]}/>
-              <line key={`l${i}`} x1="590" y1={200+i*10} x2="662" y2={200+i*10} stroke="#E0E0E0" strokeWidth="1.2"/>
-            </>)}
-            {/* Microscope */}
-            <rect x="648" y="330" width="70" height="12" rx="6" fill="#4A4A6A" stroke="#3A3A5A" strokeWidth="1.5"/>
-            <rect x="676" y="242" width="14" height="92" rx="5" fill="#555572" stroke="#3A3A5A" strokeWidth="1.5"/>
-            <rect x="650" y="298" width="64" height="11" rx="5" fill="#555572" stroke="#3A3A5A" strokeWidth="1.5"/>
-            <rect x="660" y="309" width="46" height="7" rx="2" fill="#A8C8E8"/>
-            <rect x="658" y="252" width="54" height="12" rx="5" fill="#4A4A6A" transform="rotate(-8 685 258)"/>
-            <rect x="672" y="216" width="24" height="40" rx="10" fill="#3A3A5A" stroke="#2A2A4A" strokeWidth="1.5"/>
-            <rect x="677" y="200" width="14" height="24" rx="7" fill="#2A2A4A"/>
-            <ellipse cx="684" cy="200" rx="8" ry="4.5" fill="#1A1A3A"/>
-            <rect x="676" y="254" width="16" height="22" rx="8" fill="#2A2A4A"/>
-            <circle cx="684" cy="278" r="8" fill="#1A1A3A"/>
-            <circle cx="684" cy="278" r="5" fill="#4A6A8A"/>
-            <circle cx="682" cy="276" r="1.8" fill="rgba(255,255,255,0.42)"/>
-            <circle cx="662" cy="265" r="8" fill="#66668A"/>
-            <circle cx="706" cy="265" r="8" fill="#66668A"/>
-            {/* Test tubes */}
-            <rect x="726" y="316" width="62" height="8" rx="3" fill="#906828"/>
-            {[0,1,2].map(i=>(
-              <g key={i}>
-                <rect x={730+i*14} y={256+i*2} width="9" height={66-i*2} rx="4.5" fill={['rgba(100,180,255,0.75)','rgba(100,230,120,0.75)','rgba(255,180,80,0.75)'][i]} stroke={['#90B8E0','#80C880','#E8B050'][i]} strokeWidth="1.5"/>
-                <ellipse cx={734.5+i*14} cy={256+i*2} rx="5" ry="2.8" fill="rgba(255,255,255,0.52)"/>
-              </g>
-            ))}
-            {/* Label */}
-            <rect x="554" y="410" width="212" height="44" rx="16" fill="#1A7C5C"/>
-            <text x="660" y="427" textAnchor="middle" fontSize="12.5" fill="white" fontWeight="bold">치과의사의 종류 →</text>
-            <text x="660" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.82)">교정과·소아치과 등</text>
+          {/* ── ZONE 3: 공룡 액자 + 현미경 ── */}
+          <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
+            {hovered===3 && <ellipse cx="660" cy="404" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <g transform="translate(145, 88) scale(0.78)">
+            <rect x="556" y="342" width="226" height="56" rx="6" fill="#8A6030"/>
+            <rect x="556" y="342" width="226" height="12" rx="4" fill="#A07848"/>
+            <ellipse cx="628" cy="350" rx="27" ry="7" fill="#444"/>
+            <rect x="617" y="258" width="12" height="94" rx="4" fill="#555"/>
+            <rect x="605" y="304" width="58" height="10" rx="4" fill="#555" transform="rotate(-12 634 309)"/>
+            <rect x="603" y="310" width="54" height="10" rx="4" fill="#666"/>
+            <rect x="616" y="244" width="24" height="20" rx="5" fill="#555"/>
+            <circle cx="628" cy="247" r="8" fill="#3A3A6A"/>
+            <circle cx="628" cy="247" r="5" fill="#1A1A4A"/>
+            <rect x="610" y="315" width="42" height="7" rx="2" fill="#B0C8E0"/>
+            <rect x="680" y="322" width="7" height="26" rx="3.5" fill="#A8C8F8"/>
+            <rect x="692" y="318" width="7" height="30" rx="3.5" fill="#A8F8B8"/>
+            <rect x="704" y="320" width="7" height="28" rx="3.5" fill="#F8C8A8"/>
+            <rect x="675" y="346" width="44" height="6" rx="2" fill="#555"/>
+            </g>
+            <rect x="564" y="412" width="196" height="42" rx="15" fill="#1A7C5C"/>
+            <text x="662" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 종류 →</text>
+            <text x="662" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">교정과·소아치과 등</text>
           </g>
 
-          {/* ── ZONE 2: Bookshelf ── */}
-          <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)} filter="url(#drop)">
-            {hovered===2 && <ellipse cx="878" cy="405" rx="104" ry="13" fill="rgba(245,200,0,0.35)"/>}
-            <ellipse cx="878" cy="393" rx="90" ry="9" fill="rgba(0,0,0,0.1)"/>
-            {/* Shelf frame */}
-            <rect x="788" y="70" width="196" height="278" rx="10" fill="url(#woodG)" stroke="#6A3E1A" strokeWidth="2"/>
-            <rect x="800" y="80" width="172" height="260" rx="5" fill="#C49045"/>
-            <rect x="782" y="62" width="208" height="16" rx="7" fill="#8A5828" stroke="#6A3E1A" strokeWidth="1.5"/>
-            {/* Shelves */}
-            <rect x="800" y="182" width="172" height="11" rx="4" fill="#7A4E2A"/>
-            <rect x="800" y="266" width="172" height="11" rx="4" fill="#7A4E2A"/>
-            {/* TOP SHELF BOOKS */}
-            {[
-              [804,22,82,'#D32F2F'],[828,15,76,'#1565C0'],[845,20,84,'#F9A825'],
-              [867,14,72,'#2E7D32'],[883,18,80,'#6A1B9A'],[903,15,78,'#E65100'],
-              [920,20,84,'#1A237E'],[942,19,78,'#880E4F'],
-            ].map(([x,w,h,f],i)=>(
-              <g key={i}>
-                <rect x={x} y={182-h} width={w} height={h} rx="2.5" fill={f}/>
-                <rect x={x} y={182-h} width={w} height={7} rx="2.5" fill="rgba(255,255,255,0.2)"/>
-                <rect x={x} y={182-h} width="1.5" height={h} fill="rgba(0,0,0,0.1)"/>
-              </g>
+          {/* ── ZONE 2: 책장 ── */}
+          <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
+            {hovered===2 && <ellipse cx="876" cy="404" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <g transform="translate(195, 90) scale(0.78)">
+            <rect x="794" y="78" width="188" height="332" rx="6" fill="#7A4E28"/>
+            <rect x="802" y="86" width="172" height="316" rx="3" fill="#9A6238"/>
+            <rect x="826" y="60" width="130" height="20" rx="4" fill="#1A1A2A"/>
+            <ellipse cx="891" cy="60" rx="58" ry="10" fill="#1A1A2A"/>
+            <rect x="885" y="48" width="12" height="16" rx="4" fill="#1A1A2A"/>
+            <line x1="912" y1="62" x2="935" y2="90" stroke="#F5C800" strokeWidth="3"/>
+            <circle cx="937" cy="94" r="7" fill="#F5C800"/>
+            <rect x="802" y="180" width="172" height="8" rx="2" fill="#7A4E28"/>
+            <rect x="802" y="270" width="172" height="8" rx="2" fill="#7A4E28"/>
+            <rect x="802" y="360" width="172" height="8" rx="2" fill="#7A4E28"/>
+            {[[805,22,90,'#E74C3C'],[829,14,84,'#3498DB'],[845,21,92,'#F5C800'],[868,16,86,'#1A5C3A'],[886,25,90,'#8E44AD'],[913,17,82,'#E67E22'],[932,21,88,'#2C3E50'],[955,14,84,'#C0392B','0.6']].map(([x,w,h,f,op],i)=>(
+              <g key={i}><rect x={x} y={180-h} width={w} height={h} rx="2" fill={f} opacity={op||1}/><rect x={x} y={180-h} width={w} height={6} rx="1" fill="rgba(255,255,255,0.22)"/></g>
             ))}
-            {/* MIDDLE SHELF BOOKS */}
-            {[
-              [804,24,66,'#00695C'],[830,14,60,'#B71C1C'],[846,20,64,'#0277BD'],
-              [868,16,60,'#827717'],[886,22,66,'#AD1457'],[910,14,62,'#558B2F'],
-              [926,18,64,'#BF360C'],[946,15,60,'#37474F'],
-            ].map(([x,w,h,f],i)=>(
-              <g key={i}>
-                <rect x={x} y={266-h} width={w} height={h} rx="2.5" fill={f}/>
-                <rect x={x} y={266-h} width={w} height={7} rx="2.5" fill="rgba(255,255,255,0.2)"/>
-                <rect x={x} y={266-h} width="1.5" height={h} fill="rgba(0,0,0,0.1)"/>
-              </g>
+            {[[805,25,90,'#16A085'],[832,16,84,'#C0392B'],[850,21,88,'#2980B9'],[873,17,82,'#7D6608'],[892,23,86,'#E91E63'],[917,16,84,'#4CAF50'],[935,21,88,'#FF5722'],[958,12,80,'#607D8B']].map(([x,w,h,f],i)=>(
+              <g key={i}><rect x={x} y={270-h} width={w} height={h} rx="2" fill={f}/><rect x={x} y={270-h} width={w} height={6} rx="1" fill="rgba(255,255,255,0.22)"/></g>
             ))}
-            {/* BOTTOM SHELF — books + decor */}
-            {[
-              [804,25,52,'#7B1FA2'],[831,14,48,'#00838F'],[847,20,52,'#EF6C00'],
-              [869,16,50,'#1A237E'],[887,22,52,'#880E4F'],
-            ].map(([x,w,h,f],i)=>(
-              <g key={i}>
-                <rect x={x} y={340-h} width={w} height={h} rx="2.5" fill={f}/>
-                <rect x={x} y={340-h} width={w} height={7} rx="2.5" fill="rgba(255,255,255,0.2)"/>
-                <rect x={x} y={340-h} width="1.5" height={h} fill="rgba(0,0,0,0.1)"/>
-              </g>
+            {[[805,28,88,'#9C27B0'],[835,14,82,'#00BCD4'],[851,23,90,'#FF9800'],[876,20,84,'#795548'],[898,17,86,'#607D8B'],[917,25,88,'#F44336'],[944,21,82,'#009688']].map(([x,w,h,f],i)=>(
+              <g key={i}><rect x={x} y={360-h} width={w} height={h} rx="2" fill={f}/><rect x={x} y={360-h} width={w} height={6} rx="1" fill="rgba(255,255,255,0.22)"/></g>
             ))}
-            {/* Mini potted plant */}
-            <rect x="912" y="318" width="28" height="20" rx="4" fill="#8A6030"/>
-            <ellipse cx="926" cy="317" rx="18" ry="13" fill="#2E7D32"/>
-            <ellipse cx="919" cy="312" rx="11" ry="9" fill="#388E3C"/>
-            <ellipse cx="933" cy="310" rx="9" ry="8" fill="#2E7D32"/>
-            <rect x="924" y="318" width="4" height="8" rx="2" fill="#4CAF50"/>
-            {/* Small trophy */}
-            <rect x="946" y="320" width="26" height="18" rx="3" fill="#F5C800"/>
-            <rect x="953" y="312" width="12" height="10" rx="3" fill="#F5C800"/>
-            <ellipse cx="959" cy="312" rx="10" ry="6" fill="#FFD740"/>
-            <text x="959" y="331" textAnchor="middle" fontSize="6" fill="#8B6914" fontWeight="bold">치과</text>
-            {/* Label */}
-            <rect x="774" y="410" width="206" height="44" rx="16" fill="#1A3A7C"/>
-            <text x="877" y="427" textAnchor="middle" fontSize="12.5" fill="white" fontWeight="bold">치과의사가 되는 법 →</text>
-            <text x="877" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.82)">공부와 국가고시</text>
+            <rect x="805" y="364" width="28" height="38" rx="3" fill="#888" opacity="0.8"/>
+            <circle cx="819" cy="362" r="12" fill="#CCC"/>
+            <rect x="840" y="370" width="38" height="28" rx="4" fill="#4A7A4A"/>
+            <text x="859" y="389" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">해부학</text>
+            <rect x="886" y="362" width="22" height="38" rx="4" fill="#6A8ABE"/>
+            <rect x="914" y="366" width="20" height="34" rx="4" fill="#BE6A8A"/>
+            <rect x="940" y="364" width="26" height="36" rx="4" fill="#8ABE6A"/>
+            </g>
+            <rect x="780" y="412" width="192" height="42" rx="15" fill="#1A3A7C"/>
+            <text x="876" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는 법 →</text>
+            <text x="876" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">공부와 국가고시</text>
           </g>
         </svg>
       </div>
