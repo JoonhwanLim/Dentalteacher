@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+﻿import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const mob = () => window.innerWidth < 768
@@ -157,8 +157,7 @@ const careerSteps = [
   { emoji:'📚', label:'초등학교',      desc:'수학·과학 기초',      detail:'수학과 과학에 흥미를 갖는 시간이에요.\n호기심이 많고 꼼꼼한 어린이가 되어보세요!',                           color:'#E53935', years:'6년'  },
   { emoji:'🔭', label:'중학교',        desc:'생물·화학 탐구',      detail:'생물·화학 과목을 열심히 공부해요.\n인체와 세포에 대한 호기심을 키워가는 시간이에요!',                        color:'#1976D2', years:'3년'  },
   { emoji:'⚗️', label:'고등학교',     desc:'이과·화학·생물',      detail:'이과를 선택하고 화학·생물을 집중 공부해요.\n수능을 열심히 준비하는 중요한 시간이에요!',                       color:'#00897B', years:'3년'  },
-  { emoji:'🦷', label:'치과대학',      desc:'기초·임상·실습',      detail:'치의학의 모든 것을 배워요!\n해부학·치과재료부터
-환자 실습까지 6년 동안 공부해요.',                          color:'#F9A825', years:'6년', highlight:true },
+  { emoji:'🦷', label:'치과대학',      desc:'기초·임상·실습',      detail:'치의학의 모든 것을 배워요!\n해부학·치과재료부터\n환자 실습까지 6년 동안 공부해요.',                          color:'#F9A825', years:'6년', highlight:true },
   { emoji:'📋', label:'국가면허시험',  desc:'치과의사 면허 취득',  detail:'대학 졸업 후 국가고시에 응시해요.\n합격하면 드디어 치과의사 면허증을 받아요!',                               color:'#2E7D32', years:'시험'  },
   { emoji:'🏥', label:'인턴·레지던트', desc:'전문의 취득 (선택)',  detail:'병원에서 1~4년 더 수련하면 전문의가 돼요.\n교정·소아치과 등 전문 분야를 선택할 수 있어요!',                  color:'#C62828', years:'1~4년' },
   { emoji:'👨‍⚕️', label:'치과의사!',   desc:'개업 or 취직',        detail:'드디어 치과의사가 됐어요! 🎉\n자신의 치과를 열거나 병원에 취직해요.',                                        color:'#1A8C5A', years:'완성!', final:true },
