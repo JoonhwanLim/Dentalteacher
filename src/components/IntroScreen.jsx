@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 const TOOTH_POSITIONS = [
   { top:'6%',  left:'3%',  size:'3.2rem', rot:-20, op:0.18 },
@@ -13,10 +13,61 @@ const TOOTH_POSITIONS = [
   { top:'20%', left:'8%',  size:'1.5rem', rot:-25, op:0.09 },
 ]
 
+const TITLE_LINES = ['치과의사는 도대체', '어떠한 삶을', '살고 있을까?']
+
+function WaveTitle({ fontSize }) {
+  const [jumped, setJumped] = useState(() => new Set())
+
+  const fire = useCallback((i) => {
+    setJumped(prev => new Set([...prev, i]))
+    setTimeout(() => {
+      setJumped(prev => { const n = new Set(prev); n.delete(i); return n })
+    }, 680)
+  }, [])
+
+  const handleEnter = useCallback((i) => {
+    fire(i)
+    // 이웃 글자도 살짝 지연해서 튀어오름
+    setTimeout(() => fire(i - 1), 55)
+    setTimeout(() => fire(i + 1), 55)
+    setTimeout(() => fire(i - 2), 110)
+    setTimeout(() => fire(i + 2), 110)
+  }, [fire])
+
+  let idx = 0
+  return (
+    <h1 style={{ fontSize, fontWeight:900, color:'#FFCA28', lineHeight:1.3, marginBottom:10, textShadow:'0 2px 0 rgba(180,120,0,0.18)', userSelect:'none' }}>
+      {TITLE_LINES.map((line, li) => (
+        <span key={li} style={{ display:'block' }}>
+          {[...line].map((ch) => {
+            const i = idx++
+            if (ch === ' ') return <span key={i} style={{ display:'inline-block', width:'0.28em' }}>&nbsp;</span>
+            const isJumped = jumped.has(i)
+            return (
+              <span
+                key={i}
+                onMouseEnter={() => handleEnter(i)}
+                style={{
+                  display: 'inline-block',
+                  cursor: 'default',
+                  willChange: 'transform',
+                  animation: isJumped
+                    ? 'charJump 0.68s cubic-bezier(0.34,1.56,0.64,1) both'
+                    : `charWave ${1.9 + (i % 5) * 0.22}s ease-in-out -${(i * 0.19) % 2.2}s infinite`,
+                }}
+              >{ch}</span>
+            )
+          })}
+        </span>
+      ))}
+    </h1>
+  )
+}
+
 export default function IntroScreen({ onEnter }) {
-  const [showModal, setShowModal]   = useState(false)
-  const [fadeOut,   setFadeOut]     = useState(false)
-  const [visible,   setVisible]     = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [fadeOut,   setFadeOut]   = useState(false)
+  const [visible,   setVisible]   = useState(false)
   const mob = window.innerWidth < 600
 
   useEffect(() => { setTimeout(() => setVisible(true), 60) }, [])
@@ -37,6 +88,21 @@ export default function IntroScreen({ onEnter }) {
       transition: fadeOut ? 'opacity 0.55s ease, transform 0.55s ease' : 'opacity 0.5s ease',
       zIndex: 9999, overflow: 'hidden',
     }}>
+      <style>{`
+        @keyframes charWave {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50%       { transform: translateY(-8px) rotate(-1.5deg); }
+        }
+        @keyframes charJump {
+          0%   { transform: translateY(0px)   scale(1)    rotate(0deg); }
+          28%  { transform: translateY(-26px) scale(1.3)  rotate(-10deg); }
+          52%  { transform: translateY(-5px)  scale(0.88) rotate(5deg); }
+          70%  { transform: translateY(-14px) scale(1.12) rotate(-4deg); }
+          86%  { transform: translateY(-2px)  scale(0.97) rotate(1deg); }
+          100% { transform: translateY(0px)   scale(1)    rotate(0deg); }
+        }
+      `}</style>
+
       {/* 배경 치아 패턴 */}
       {TOOTH_POSITIONS.map((p, i) => (
         <span key={i} style={{
@@ -79,22 +145,8 @@ export default function IntroScreen({ onEnter }) {
           리라초등학교 · 5학년 2반 명예교사
         </div>
 
-        {/* 메인 타이틀 */}
-        <style>{`
-          @keyframes titleFloat {
-            0%, 100% { transform: translateY(0px) rotate(-0.4deg); }
-            50%       { transform: translateY(-9px) rotate(0.4deg); }
-          }
-        `}</style>
-        <h1 style={{
-          fontSize: mob ? '2rem' : '2.8rem', fontWeight: 900, color: '#FFCA28',
-          lineHeight: 1.25, marginBottom: 10,
-          textShadow: '0 2px 0 rgba(180,120,0,0.18)',
-          animation: 'titleFloat 3.2s ease-in-out infinite',
-          display: 'inline-block',
-        }}>
-          치과의사는 도대체<br />어떠한 삶을<br />살고 있을까?
-        </h1>
+        {/* 메인 타이틀 — 글자별 wave + 마우스 통통 튀기 */}
+        <WaveTitle fontSize={mob ? '2rem' : '2.8rem'} />
 
         <p style={{
           fontSize: mob ? '1rem' : '1.25rem', fontWeight: 700, color: '#555',
@@ -105,7 +157,6 @@ export default function IntroScreen({ onEnter }) {
 
         {/* 버튼 그룹 */}
         <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-          {/* 강사소개 버튼 */}
           <button
             onClick={() => setShowModal(true)}
             style={{
@@ -122,7 +173,6 @@ export default function IntroScreen({ onEnter }) {
             👩‍⚕️ 강사 소개
           </button>
 
-          {/* Enter 버튼 */}
           <button
             onClick={handleEnter}
             style={{
@@ -169,7 +219,6 @@ export default function IntroScreen({ onEnter }) {
           >
             <style>{`@keyframes modalIn { from { opacity:0; transform:scale(0.9) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }`}</style>
 
-            {/* 닫기 버튼 */}
             <button
               onClick={() => setShowModal(false)}
               style={{
@@ -180,7 +229,6 @@ export default function IntroScreen({ onEnter }) {
               }}
             >✕</button>
 
-            {/* 사진 */}
             <div style={{
               width: 140, height: 170, borderRadius: 20, overflow: 'hidden',
               margin: '0 auto 20px', background: '#f5f5f5',
@@ -198,7 +246,6 @@ export default function IntroScreen({ onEnter }) {
               />
             </div>
 
-            {/* 뱃지 */}
             <div style={{
               display: 'inline-block', background: '#FFF8DC',
               border: '1.5px solid #FFCA28', borderRadius: 50,
