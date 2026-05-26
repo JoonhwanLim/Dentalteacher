@@ -1248,17 +1248,66 @@ function CareerSection({ onBack }) {
 
 /* ── SECTION 3: 치과의사의 다양한 종류 ── */
 function SpecialtiesSection({ onBack }) {
-  const [idx, setIdx] = useState(0)
+  const [idx, setIdx]               = useState(0)
+  const [hoveredIdx, setHoveredIdx] = useState(null)
+  const [bounceKey, setBounceKey]   = useState(0)
+  const [bounceDir, setBounceDir]   = useState(null)
+  const dragRef    = useRef(null)
+  const wasDragRef = useRef(false)
   const isMob = mob()
-  const s = specialties[idx]
-  const cardW  = isMob ? 230 : 400
-  const cardH  = isMob ? 330 : 400
-  const gap    = isMob ? 138 : 250   // center-to-center offset per step
+  const s    = specialties[idx]
+  const cardW = isMob ? 230 : 400
+  const cardH = isMob ? 330 : 400
+  const gap   = isMob ? 138 : 250
 
-  function go(n) { if (n >= 0 && n < specialties.length) setIdx(n) }
+  function go(n) {
+    if (n < 0 || n >= specialties.length) {
+      setBounceDir(n < 0 ? 'right' : 'left')
+      setBounceKey(k => k + 1)
+      setTimeout(() => setBounceDir(null), 500)
+      return
+    }
+    setIdx(n)
+  }
+
+  function onPtrDown(x) { dragRef.current = { x, moved: false } }
+  function onPtrMove(x) {
+    if (dragRef.current && Math.abs(x - dragRef.current.x) > 8)
+      dragRef.current.moved = true
+  }
+  function onPtrUp(x) {
+    if (!dragRef.current) return
+    const { x: startX, moved } = dragRef.current
+    dragRef.current = null
+    if (!moved) return
+    const dx = x - startX
+    if (Math.abs(dx) > 50) {
+      wasDragRef.current = true
+      go(dx < 0 ? idx + 1 : idx - 1)
+      requestAnimationFrame(() => { wasDragRef.current = false })
+    }
+  }
 
   return (
     <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A3A7C,#0A1E40)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
+      <style>{`
+        @keyframes bounceLeft {
+          0%   { transform: translateX(0px); }
+          28%  { transform: translateX(-52px); }
+          58%  { transform: translateX(16px); }
+          78%  { transform: translateX(-8px); }
+          92%  { transform: translateX(3px); }
+          100% { transform: translateX(0px); }
+        }
+        @keyframes bounceRight {
+          0%   { transform: translateX(0px); }
+          28%  { transform: translateX(52px); }
+          58%  { transform: translateX(-16px); }
+          78%  { transform: translateX(8px); }
+          92%  { transform: translateX(-3px); }
+          100% { transform: translateX(0px); }
+        }
+      `}</style>
 
       {/* 헤더 */}
       <div style={{ padding: isMob?'12px 16px':'16px 40px', display:'flex', alignItems:'center', gap:12, flexShrink:0, color:'white' }}>
@@ -1270,8 +1319,16 @@ function SpecialtiesSection({ onBack }) {
       </div>
 
       {/* 카드 스테이지 */}
-      <div style={{ flex:1, position:'relative', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center' }}>
-
+      <div
+        style={{ flex:1, position:'relative', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center', userSelect:'none', touchAction:'none', cursor:'grab' }}
+        onMouseDown={e => onPtrDown(e.clientX)}
+        onMouseMove={e => onPtrMove(e.clientX)}
+        onMouseUp={e => onPtrUp(e.clientX)}
+        onMouseLeave={e => { onPtrUp(e.clientX); dragRef.current = null }}
+        onTouchStart={e => onPtrDown(e.touches[0].clientX)}
+        onTouchMove={e => onPtrMove(e.touches[0].clientX)}
+        onTouchEnd={e => onPtrUp(e.changedTouches[0].clientX)}
+      >
         {/* 화살표 버튼 */}
         {[[-1,'←',isMob?10:36],[1,'→',isMob?10:36]].map(([dir, label, edge]) => {
           const target = idx + dir
@@ -1294,69 +1351,80 @@ function SpecialtiesSection({ onBack }) {
           )
         })}
 
-        {/* 카드들 */}
-        {specialties.map((sp, i) => {
-          const diff   = i - idx
-          const abs    = Math.abs(diff)
-          const scale  = abs === 0 ? 1 : abs === 1 ? 0.72 : abs === 2 ? 0.52 : 0.38
-          const tx     = diff * gap
-          const op     = abs === 0 ? 1 : abs === 1 ? 0.60 : abs === 2 ? 0.28 : 0
-          const zI     = 20 - abs * 5
-          const active = abs === 0
+        {/* 카드 트랙 — 바운스 wrapper */}
+        <div key={bounceKey} style={{
+          position:'absolute', inset:0,
+          display:'flex', alignItems:'center', justifyContent:'center',
+          animation: bounceDir ? `bounce${bounceDir === 'left' ? 'Left' : 'Right'} 0.50s cubic-bezier(0.36,0.07,0.19,0.97) both` : 'none',
+          pointerEvents:'none',
+        }}>
+          {specialties.map((sp, i) => {
+            const diff      = i - idx
+            const abs       = Math.abs(diff)
+            const isHov     = hoveredIdx === i && abs > 0
+            const baseScale = abs === 0 ? 1 : abs === 1 ? 0.72 : abs === 2 ? 0.52 : 0.38
+            const scale     = isHov ? Math.min(baseScale + 0.10, 0.84) : baseScale
+            const tx        = diff * gap
+            const op        = abs === 0 ? 1 : abs === 1 ? 0.60 : abs === 2 ? 0.28 : 0
+            const zI        = 20 - abs * 5
+            const active    = abs === 0
 
-          return (
-            <div key={i}
-              onClick={() => !active && go(i)}
-              style={{
-                position:'absolute',
-                width: cardW, height: cardH,
-                transform: `translateX(${tx}px) scale(${scale})`,
-                opacity: op,
-                zIndex: zI,
-                transition:'transform 0.40s cubic-bezier(0.22,0.8,0.36,1), opacity 0.40s, box-shadow 0.40s',
-                cursor: active ? 'default' : 'pointer',
-                pointerEvents: abs > 2 ? 'none' : 'auto',
-                background: active ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.06)',
-                backdropFilter:'blur(20px)',
-                borderRadius: isMob ? 24 : 32,
-                border:`2px solid ${active ? sp.color+'66' : 'rgba(255,255,255,0.10)'}`,
-                boxShadow: active ? `0 0 100px ${sp.color}38, 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15)` : 'none',
-                display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-                textAlign:'center', padding: isMob?'22px 16px':'36px 44px', gap: isMob?10:16,
-                overflow:'hidden',
-              }}
-            >
-              {/* 번호 뱃지 (활성만) */}
-              <div style={{ opacity: active?1:0, transition:'opacity 0.35s',
-                background:`${sp.color}28`, border:`1.5px solid ${sp.color}55`,
-                borderRadius:50, padding: isMob?'3px 12px':'4px 16px',
-                fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:sp.color }}>
-                {i+1} / {specialties.length}
+            return (
+              <div key={i}
+                onClick={() => { if (wasDragRef.current) return; !active && go(i) }}
+                onMouseEnter={() => abs > 0 && setHoveredIdx(i)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                style={{
+                  position:'absolute',
+                  width: cardW, height: cardH,
+                  transform: `translateX(${tx}px) scale(${scale})`,
+                  opacity: op,
+                  zIndex: zI,
+                  transition:'transform 0.40s cubic-bezier(0.22,0.8,0.36,1), opacity 0.40s, box-shadow 0.40s',
+                  cursor: active ? 'default' : 'pointer',
+                  pointerEvents: abs > 2 ? 'none' : 'auto',
+                  background: active ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.06)',
+                  backdropFilter:'blur(20px)',
+                  borderRadius: isMob ? 24 : 32,
+                  border:`2px solid ${active ? sp.color+'66' : 'rgba(255,255,255,0.10)'}`,
+                  boxShadow: active ? `0 0 100px ${sp.color}38, 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15)` : 'none',
+                  display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+                  textAlign:'center', padding: isMob?'22px 16px':'36px 44px', gap: isMob?10:16,
+                  overflow:'hidden',
+                }}
+              >
+                {/* 번호 뱃지 (활성만) */}
+                <div style={{ opacity: active?1:0, transition:'opacity 0.35s',
+                  background:`${sp.color}28`, border:`1.5px solid ${sp.color}55`,
+                  borderRadius:50, padding: isMob?'3px 12px':'4px 16px',
+                  fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:sp.color }}>
+                  {i+1} / {specialties.length}
+                </div>
+
+                {/* 이모지 */}
+                <div style={{
+                  fontSize: isMob?'3.8rem':'5.8rem', lineHeight:1,
+                  filter: active ? `drop-shadow(0 0 24px ${sp.color}BB)` : 'none',
+                  transition:'filter 0.4s',
+                }}>{sp.emoji}</div>
+
+                {/* 이름 */}
+                <p style={{
+                  fontWeight:900, margin:0, lineHeight:1.2,
+                  fontSize: active ? (isMob?'1.5rem':'2.1rem') : (isMob?'1.0rem':'1.4rem'),
+                  color: active ? sp.color : 'rgba(255,255,255,0.65)',
+                  transition:'all 0.4s',
+                }}>{sp.name}</p>
+
+                {/* 구분선 + 설명 (활성만 페이드인) */}
+                <div style={{ opacity: active?1:0, maxHeight: active ? 200 : 0, overflow:'hidden', transition:'opacity 0.35s 0.1s, max-height 0.35s', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?8:12 }}>
+                  <div style={{ width:44, height:3, background:sp.color, borderRadius:2, opacity:0.65 }}/>
+                  <p style={{ fontSize: isMob?'0.88rem':'1.02rem', color:'rgba(255,255,255,0.82)', lineHeight:1.70, margin:0 }}>{sp.desc}</p>
+                </div>
               </div>
-
-              {/* 이모지 */}
-              <div style={{
-                fontSize: isMob?'3.8rem':'5.8rem', lineHeight:1,
-                filter: active ? `drop-shadow(0 0 24px ${sp.color}BB)` : 'none',
-                transition:'filter 0.4s',
-              }}>{sp.emoji}</div>
-
-              {/* 이름 */}
-              <p style={{
-                fontWeight:900, margin:0, lineHeight:1.2,
-                fontSize: active ? (isMob?'1.5rem':'2.1rem') : (isMob?'1.0rem':'1.4rem'),
-                color: active ? sp.color : 'rgba(255,255,255,0.65)',
-                transition:'all 0.4s',
-              }}>{sp.name}</p>
-
-              {/* 구분선 + 설명 (활성만 페이드인) */}
-              <div style={{ opacity: active?1:0, maxHeight: active ? 200 : 0, overflow:'hidden', transition:'opacity 0.35s 0.1s, max-height 0.35s', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?8:12 }}>
-                <div style={{ width:44, height:3, background:sp.color, borderRadius:2, opacity:0.65 }}/>
-                <p style={{ fontSize: isMob?'0.88rem':'1.02rem', color:'rgba(255,255,255,0.82)', lineHeight:1.70, margin:0 }}>{sp.desc}</p>
-              </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
 
       {/* 하단: 도트 + 슬라이더 */}
