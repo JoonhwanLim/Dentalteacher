@@ -1005,6 +1005,20 @@ function ToolsContent() {
   )
 }
 
+/* ── BOOK RAIN configs (stable, defined once) ── */
+const FALL_BOOKS = [
+  { left:'7%',  delay:'0s',    dur:'2.1s' },
+  { left:'18%', delay:'0.55s', dur:'1.85s' },
+  { left:'30%', delay:'0.25s', dur:'2.4s' },
+  { left:'42%', delay:'1.05s', dur:'2.0s' },
+  { left:'53%', delay:'0.7s',  dur:'2.25s' },
+  { left:'64%', delay:'0.15s', dur:'1.9s' },
+  { left:'75%', delay:'1.35s', dur:'2.1s' },
+  { left:'86%', delay:'0.45s', dur:'2.35s' },
+  { left:'93%', delay:'0.9s',  dur:'1.95s' },
+  { left:'47%', delay:'1.6s',  dur:'2.15s' },
+]
+
 /* ── BUILDING ILLUSTRATIONS (each step's standalone SVG) ── */
 function BuildingIllustration({ step }) {
   const id = `bld${step}`
@@ -1123,7 +1137,11 @@ function CareerSection({ onBack }) {
   const [bounceDir, setBounceDir]   = useState(null)
   const dragRef    = useRef(null)
   const wasDragRef = useRef(false)
+  const [escape, setEscape] = useState({ x: 0, caught: false })
   const isMob = mob()
+
+  useEffect(() => { setEscape({ x: 0, caught: false }) }, [idx])
+
   const s    = careerSteps[idx]
   const cardW = isMob ? 255 : 420
   const cardH = isMob ? 400 : 490
@@ -1176,6 +1194,17 @@ function CareerSection({ onBack }) {
           92%  { transform: translateX(-3px); }
           100% { transform: translateX(0px); }
         }
+        @keyframes bookFall {
+          0%   { top: -60px; opacity: 0;   transform: rotate(-20deg) scale(0.8); }
+          8%   { opacity: 1; }
+          90%  { opacity: 1; }
+          100% { top: 108%;  opacity: 0;   transform: rotate(200deg) scale(1.1); }
+        }
+        @keyframes caughtPop {
+          0%   { transform: scale(0.4); opacity: 0; }
+          60%  { transform: scale(1.2); opacity: 1; }
+          100% { transform: scale(1);   opacity: 1; }
+        }
       `}</style>
 
       {/* 헤더 */}
@@ -1198,6 +1227,17 @@ function CareerSection({ onBack }) {
         onTouchMove={e => onPtrMove(e.touches[0].clientX)}
         onTouchEnd={e => onPtrUp(e.changedTouches[0].clientX)}
       >
+        {/* 📚 책 비 — 치과대학 단계에서만 */}
+        {FALL_BOOKS.map((b, bi) => (
+          <span key={bi} style={{
+            position:'absolute', left: b.left, fontSize: isMob?'1.6rem':'2.2rem',
+            pointerEvents:'none', zIndex:5,
+            animation: `bookFall ${b.dur} ${b.delay} linear infinite`,
+            opacity: idx === 3 ? 1 : 0,
+            transition: 'opacity 0.5s',
+          }}>📚</span>
+        ))}
+
         {/* 화살표 버튼 */}
         {[[-1,'←',isMob?10:36],[1,'→',isMob?10:36]].map(([dir, label, edge]) => {
           const target = idx + dir
@@ -1276,11 +1316,45 @@ function CareerSection({ onBack }) {
                   </div>
                 </div>
 
-                {/* 건물 일러스트 */}
-                <div style={{ width:'100%', height: isMob?96:138, flexShrink:0, borderRadius:12, overflow:'hidden',
+                {/* 건물 일러스트 (치과대학은 마우스로 도망감) */}
+                <div style={{ width:'100%', height: isMob?96:138, flexShrink:0, position:'relative',
                   filter: active ? `drop-shadow(0 4px 16px ${cs.color}66)` : 'none',
                   transition:'filter 0.4s', opacity: active ? 1 : 0.72 }}>
-                  <BuildingIllustration step={i} />
+                  <div
+                    style={{
+                      width:'100%', height:'100%', borderRadius:12, overflow:'hidden',
+                      transform: (active && i === 3) ? `translateX(${escape.x}px)` : 'none',
+                      transition: 'transform 0.20s ease-out',
+                      cursor: (active && i === 3) ? 'pointer' : 'default',
+                    }}
+                    onMouseMove={(active && i === 3) ? (e => {
+                      if (escape.caught) return
+                      const r = e.currentTarget.getBoundingClientRect()
+                      const side = e.clientX < r.left + r.width / 2 ? 1 : -1
+                      setEscape(prev => ({ ...prev, x: side * 28 }))
+                    }) : undefined}
+                    onMouseLeave={(active && i === 3) ? (() => setEscape(prev => ({ ...prev, x: 0 }))) : undefined}
+                    onClick={(active && i === 3) ? (e => {
+                      e.stopPropagation()
+                      setEscape({ x: 0, caught: true })
+                      setTimeout(() => setEscape({ x: 0, caught: false }), 1400)
+                    }) : undefined}
+                  >
+                    <BuildingIllustration step={i} />
+                  </div>
+                  {active && i === 3 && escape.caught && (
+                    <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
+                      fontSize: isMob?'1.1rem':'1.4rem', fontWeight:900, color:'#F9A825',
+                      textShadow:'0 2px 10px rgba(0,0,0,0.7)', pointerEvents:'none',
+                      animation:'caughtPop 0.35s cubic-bezier(0.34,1.56,0.64,1)' }}>
+                      잡았다! 🎉
+                    </div>
+                  )}
+                  {active && i === 3 && !escape.caught && escape.x === 0 && (
+                    <div style={{ position:'absolute', bottom:6, right:8, fontSize:'0.65rem', color:'rgba(255,255,255,0.45)', pointerEvents:'none' }}>
+                      건물을 잡아봐요 👆
+                    </div>
+                  )}
                 </div>
 
                 {/* 이름 */}
