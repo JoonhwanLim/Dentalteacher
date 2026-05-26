@@ -572,52 +572,105 @@ function ClinicSection({ onBack }) {
 
 function TreatmentsContent() {
   const [selected, setSelected] = useState(null)
-  const [hovered, setHovered]   = useState(null)
-  const roomBgs = ['#FFFDE7','#E8F4FD','#FFF8EE','#F5EEFF','#FFF0F0','#F4F4F4']
+  const [hovIdx,   setHovIdx]   = useState(null)
+  const isMob = mob()
+
+  const cardStyles = [
+    { bg:'rgba(196,242,214,0.60)', border:'rgba(100,200,140,0.45)', glow:'rgba(26,92,58,0.22)'   },
+    { bg:'rgba(190,224,255,0.60)', border:'rgba(100,160,220,0.45)', glow:'rgba(74,144,217,0.22)'  },
+    { bg:'rgba(255,244,195,0.60)', border:'rgba(230,180,80,0.45)',  glow:'rgba(230,126,34,0.22)'  },
+    { bg:'rgba(234,210,255,0.60)', border:'rgba(180,120,220,0.45)', glow:'rgba(142,68,173,0.22)'  },
+    { bg:'rgba(255,210,215,0.60)', border:'rgba(220,130,140,0.45)', glow:'rgba(231,76,60,0.22)'   },
+    { bg:'rgba(228,228,232,0.60)', border:'rgba(160,160,170,0.45)', glow:'rgba(85,85,85,0.15)'    },
+  ]
 
   return (
     <>
-      <div style={{ flex:1, background:'linear-gradient(160deg,#FFFBEA,#FFF3A0)', padding:'0 14px 14px', overflow: mob() ? 'auto' : 'hidden' }}>
-        <svg viewBox="0 0 984 444" style={{ width:'100%', height:'100%', display:'block' }} preserveAspectRatio="xMidYMid meet">
-          <rect x="0" y="0" width="984" height="26" rx="6" fill="#7A5030"/>
-          <rect x="3" y="4" width="978" height="14" rx="3" fill="#9A6040"/>
-          <rect x="332" y="0" width="320" height="24" rx="5" fill="#1A5C3A"/>
-          <text x="492" y="16" textAnchor="middle" fontSize="12.5" fill="white" fontWeight="bold">🏥 리라 치과의원 — 오늘의 진료실</text>
+      <div style={{
+        flex:1, position:'relative', overflow:'hidden',
+        background:'linear-gradient(180deg,#7EC8E3 0%,#B3E5FC 35%,#DCF3FF 70%,#F0FAFF 100%)',
+        display:'flex', flexDirection:'column',
+        padding: isMob ? '14px 10px' : '20px 20px',
+      }}>
+        {/* 배경 버블 장식 */}
+        {[['-8%','6%',130,0.16],['-4%','78%',80,0.13],['72%','12%',60,0.18],['65%','82%',95,0.14],['38%','46%',50,0.11]].map(([t,l,s,o],i)=>(
+          <div key={i} style={{ position:'absolute', top:t, left:l, width:s, height:s, borderRadius:'50%', background:`rgba(255,255,255,${o})`, backdropFilter:'blur(2px)', pointerEvents:'none' }}/>
+        ))}
 
+        {/* 카드 행 */}
+        <div style={{
+          flex:1, display:'flex', gap: isMob ? 10 : 14,
+          overflowX: isMob ? 'auto' : 'hidden',
+          alignItems:'stretch', position:'relative', zIndex:1,
+          paddingBottom: isMob ? 6 : 0,
+        }}>
           {treatments.map((t, i) => {
-            const x = 3 + i * 163
-            const W = 157
-            const ac = t.badgeColor
-            const bg = roomBgs[i]
-            const isH = hovered === i
+            const cs = cardStyles[i]
+            const isHov = hovIdx === i
             return (
-              <g key={i}
+              <div key={i}
                 onClick={() => setSelected(t)}
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-                style={{ cursor:'pointer', filter: isH ? `drop-shadow(0 0 16px ${ac}CC)` : 'none', transition:'filter 0.18s' }}
+                onMouseEnter={() => setHovIdx(i)}
+                onMouseLeave={() => setHovIdx(null)}
+                style={{
+                  flex: isMob ? '0 0 148px' : 1,
+                  background: cs.bg,
+                  backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)',
+                  borderRadius: isMob ? 20 : 26,
+                  border:`1.5px solid ${isHov ? 'rgba(255,255,255,0.88)' : cs.border}`,
+                  boxShadow: isHov
+                    ? `0 22px 50px ${cs.glow}, 0 0 0 2px rgba(255,255,255,0.32) inset`
+                    : `0 8px 28px ${cs.glow}, 0 0 0 1px rgba(255,255,255,0.22) inset`,
+                  display:'flex', flexDirection:'column', alignItems:'center',
+                  padding: isMob ? '14px 10px 12px' : '18px 14px 16px',
+                  cursor:'pointer', position:'relative', overflow:'hidden',
+                  transition:'transform 0.24s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s',
+                  transform: isHov ? 'translateY(-10px) scale(1.025)' : 'translateY(0) scale(1)',
+                }}
               >
-                <rect x={x} y={26} width={W} height={316} fill={bg} stroke={isH ? ac : '#CCC'} strokeWidth={isH ? 2.5 : 1}/>
-                <rect x={x} y={26} width={W} height={11} fill={ac} opacity="0.45"/>
-                <rect x={x+W/2-22} y={26} width={44} height={7} rx="3.5" fill="#DDD"/>
-                <rect x={x+W/2-20} y={31} width={40} height={9} rx="3" fill="white" opacity="0.9"/>
-                <path d={`M${x+W/2-18},40 L${x+W/2-40},112 L${x+W/2+40},112 L${x+W/2+18},40 Z`} fill="rgba(255,255,230,0.22)"/>
-                {i < 5 && <rect x={x+W} y={26} width={6} height={316} fill="#B09070"/>}
-                <rect x={x} y={334} width={W} height={8} fill="#C4905C"/>
-                <rect x={x+10} y={44} width={W-20} height={21} rx={10.5} fill={ac}/>
-                <text x={x+W/2} y={59} textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">{t.badge}</text>
-                <text x={x+W/2} y={205} textAnchor="middle" fontSize="84" style={{userSelect:'none'}}>{t.emoji}</text>
-                <rect x={x} y={342} width={W} height={102} fill={ac}/>
-                <text x={x+W/2} y={368} textAnchor="middle" fontSize="15.5" fill="white" fontWeight="bold">{t.name}</text>
-                <text x={x+W/2} y={385} textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.75)">{t.english}</text>
-                <rect x={x+28} y={395} width={W-56} height={22} rx={11} fill="rgba(255,255,255,0.18)"/>
-                <text x={x+W/2} y={410} textAnchor="middle" fontSize="10.5" fill="white" fontWeight="bold">자세히 보기 →</text>
-              </g>
+                {/* 상단 하이라이트 */}
+                <div style={{ position:'absolute', top:0, left:0, right:0, height:'45%', background:'linear-gradient(180deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0) 100%)', borderRadius:'26px 26px 50% 50%', pointerEvents:'none' }}/>
+
+                {/* 뱃지 */}
+                <div style={{
+                  background:t.badgeColor, color:'white', borderRadius:50,
+                  padding: isMob ? '3px 10px' : '4px 14px',
+                  fontSize: isMob ? '0.63rem' : '0.72rem', fontWeight:800,
+                  marginBottom: isMob ? 10 : 14, flexShrink:0,
+                  boxShadow:`0 3px 10px ${cs.glow}`,
+                }}>{t.badge}</div>
+
+                {/* 이모지 */}
+                <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', width:'100%' }}>
+                  <div style={{ position:'absolute', width:'65%', aspectRatio:'1', borderRadius:'50%', background:`radial-gradient(circle, ${cs.glow.replace('0.22','0.38')} 0%, transparent 70%)`, top:'50%', left:'50%', transform:'translate(-50%,-50%)', pointerEvents:'none' }}/>
+                  <span style={{
+                    fontSize: isMob ? '3.2rem' : '4.8rem', lineHeight:1,
+                    filter:`drop-shadow(0 10px 20px ${cs.glow.replace('0.22','0.55')}) drop-shadow(0 2px 6px rgba(0,0,0,0.10))`,
+                    position:'relative', zIndex:1,
+                    transition:'transform 0.24s cubic-bezier(0.34,1.56,0.64,1)',
+                    transform: isHov ? 'scale(1.15) translateY(-6px)' : 'scale(1)',
+                  }}>{t.emoji}</span>
+                </div>
+
+                {/* 이름 + 버튼 */}
+                <div style={{ marginTop: isMob ? 10 : 14, textAlign:'center', width:'100%' }}>
+                  <p style={{ fontWeight:900, fontSize: isMob ? '0.88rem' : '1rem', color:'#1A1A1A', marginBottom:2, lineHeight:1.3 }}>{t.name}</p>
+                  <p style={{ fontSize: isMob ? '0.62rem' : '0.7rem', color:'rgba(0,0,0,0.42)', marginBottom: isMob ? 8 : 10 }}>{t.english}</p>
+                  <div style={{
+                    background:'rgba(255,255,255,0.68)', backdropFilter:'blur(4px)',
+                    border:'1.5px solid rgba(255,255,255,0.85)', borderRadius:50,
+                    padding: isMob ? '5px 12px' : '6px 18px',
+                    fontSize: isMob ? '0.68rem' : '0.77rem', fontWeight:700, color:'#333',
+                    boxShadow:'0 2px 8px rgba(0,0,0,0.07)',
+                  }}>자세히 보기 →</div>
+                </div>
+              </div>
             )
           })}
-        </svg>
+        </div>
       </div>
 
+      {/* 상세 모달 */}
       {selected && (
         <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.55)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:300 }} onClick={() => setSelected(null)}>
           <div style={{ background:'white', borderRadius:24, padding:'36px', maxWidth:660, width:'90%', maxHeight:'85vh', overflowY:'auto' }} onClick={e => e.stopPropagation()}>
