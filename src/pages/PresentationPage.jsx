@@ -1026,8 +1026,8 @@ const FALL_BOOKS = [
   { left:'15%', delay:'1.20s', dur:'2.05s' },  // 8 — 국가면허~
   { left:'91%', delay:'0.90s', dur:'1.95s' },  // 9 — 인턴~
 ]
-// 스텝별 보이는 책 수: 초등(2)→중학(3)→고등(5)→치대(7)→면허(9)→인턴(10)→의사(0)
-const BOOK_COUNTS = [2, 3, 5, 7, 9, 10, 0]
+// 스텝별 보이는 책 수: 초등(1)→중학(2)→고등(4)→치대(7)→면허(9)→인턴(10)→의사(0)
+const BOOK_COUNTS = [1, 2, 4, 7, 9, 10, 0]
 
 /* ── BUILDING ILLUSTRATIONS (each step's standalone SVG) ── */
 function BuildingIllustration({ step }) {
@@ -1237,14 +1237,12 @@ function CareerSection({ onBack }) {
         onTouchMove={e => onPtrMove(e.touches[0].clientX)}
         onTouchEnd={e => onPtrUp(e.changedTouches[0].clientX)}
       >
-        {/* 📚 책 비 — 치과대학 단계에서만 */}
-        {FALL_BOOKS.map((b, bi) => (
-          <span key={bi} style={{
+        {/* 📚 책 비 — 스텝별로 점점 많아짐 */}
+        {FALL_BOOKS.slice(0, BOOK_COUNTS[idx]).map((b, bi) => (
+          <span key={`book-${bi}`} style={{
             position:'absolute', left: b.left, fontSize: isMob?'1.6rem':'2.2rem',
             pointerEvents:'none', zIndex:5,
             animation: `bookFall ${b.dur} ${b.delay} linear infinite`,
-            opacity: bi < BOOK_COUNTS[idx] ? 1 : 0,
-            transition: 'opacity 0.5s',
           }}>📚</span>
         ))}
 
