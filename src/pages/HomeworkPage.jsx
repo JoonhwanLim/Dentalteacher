@@ -59,8 +59,8 @@ export default function HomeworkPage() {
                 <h2>내 이름이 맞나요?</h2>
                 <p>
                   <span className="modal-name">{selected}</span>
-                  이름은 비밀번호가 없어요.<br />
-                  <strong>본인의 이름만 접속해야 합니다!</strong>
+                  본인의 이름만 접속해야합니다<br />
+                  <strong>(경고: 다른 사람 이름 접속하면 큰일남!!!!!)</strong>
                 </p>
                 <div className="modal-actions">
                   <button className="btn-cancel" onClick={() => setSelected(null)}>

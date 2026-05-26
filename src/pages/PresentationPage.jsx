@@ -172,12 +172,13 @@ const careerSteps = [
 ]
 
 const specialties = [
-  { emoji:'😁', name:'교정과', desc:'브라켓·와이어·투명교정으로 비뚤어진 치아 교정', color:'#E67E22' },
+  { emoji:'😁', name:'교정과', desc:'브라켓·와이어·투명교정으로 비뚤어진 치아를 가지런하게!', color:'#E67E22' },
   { emoji:'🔪', name:'구강악안면외과', desc:'임플란트 수술, 사랑니, 얼굴뼈 수술 전문', color:'#E74C3C' },
   { emoji:'🦠', name:'치주과', desc:'잇몸병(치주염) 치료와 잇몸 수술 전문', color:'#27AE60' },
   { emoji:'👶', name:'소아치과', desc:'어린이·청소년 전문 치과 진료', color:'#3498DB' },
   { emoji:'👑', name:'보철과', desc:'임플란트·틀니·크라운 등 인공 치아 전문', color:'#8E44AD' },
   { emoji:'💤', name:'치과마취과', desc:'전신마취·수면치료 등 통증 없는 치과 전문', color:'#16A085' },
+  { emoji:'🦷', name:'보존과', desc:'충치 치료·신경 치료·치아 미백 등 치아를 최대한 살리는 치료 전문!', color:'#2196F3' },
 ]
 
 /* hubCards 제거 — MainHub가 SVG 일러스트로 대체됨 */
@@ -778,8 +779,12 @@ function ToolsSection({ onBack }) {
 
 /* ── SECTION 2: 치과의사가 되는 길 — 교육 여정 일러스트 ── */
 function CareerSection({ onBack }) {
+  const [page, setPage] = useState(0)
+
   return (
     <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A3A7C,#0A1E40)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
+
+      {page === 0 ? (<>
       <div style={{ padding:'16px 40px', display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
         <BackBtn onClick={onBack} />
         <h1 style={{ fontSize:'1.8rem', fontWeight:900, color:'white' }}>치과의사가 되는 <span style={{ color:'#F5C800' }}>길</span></h1>
@@ -787,7 +792,7 @@ function CareerSection({ onBack }) {
       </div>
 
       {/* Journey Illustration */}
-      <div style={{ padding:'0 16px 6px', flexShrink:0 }}>
+      <div style={{ flex:1, padding:'0 16px 6px', minHeight:0 }}>
         <svg viewBox="0 0 1200 320" style={{ width:'100%', display:'block', maxHeight:'44vh' }} preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id="cg_sky" x1="0" y1="0" x2="0" y2="1">
@@ -1003,19 +1008,30 @@ function CareerSection({ onBack }) {
         </svg>
       </div>
 
-      {/* Specialties */}
-      <div style={{ flex:1, padding:'4px 20px 14px', display:'flex', flexDirection:'column', minHeight:0 }}>
-        <p style={{ color:'#F5C800', fontWeight:900, fontSize:'0.88rem', letterSpacing:2, marginBottom:8, flexShrink:0 }}>⭐ 전문의 취득 후 선택할 수 있는 치과 6대 전문 분야</p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(6,1fr)', gap:8, flex:1, minHeight:0 }}>
+      <div style={{ padding:'14px 40px', display:'flex', justifyContent:'flex-end', flexShrink:0 }}>
+        <button onClick={() => setPage(1)} style={{ background:'linear-gradient(135deg,#F5C800,#FFB300)', border:'none', borderRadius:50, padding:'12px 32px', fontFamily:"'Noto Sans KR', sans-serif", fontWeight:900, fontSize:'1rem', cursor:'pointer', color:'#1A1A1A', boxShadow:'0 4px 16px rgba(245,200,0,0.4)' }}>다음: 전문 분야 →</button>
+      </div>
+      </>) : (<>
+
+      <div style={{ padding:'16px 40px', display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
+        <button onClick={() => setPage(0)} style={{ background:'rgba(0,0,0,0.18)', border:'none', borderRadius:50, padding:'10px 20px', fontFamily:"'Noto Sans KR', sans-serif", fontWeight:700, fontSize:'0.9rem', cursor:'pointer', display:'flex', alignItems:'center', gap:6, color:'white', backdropFilter:'blur(8px)' }}>← 교육 여정</button>
+        <h1 style={{ fontSize:'1.8rem', fontWeight:900, color:'white' }}>치과 <span style={{ color:'#F5C800' }}>전문 분야</span></h1>
+        <p style={{ color:'rgba(255,255,255,0.5)', marginLeft:10, fontSize:'0.88rem' }}>전문의 취득 후 선택할 수 있는 7가지 전문 분야</p>
+        <div style={{ marginLeft:'auto' }}><BackBtn onClick={onBack} /></div>
+      </div>
+
+      <div style={{ flex:1, padding:'12px 28px 24px', display:'flex', flexDirection:'column', minHeight:0, overflowY:'auto' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:16 }}>
           {specialties.map((s,i) => (
-            <div key={i} style={{ background:'rgba(255,255,255,0.1)', borderRadius:14, padding:'12px 10px', textAlign:'center', borderTop:`3px solid ${s.color}`, display:'flex', flexDirection:'column', alignItems:'center', gap:5 }}>
-              <div style={{ fontSize:'1.6rem' }}>{s.emoji}</div>
-              <p style={{ fontWeight:900, color:'white', fontSize:'0.82rem', margin:0 }}>{s.name}</p>
-              <p style={{ color:'rgba(255,255,255,0.6)', fontSize:'0.72rem', lineHeight:1.45, margin:0 }}>{s.desc}</p>
+            <div key={i} style={{ background:'rgba(255,255,255,0.1)', borderRadius:20, padding:'28px 18px', textAlign:'center', borderTop:`4px solid ${s.color}`, display:'flex', flexDirection:'column', alignItems:'center', gap:10 }}>
+              <div style={{ fontSize:'2.6rem' }}>{s.emoji}</div>
+              <p style={{ fontWeight:900, color:'white', fontSize:'1.05rem', margin:0 }}>{s.name}</p>
+              <p style={{ color:'rgba(255,255,255,0.7)', fontSize:'0.83rem', lineHeight:1.55, margin:0 }}>{s.desc}</p>
             </div>
           ))}
         </div>
       </div>
+      </>)}
     </div>
   )
 }
