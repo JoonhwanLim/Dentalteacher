@@ -1248,32 +1248,148 @@ function CareerSection({ onBack }) {
 
 /* ── SECTION 3: 치과의사의 다양한 종류 ── */
 function SpecialtiesSection({ onBack }) {
-  const [selected, setSelected] = useState(null)
+  const [idx,      setIdx]      = useState(0)
+  const [animKey,  setAnimKey]  = useState(0)
+  const [slideDir, setSlideDir] = useState(1)
+  const isMob = mob()
+  const s = specialties[idx]
+
+  function go(newIdx) {
+    if (newIdx < 0 || newIdx >= specialties.length) return
+    setSlideDir(newIdx > idx ? 1 : -1)
+    setIdx(newIdx)
+    setAnimKey(k => k + 1)
+  }
 
   return (
     <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A3A7C,#0A1E40)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
-      <div style={{ padding:'16px 40px', display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
+      <style>{`
+        @keyframes slideFromRight { from{transform:translateX(70px);opacity:0} to{transform:translateX(0);opacity:1} }
+        @keyframes slideFromLeft  { from{transform:translateX(-70px);opacity:0} to{transform:translateX(0);opacity:1} }
+        .nav-btn:not(:disabled):hover { background:rgba(255,255,255,0.22) !important; transform:scale(1.08); }
+      `}</style>
+
+      {/* 헤더 */}
+      <div style={{ padding: isMob?'12px 16px':'16px 40px', display:'flex', alignItems:'center', gap:12, flexShrink:0, color:'white' }}>
         <BackBtn onClick={onBack} />
-        <h1 style={{ fontSize:'1.8rem', fontWeight:900, color:'white' }}>치과의사의 다양한 <span style={{ color:'#F5C800' }}>종류</span></h1>
-        <p style={{ color:'rgba(255,255,255,0.5)', marginLeft:10, fontSize:'0.88rem' }}>전문의 취득 후 선택할 수 있는 8가지 전문 분야</p>
+        <h1 style={{ fontSize: isMob?'1.2rem':'1.8rem', fontWeight:900, color:'white' }}>
+          치과의사의 다양한 <span style={{ color:'#F5C800' }}>종류</span>
+        </h1>
+        <p style={{ color:'rgba(255,255,255,0.45)', marginLeft:6, fontSize:'0.82rem' }}>8가지 전문 분야</p>
       </div>
 
-      <div style={{ flex:1, padding:'8px 28px 24px', overflowY:'auto' }}>
-        <div style={{ display:'grid', gridTemplateColumns: mob() ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap:14 }}>
-          {specialties.map((s, i) => (
-            <div key={i}
-              onClick={() => setSelected(selected === i ? null : i)}
-              style={{ background: selected===i ? `${s.color}22` : 'rgba(255,255,255,0.07)', borderRadius:20, padding:'22px 16px', textAlign:'center', borderTop:`4px solid ${s.color}`, border: selected===i ? `2px solid ${s.color}88` : `1px solid rgba(255,255,255,0.1)`, borderTop:`4px solid ${s.color}`, cursor:'pointer', transition:'all 0.2s', display:'flex', flexDirection:'column', alignItems:'center', gap:10 }}
-            >
-              <div style={{ fontSize: mob() ? '2rem' : '2.8rem', lineHeight:1 }}>{s.emoji}</div>
-              <p style={{ fontWeight:900, color: selected===i ? s.color : 'white', fontSize: mob() ? '0.9rem' : '1rem', margin:0, lineHeight:1.3 }}>{s.name}</p>
-              {selected === i ? (
-                <p style={{ color:'rgba(255,255,255,0.85)', fontSize:'0.82rem', lineHeight:1.6, margin:0 }}>{s.desc}</p>
-              ) : (
-                <p style={{ color:'rgba(255,255,255,0.4)', fontSize:'0.74rem', margin:0 }}>클릭해서 알아보기 ↓</p>
-              )}
-            </div>
+      {/* 카드 영역 */}
+      <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', overflow:'hidden', padding:'0 10px' }}>
+
+        {/* 왼쪽 버튼 */}
+        <button
+          className="nav-btn"
+          onClick={() => go(idx - 1)}
+          disabled={idx === 0}
+          style={{
+            position:'absolute', left: isMob?6:32, zIndex:10,
+            width: isMob?44:58, height: isMob?44:58, borderRadius:'50%',
+            background:'rgba(255,255,255,0.10)', border:'1.5px solid rgba(255,255,255,0.18)',
+            backdropFilter:'blur(10px)', color:'white',
+            fontSize: isMob?'1.3rem':'1.6rem', cursor: idx===0?'default':'pointer',
+            opacity: idx===0 ? 0.22 : 1, transition:'all 0.18s',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            fontFamily:'inherit',
+          }}
+        >←</button>
+
+        {/* 슬라이드 카드 */}
+        <div
+          key={animKey}
+          style={{
+            animation: `${slideDir > 0 ? 'slideFromRight' : 'slideFromLeft'} 0.34s cubic-bezier(0.22,0.8,0.36,1)`,
+            background:'rgba(255,255,255,0.08)', backdropFilter:'blur(24px)',
+            borderRadius: isMob?24:36,
+            border:`2px solid ${s.color}55`,
+            boxShadow:`0 0 80px ${s.color}28, inset 0 1px 0 rgba(255,255,255,0.14)`,
+            padding: isMob?'28px 22px':'52px 68px',
+            maxWidth: isMob?'80vw':560, width:'100%',
+            textAlign:'center', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?14:20,
+          }}
+        >
+          {/* 번호 뱃지 */}
+          <div style={{
+            background:`${s.color}28`, border:`1.5px solid ${s.color}66`,
+            borderRadius:50, padding: isMob?'4px 14px':'5px 18px',
+            fontSize: isMob?'0.72rem':'0.80rem', fontWeight:800, color: s.color,
+          }}>{idx + 1} / {specialties.length}</div>
+
+          {/* 이모지 */}
+          <div style={{
+            fontSize: isMob?'4.5rem':'6.5rem', lineHeight:1,
+            filter:`drop-shadow(0 0 28px ${s.color}AA)`,
+          }}>{s.emoji}</div>
+
+          {/* 이름 */}
+          <h2 style={{ fontSize: isMob?'1.7rem':'2.3rem', fontWeight:900, color:s.color, margin:0, lineHeight:1.2 }}>{s.name}</h2>
+
+          {/* 구분선 */}
+          <div style={{ width:52, height:3, background:s.color, borderRadius:2, opacity:0.6 }}/>
+
+          {/* 설명 */}
+          <p style={{ fontSize: isMob?'0.95rem':'1.1rem', color:'rgba(255,255,255,0.84)', lineHeight:1.75, margin:0, maxWidth:400 }}>{s.desc}</p>
+        </div>
+
+        {/* 오른쪽 버튼 */}
+        <button
+          className="nav-btn"
+          onClick={() => go(idx + 1)}
+          disabled={idx === specialties.length - 1}
+          style={{
+            position:'absolute', right: isMob?6:32, zIndex:10,
+            width: isMob?44:58, height: isMob?44:58, borderRadius:'50%',
+            background:'rgba(255,255,255,0.10)', border:'1.5px solid rgba(255,255,255,0.18)',
+            backdropFilter:'blur(10px)', color:'white',
+            fontSize: isMob?'1.3rem':'1.6rem', cursor: idx===specialties.length-1?'default':'pointer',
+            opacity: idx===specialties.length-1 ? 0.22 : 1, transition:'all 0.18s',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            fontFamily:'inherit',
+          }}
+        >→</button>
+      </div>
+
+      {/* 하단: 도트 + 슬라이더 */}
+      <div style={{ padding: isMob?'12px 24px 24px':'16px 60px 32px', display:'flex', flexDirection:'column', alignItems:'center', gap:14, flexShrink:0 }}>
+
+        {/* 도트 인디케이터 */}
+        <div style={{ display:'flex', gap:7 }}>
+          {specialties.map((sp, i) => (
+            <div key={i} onClick={() => go(i)} style={{
+              width: i===idx ? 26 : 8, height:8, borderRadius:4,
+              background: i===idx ? sp.color : 'rgba(255,255,255,0.22)',
+              cursor:'pointer', transition:'all 0.28s',
+            }}/>
           ))}
+        </div>
+
+        {/* 슬라이더 트랙 */}
+        <div
+          style={{ width: isMob?'85%':'70%', height:6, background:'rgba(255,255,255,0.12)', borderRadius:3, cursor:'pointer', position:'relative' }}
+          onClick={e => {
+            const rect = e.currentTarget.getBoundingClientRect()
+            go(Math.round((e.clientX - rect.left) / rect.width * (specialties.length - 1)))
+          }}
+        >
+          <div style={{
+            position:'absolute', left:0, top:0, bottom:0,
+            width:`${(idx / (specialties.length - 1)) * 100}%`,
+            background:`linear-gradient(90deg, ${specialties[0].color}, ${s.color})`,
+            borderRadius:3, transition:'width 0.28s',
+          }}/>
+          <div style={{
+            position:'absolute', top:'50%',
+            left:`${(idx / (specialties.length - 1)) * 100}%`,
+            transform:'translate(-50%,-50%)',
+            width:18, height:18, borderRadius:'50%',
+            background:s.color, border:'2.5px solid white',
+            boxShadow:`0 0 12px ${s.color}88`,
+            transition:'left 0.28s, background 0.28s',
+          }}/>
         </div>
       </div>
     </div>
