@@ -578,7 +578,7 @@ function TreatmentsContent() {
   const physRef      = useRef(null)
   const rafRef       = useRef(null)
   const isMob = mob()
-  const csz = isMob ? 90 : 122
+  const csz = isMob ? 180 : 244
   const bR  = csz / 2
 
   const bStyles = [
@@ -698,13 +698,13 @@ function TreatmentsContent() {
     <>
       <style>{`
         @keyframes bJelly {
-          0%  {transform:scale(1,1)       rotate(0deg)  }
-          16% {transform:scale(1.34,0.70) rotate(-8deg) }
-          34% {transform:scale(0.74,1.32) rotate(7deg)  }
-          52% {transform:scale(1.20,0.82) rotate(-3deg) }
-          70% {transform:scale(0.92,1.12) rotate(1.5deg)}
-          86% {transform:scale(1.05,0.96) rotate(0deg)  }
-          100%{transform:scale(1,1)       rotate(0deg)  }
+          0%  {transform:scale(1,1)         rotate(0deg)   }
+          16% {transform:scale(1.068,0.940) rotate(-1.6deg)}
+          34% {transform:scale(0.948,1.064) rotate(1.4deg) }
+          52% {transform:scale(1.040,0.964) rotate(-0.6deg)}
+          70% {transform:scale(0.984,1.024) rotate(0.3deg) }
+          86% {transform:scale(1.010,0.992) rotate(0deg)   }
+          100%{transform:scale(1,1)         rotate(0deg)   }
         }
         @keyframes cloudDrift {
           0%,100%{transform:translate(0,0)}
