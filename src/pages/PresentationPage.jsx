@@ -571,169 +571,203 @@ function ClinicSection({ onBack }) {
 }
 
 function TreatmentsContent() {
-  const [selected,  setSelected]  = useState(null)
-  const [hovIdx,    setHovIdx]    = useState(null)
-  const [jellySet,  setJellySet]  = useState(() => new Set())
+  const [selected, setSelected] = useState(null)
+  const [hovIdx,   setHovIdx]   = useState(null)
+  const [jellySet, setJellySet] = useState(() => new Set())
   const isMob = mob()
 
-  const clay = [
-    { top:'#A8F5C0', mid:'#6EE09A', shadow:'#38A85E', glow:'rgba(80,210,130,0.55)'  },
-    { top:'#A8E5FF', mid:'#68C8F5', shadow:'#3098CC', glow:'rgba(80,180,240,0.55)'  },
-    { top:'#FFEEA0', mid:'#FFD84D', shadow:'#C8A020', glow:'rgba(255,200,50,0.55)'  },
-    { top:'#E0BEFF', mid:'#C088F8', shadow:'#8848D0', glow:'rgba(180,100,240,0.55)' },
-    { top:'#FFBFD0', mid:'#FF88AA', shadow:'#D04870', glow:'rgba(240,90,130,0.55)'  },
-    { top:'#D8D8F0', mid:'#B0B0D0', shadow:'#7878A8', glow:'rgba(150,150,200,0.55)' },
+  const bubbles = [
+    { bg:'rgba(160,238,196,0.52)', shine:'rgba(220,255,240,0.88)', glow:'rgba(60,200,120,0.52)'  },
+    { bg:'rgba(160,212,252,0.52)', shine:'rgba(215,242,255,0.88)', glow:'rgba(60,158,235,0.52)'  },
+    { bg:'rgba(255,232,136,0.52)', shine:'rgba(255,252,210,0.88)', glow:'rgba(232,188,30,0.52)'  },
+    { bg:'rgba(216,175,255,0.52)', shine:'rgba(242,225,255,0.88)', glow:'rgba(165,95,242,0.52)'  },
+    { bg:'rgba(255,182,202,0.52)', shine:'rgba(255,225,238,0.88)', glow:'rgba(232,88,128,0.52)'  },
+    { bg:'rgba(192,222,255,0.52)', shine:'rgba(228,244,255,0.88)', glow:'rgba(100,165,242,0.52)' },
   ]
 
-  const R   = isMob ? 138 : 194
-  const csz = isMob ? 100 : 132
+  /* desktop layout constants */
+  const R   = 172,  csz  = 138
+  const lSH = 118,  lSV  = 68
+  const offX = lSH, offY = lSV
+  const bigW = R*2 + csz + lSH*2
+  const bigH = R*2 + csz + lSV*2
+  const cx = offX + R + csz/2
+  const cy = offY + R + csz/2
+
+  /* mobile grid constants */
+  const mcsz = 100
 
   function fireJelly(i) {
     setJellySet(prev => new Set([...prev, i]))
-    setTimeout(() => setJellySet(prev => { const n = new Set(prev); n.delete(i); return n }), 700)
+    setTimeout(() => setJellySet(prev => { const n = new Set(prev); n.delete(i); return n }), 720)
+  }
+
+  function BubbleCircle({ t, i, size }) {
+    const bb  = bubbles[i]
+    const isJ = jellySet.has(i)
+    const isH = hovIdx === i
+    const dur = 2.1 + i * 0.19
+    const del = -(i * 0.43)
+    return (
+      <div
+        onClick={() => setSelected(t)}
+        onMouseEnter={() => { setHovIdx(i); fireJelly(i) }}
+        onMouseLeave={() => setHovIdx(null)}
+        style={{
+          width: size, height: size, borderRadius: '50%', flexShrink: 0,
+          background: `radial-gradient(circle at 30% 26%, ${bb.shine} 0%, ${bb.bg} 55%, ${bb.bg.replace('0.52','0.25')} 100%)`,
+          border: `2.5px solid rgba(255,255,255,${isH ? 0.95 : 0.75})`,
+          boxShadow: isH
+            ? `inset 0 6px 18px rgba(255,255,255,0.78), inset 0 -5px 12px rgba(0,0,0,0.06), 0 22px 52px ${bb.glow}, 0 6px 18px rgba(0,0,0,0.10)`
+            : `inset 0 6px 18px rgba(255,255,255,0.65), inset 0 -5px 12px rgba(0,0,0,0.06), 0 10px 32px ${bb.glow}, 0 4px 12px rgba(0,0,0,0.08)`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer', userSelect: 'none', position: 'relative',
+          animation: isJ
+            ? 'bJelly 0.72s cubic-bezier(0.34,1.56,0.64,1) both'
+            : isH
+              ? `bLift ${dur}s ease-in-out ${del}s infinite`
+              : `bFloat ${dur}s ease-in-out ${del}s infinite`,
+          transition: 'box-shadow 0.22s, border-color 0.18s',
+        }}
+      >
+        <div style={{ position:'absolute', top:'10%', left:'18%', width:'38%', height:'26%', borderRadius:'50%', background:'rgba(255,255,255,0.76)', filter:'blur(5px)', transform:'rotate(-26deg)', pointerEvents:'none' }}/>
+        <span style={{ fontSize: size * 0.31, lineHeight:1, position:'relative', zIndex:1, filter:`drop-shadow(0 4px 10px ${bb.glow})` }}>{t.emoji}</span>
+      </div>
+    )
   }
 
   return (
     <>
       <style>{`
-        @keyframes clayFloat {
-          0%,100% { transform: translateY(0px) rotate(0deg); }
-          50%      { transform: translateY(-10px) rotate(1deg); }
+        @keyframes bFloat { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-11px) rotate(1.2deg)} }
+        @keyframes bLift  { 0%,100%{transform:translateY(-15px) rotate(-1deg)} 50%{transform:translateY(-22px) rotate(1.5deg)} }
+        @keyframes bJelly {
+          0%  {transform:scale(1,1)       rotate(0deg)}
+          16% {transform:scale(1.32,0.72) rotate(-7deg)}
+          34% {transform:scale(0.76,1.30) rotate(6deg)}
+          52% {transform:scale(1.18,0.84) rotate(-3deg)}
+          70% {transform:scale(0.93,1.10) rotate(1.5deg)}
+          86% {transform:scale(1.04,0.97) rotate(0deg)}
+          100%{transform:scale(1,1)       rotate(0deg)}
         }
-        @keyframes clayLift {
-          0%,100% { transform: translateY(-14px) rotate(-1deg); }
-          50%      { transform: translateY(-20px) rotate(1.5deg); }
+        @keyframes hubBob {
+          0%,100%{transform:translate(-50%,-50%) scale(1)   rotate(0deg)}
+          50%    {transform:translate(-50%,-56%) scale(1.06) rotate(3deg)}
         }
-        @keyframes clayJelly {
-          0%   { transform: scale(1,1)       rotate(0deg);   }
-          18%  { transform: scale(1.28,0.76) rotate(-6deg);  }
-          36%  { transform: scale(0.80,1.24) rotate(5deg);   }
-          54%  { transform: scale(1.14,0.88) rotate(-2.5deg);}
-          72%  { transform: scale(0.95,1.07) rotate(1deg);   }
-          88%  { transform: scale(1.03,0.98) rotate(0deg);   }
-          100% { transform: scale(1,1)       rotate(0deg);   }
-        }
-        @keyframes hubPulse {
-          0%,100% { box-shadow: 0 10px 0 #C8A020, 0 16px 28px rgba(255,200,60,0.45), inset 0 4px 10px rgba(255,255,255,0.9); }
-          50%      { box-shadow: 0 14px 0 #C8A020, 0 22px 36px rgba(255,200,60,0.55), inset 0 4px 10px rgba(255,255,255,0.9); }
+        @keyframes cloudDrift {
+          0%,100%{transform:translateX(0px) translateY(0px)}
+          33%    {transform:translateX(12px) translateY(-8px)}
+          66%    {transform:translateX(-8px) translateY(6px)}
         }
       `}</style>
 
       <div style={{
-        flex:1, position:'relative', overflow:'hidden',
-        background:'radial-gradient(ellipse at 35% 25%, #D8F5FF 0%, #C0EAFF 45%, #D4F5E4 100%)',
+        flex:1, overflow:'hidden', position:'relative',
+        background:'linear-gradient(155deg, #FFD0EC 0%, #F0BEFF 45%, #CAD4FF 100%)',
         display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
       }}>
-        {/* 배경 원 장식 */}
-        {[['8%','4%',180,0.18],['75%','80%',120,0.14],['60%','8%',90,0.20],['15%','82%',140,0.12]].map(([t,l,s,o],i)=>(
-          <div key={i} style={{ position:'absolute', top:t, left:l, width:s, height:s, borderRadius:'50%', background:`rgba(255,255,255,${o})`, pointerEvents:'none' }}/>
+        {/* 몽환 구름 배경 */}
+        {[
+          ['8%','5%','220px','170px',0.28,'0s'],
+          ['60%','72%','180px','140px',0.22,'1.2s'],
+          ['65%','10%','150px','120px',0.24,'2.1s'],
+          ['18%','68%','200px','155px',0.20,'0.7s'],
+          ['40%','40%','120px','100px',0.15,'1.8s'],
+        ].map(([t,l,w,h,o,d],i)=>(
+          <div key={i} style={{
+            position:'absolute', top:t, left:l, width:w, height:h,
+            borderRadius:'50%', background:`rgba(255,255,255,${o})`,
+            filter:'blur(22px)', pointerEvents:'none',
+            animation:`cloudDrift ${7+i*1.3}s ease-in-out ${d} infinite`,
+          }}/>
         ))}
 
         {/* 타이틀 */}
-        <div style={{ marginBottom: isMob ? 18 : 26, position:'relative', zIndex:2, flexShrink:0 }}>
+        <div style={{ marginBottom: isMob ? 16 : 22, position:'relative', zIndex:2, flexShrink:0 }}>
           <span style={{
-            display:'inline-block',
-            background:'white', borderRadius:50,
-            padding: isMob ? '8px 22px' : '11px 34px',
-            fontSize: isMob ? '0.88rem' : '1.05rem', fontWeight:900, color:'#1A5C3A',
-            boxShadow:'0 6px 0 #c8e8d0, 0 10px 24px rgba(50,150,90,0.22)',
+            display:'inline-flex', alignItems:'center', gap:8,
+            background:'rgba(255,255,255,0.82)', backdropFilter:'blur(12px)',
+            border:'2px solid rgba(255,255,255,0.95)', borderRadius:50,
+            padding: isMob ? '9px 24px' : '12px 38px',
+            fontSize: isMob ? '0.92rem' : '1.12rem', fontWeight:900, color:'#2A6A48',
+            boxShadow:'0 6px 24px rgba(100,200,150,0.28)',
             letterSpacing: 0.5,
           }}>🦷 치과 진료의 종류</span>
         </div>
 
-        {/* 원형 배치 */}
-        <div style={{ position:'relative', width: R*2+csz, height: R*2+csz, flexShrink:0, zIndex:1 }}>
-
-          {/* SVG 연결선 (중심에서 카드 바깥까지) */}
-          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', overflow:'visible' }}>
-            {treatments.map((_, i) => {
-              const a  = (i*60 - 90) * Math.PI / 180
-              const cx = R + csz/2, cy = R + csz/2
-              const r0 = isMob ? 36 : 48
-              const r1 = R - csz/2 - 2
-              return (
-                <line key={i}
-                  x1={cx + Math.cos(a)*r0} y1={cy + Math.sin(a)*r0}
-                  x2={cx + Math.cos(a)*r1} y2={cy + Math.sin(a)*r1}
-                  stroke="rgba(80,180,120,0.30)" strokeWidth={isMob?2:2.5}
-                  strokeDasharray="6 5" strokeLinecap="round"
-                />
-              )
-            })}
-          </svg>
-
-          {/* 중앙 허브 */}
-          <div style={{
-            position:'absolute', top:'50%', left:'50%',
-            transform:'translate(-50%,-50%)',
-            width: isMob ? 70 : 94, height: isMob ? 70 : 94,
-            borderRadius:'50%',
-            background:'linear-gradient(140deg, #FFF9D0, #FFE870)',
-            animation:'hubPulse 2.4s ease-in-out infinite',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            fontSize: isMob ? '2rem' : '2.7rem', userSelect:'none', zIndex:5,
-          }}>🏥</div>
-
-          {/* 클레이 카드 */}
-          {treatments.map((t, i) => {
-            const a    = (i*60 - 90) * Math.PI / 180
-            const x    = R + csz/2 + Math.cos(a)*R - csz/2
-            const y    = R + csz/2 + Math.sin(a)*R - csz/2
-            const cc   = clay[i]
-            const isH  = hovIdx === i
-            const isJ  = jellySet.has(i)
-            const dur  = 2.0 + i * 0.20
-            const del  = -(i * 0.42)
-
-            return (
-              <div key={i}
-                onClick={() => setSelected(t)}
-                onMouseEnter={() => { setHovIdx(i); fireJelly(i) }}
-                onMouseLeave={() => setHovIdx(null)}
-                style={{
-                  position:'absolute', left: x, top: y,
-                  width: csz, height: csz, borderRadius:'50%',
-                  background:`linear-gradient(140deg, ${cc.top} 0%, ${cc.mid} 70%)`,
-                  boxShadow: isH
-                    ? `0 ${isMob?20:26}px 0 ${cc.shadow}, 0 ${isMob?28:36}px 28px ${cc.glow}, inset 0 5px 12px rgba(255,255,255,0.80)`
-                    : `0 ${isMob?11:15}px 0 ${cc.shadow}, 0 ${isMob?16:22}px 22px ${cc.glow}, inset 0 5px 12px rgba(255,255,255,0.75)`,
-                  display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-                  cursor:'pointer', userSelect:'none', position:'absolute',
-                  animation: isJ
-                    ? 'clayJelly 0.70s cubic-bezier(0.34,1.56,0.64,1) both'
-                    : isH
-                      ? `clayLift ${dur}s ease-in-out ${del}s infinite`
-                      : `clayFloat ${dur}s ease-in-out ${del}s infinite`,
-                  transition: 'box-shadow 0.22s',
-                  zIndex: isH ? 10 : 2,
-                  left: x, top: y,
-                }}
-              >
-                {/* 상단 하이라이트 (클레이 광택) */}
-                <div style={{
-                  position:'absolute', top:'10%', left:'18%',
-                  width:'38%', height:'26%', borderRadius:'50%',
-                  background:'rgba(255,255,255,0.62)',
-                  filter:'blur(4px)', transform:'rotate(-28deg)',
-                  pointerEvents:'none',
-                }}/>
-                <span style={{
-                  fontSize: isMob ? '2.4rem' : '3.2rem', lineHeight:1,
-                  position:'relative', zIndex:1,
-                  filter:`drop-shadow(0 3px 6px ${cc.shadow}88)`,
-                }}>{t.emoji}</span>
-                <p style={{
-                  fontSize: isMob ? '0.66rem' : '0.76rem', fontWeight:900,
-                  color:'rgba(0,0,0,0.58)', marginTop: isMob ? 5 : 7,
-                  textAlign:'center', lineHeight:1.25,
-                  padding:`0 ${isMob?6:10}px`,
-                  position:'relative', zIndex:1,
-                  textShadow:'0 1px 2px rgba(255,255,255,0.7)',
-                }}>{t.name}</p>
+        {isMob ? (
+          /* ── 모바일: 2×3 버블 그리드 ── */
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:18, padding:'0 20px', zIndex:1 }}>
+            {treatments.map((t, i) => (
+              <div key={i} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:8 }}>
+                <BubbleCircle t={t} i={i} size={mcsz} />
+                <p style={{ fontSize:'0.72rem', fontWeight:900, color:'rgba(50,30,80,0.88)', textAlign:'center', lineHeight:1.3, textShadow:'0 1px 4px rgba(255,255,255,0.9)' }}>{t.name}</p>
               </div>
-            )
-          })}
-        </div>
+            ))}
+          </div>
+        ) : (
+          /* ── 데스크탑: 원형 휠 + 바깥 라벨 ── */
+          <div style={{ position:'relative', width:bigW, height:bigH, flexShrink:0, zIndex:1 }}>
+
+            {/* SVG 연결선 */}
+            <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', overflow:'visible' }}>
+              {treatments.map((_, i) => {
+                const a  = (i*60-90)*Math.PI/180
+                const r0 = 52, r1 = R - csz/2 - 4
+                return (
+                  <line key={i}
+                    x1={cx+Math.cos(a)*r0} y1={cy+Math.sin(a)*r0}
+                    x2={cx+Math.cos(a)*r1} y2={cy+Math.sin(a)*r1}
+                    stroke="rgba(255,255,255,0.55)" strokeWidth="2.5"
+                    strokeDasharray="7 5" strokeLinecap="round"
+                  />
+                )
+              })}
+            </svg>
+
+            {/* 중앙 허브 */}
+            <div style={{
+              position:'absolute', top:'50%', left:'50%',
+              animation:'hubBob 3s ease-in-out infinite',
+              width:92, height:92, borderRadius:'50%',
+              background:'radial-gradient(circle at 32% 28%, rgba(255,252,220,0.95) 0%, rgba(255,235,150,0.88) 60%)',
+              border:'3px solid rgba(255,255,255,0.92)',
+              boxShadow:'0 10px 0 rgba(210,160,40,0.55), 0 18px 32px rgba(220,160,40,0.40), inset 0 4px 12px rgba(255,255,255,0.88)',
+              display:'flex', alignItems:'center', justifyContent:'center',
+              fontSize:'2.6rem', userSelect:'none', zIndex:5,
+            }}>🏥</div>
+
+            {/* 버블 + 라벨 */}
+            {treatments.flatMap((t, i) => {
+              const a    = (i*60-90)*Math.PI/180
+              const cosA = Math.cos(a), sinA = Math.sin(a)
+              const bx   = cx + cosA*R - csz/2
+              const by   = cy + sinA*R - csz/2
+              const lx   = cx + cosA*(R + csz/2 + 14)
+              const ly   = cy + sinA*(R + csz/2 + 14)
+
+              let lTx, lTy, tAlign
+              if (cosA > 0.3)       { lTx='0%';    lTy='-50%'; tAlign='left'   }
+              else if (cosA < -0.3) { lTx='-100%'; lTy='-50%'; tAlign='right'  }
+              else if (sinA < 0)    { lTx='-50%';  lTy='-100%'; tAlign='center' }
+              else                  { lTx='-50%';  lTy='0%';   tAlign='center' }
+
+              return [
+                <div key={`b${i}`} style={{ position:'absolute', left:bx, top:by, zIndex: hovIdx===i?10:3 }}>
+                  <BubbleCircle t={t} i={i} size={csz} />
+                </div>,
+                <div key={`l${i}`} style={{
+                  position:'absolute', left:lx, top:ly,
+                  transform:`translate(${lTx},${lTy})`,
+                  textAlign: tAlign, maxWidth:114, zIndex:4, pointerEvents:'none',
+                }}>
+                  <p style={{ fontSize:'0.86rem', fontWeight:900, color:'rgba(44,28,80,0.92)', lineHeight:1.3, textShadow:'0 1px 5px rgba(255,255,255,0.95)' }}>{t.name}</p>
+                  <p style={{ fontSize:'0.70rem', fontWeight:600, color:'rgba(70,50,110,0.60)', marginTop:3, lineHeight:1.3 }}>{t.english}</p>
+                </div>,
+              ]
+            })}
+          </div>
+        )}
       </div>
 
       {/* 상세 모달 */}
