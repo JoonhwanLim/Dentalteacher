@@ -462,6 +462,15 @@ function DaySection({ onBack }) {
   const item = timeline[selected]
   const isMob = mob()
 
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'ArrowRight') setSelected(s => Math.min(s + 1, timeline.length - 1))
+      if (e.key === 'ArrowLeft')  setSelected(s => Math.max(s - 1, 0))
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   return (
     <div style={{ width:'100vw', height:'100vh', display:'flex', flexDirection:'column', background:'linear-gradient(160deg,#F0FFF4,#E8F5E9)', fontFamily:"'Noto Sans KR',sans-serif" }}>
       <style>{`@keyframes slideIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }`}</style>
