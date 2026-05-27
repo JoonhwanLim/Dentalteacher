@@ -283,7 +283,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
 
           {/* ── ZONE 0: 여의사 캐릭터 ── */}
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
-            {hovered===0 && <ellipse cx="155" cy="404" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            {hovered===0 && <ellipse cx="155" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <g transform="translate(34, 90) scale(0.78)">
             <ellipse cx="135" cy="408" rx="19" ry="7" fill="#222"/>
             <ellipse cx="174" cy="408" rx="19" ry="7" fill="#222"/>
@@ -333,36 +333,36 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <ellipse cx="130" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
             <ellipse cx="180" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
             </g>
-            <rect x="66" y="412" width="182" height="42" rx="15" fill="#1A5C3A"/>
-            <text x="157" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 하루 →</text>
-            <text x="157" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">출근부터 퇴근까지</text>
+            <rect x="66" y="462" width="182" height="42" rx="15" fill="#1A5C3A"/>
+            <text x="157" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 하루 →</text>
+            <text x="157" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">출근부터 퇴근까지</text>
           </g>
 
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
-            {hovered===1 && <ellipse cx="398" cy="404" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone1.png" x="238" y="136" width="320" height="249" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="289" y="412" width="220" height="42" rx="15" fill="#1A5C3A"/>
-            <text x="399" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치료와 비밀 무기 →</text>
-            <text x="399" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
+            {hovered===1 && <ellipse cx="398" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <image href="/zone1.png" x="270" y="336" width="256" height="199" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="289" y="462" width="220" height="42" rx="15" fill="#1A5C3A"/>
+            <text x="399" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치료와 비밀 무기 →</text>
+            <text x="399" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
           </g>
 
           {/* ── ZONE 3: 현미경 ── */}
           <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
-            {hovered===3 && <ellipse cx="660" cy="404" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone3.png" x="538" y="76" width="250" height="309" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="564" y="412" width="196" height="42" rx="15" fill="#1A7C5C"/>
-            <text x="662" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 종류 →</text>
-            <text x="662" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">교정과·소아치과 등</text>
+            {hovered===3 && <ellipse cx="660" cy="454" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <image href="/zone3.png" x="563" y="176" width="200" height="247" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="564" y="462" width="196" height="42" rx="15" fill="#1A7C5C"/>
+            <text x="662" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 종류 →</text>
+            <text x="662" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">교정과·소아치과 등</text>
           </g>
 
           {/* ── ZONE 2: 책장 ── */}
           <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
-            {hovered===2 && <ellipse cx="876" cy="404" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone2.png" x="793" y="115" width="168" height="270" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="780" y="412" width="192" height="42" rx="15" fill="#1A3A7C"/>
-            <text x="876" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는 법 →</text>
-            <text x="876" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">공부와 국가고시</text>
+            {hovered===2 && <ellipse cx="876" cy="454" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <image href="/zone2.png" x="810" y="185" width="134" height="216" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="780" y="462" width="192" height="42" rx="15" fill="#1A3A7C"/>
+            <text x="876" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는 법 →</text>
+            <text x="876" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">공부와 국가고시</text>
           </g>
         </svg>
       </div>
