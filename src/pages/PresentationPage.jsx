@@ -332,6 +332,23 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <text x="625" y="487" textAnchor="middle" fontSize="10" fill="rgba(60,35,0,0.7)">교정과·소아치과 등</text>
             <text x="685" y="470" textAnchor="middle" fontSize="12" fill="#5C3A00" opacity="0.5">✦</text>
             <text x="693" y="483" textAnchor="middle" fontSize="8" fill="#5C3A00" opacity="0.35">✧</text>
+            {/* 하트 파티클 */}
+            {hovered===3 && [
+              {x:548, y:440, dx:-6,  sz:10, c:'#FF4D8D', delay:'0s'   },
+              {x:572, y:448, dx: 4,  sz:8,  c:'#FF6B9D', delay:'0.22s'},
+              {x:600, y:432, dx:-3,  sz:13, c:'#E91E8C', delay:'0.45s'},
+              {x:628, y:445, dx: 7,  sz:9,  c:'#FF4D8D', delay:'0.08s'},
+              {x:655, y:436, dx:-5,  sz:11, c:'#FF6B9D', delay:'0.35s'},
+              {x:680, y:443, dx: 5,  sz:8,  c:'#E91E8C', delay:'0.6s' },
+              {x:614, y:452, dx: 0,  sz:10, c:'#FF4D8D', delay:'0.7s' },
+            ].map((h, i) => (
+              <text key={i} x={h.x} y={h.y} fontSize={h.sz} textAnchor="middle" fill={h.c} opacity="0">
+                ♥
+                <animate attributeName="opacity" values="0;1;1;0" dur="1.6s" begin={h.delay} repeatCount="indefinite"/>
+                <animate attributeName="y" values={`${h.y};${h.y-75}`} dur="1.6s" begin={h.delay} repeatCount="indefinite"/>
+                <animate attributeName="x" values={`${h.x};${h.x+h.dx}`} dur="1.6s" begin={h.delay} repeatCount="indefinite"/>
+              </text>
+            ))}
           </g>
 
           {/* ── ZONE 2: 책장 ── */}
