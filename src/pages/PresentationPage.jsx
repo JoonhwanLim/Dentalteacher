@@ -284,55 +284,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 0: 여의사 캐릭터 ── */}
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
             {hovered===0 && <ellipse cx="155" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <g transform="translate(34, 120) scale(0.78)">
-            <ellipse cx="135" cy="408" rx="19" ry="7" fill="#222"/>
-            <ellipse cx="174" cy="408" rx="19" ry="7" fill="#222"/>
-            <rect x="125" y="354" width="25" height="58" rx="10" fill="#3A5890"/>
-            <rect x="157" y="354" width="25" height="58" rx="10" fill="#3A5890"/>
-            <path d="M116,222 Q96,265 100,315 Q102,350 115,372" stroke="#4A2010" strokeWidth="28" fill="none" strokeLinecap="round"/>
-            <path d="M194,222 Q214,265 210,315 Q208,350 195,372" stroke="#4A2010" strokeWidth="28" fill="none" strokeLinecap="round"/>
-            <rect x="112" y="275" width="86" height="92" rx="14" fill="white" stroke="#DDD" strokeWidth="1.5"/>
-            <rect x="141" y="275" width="28" height="36" rx="4" fill="#5A9FD4"/>
-            <rect x="118" y="293" width="36" height="18" rx="3" fill="#4A90D9"/>
-            <text x="136" y="305" textAnchor="middle" fontSize="7" fill="white" fontWeight="bold">치과의사</text>
-            <path d="M141,285 Q131,308 124,320 Q118,330 123,338" stroke="#777" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
-            <circle cx="123" cy="340" r="6" fill="#777"/>
-            <path d="M169,285 Q179,308 186,320 Q192,330 187,338" stroke="#777" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
-            <circle cx="187" cy="340" r="6" fill="#777"/>
-            <rect x="93" y="282" width="21" height="60" rx="9" fill="white" stroke="#DDD" strokeWidth="1.5"/>
-            <rect x="196" y="282" width="21" height="60" rx="9" fill="white" stroke="#DDD" strokeWidth="1.5"/>
-            <circle cx="103" cy="347" r="11" fill="#FFCEA0"/>
-            <rect x="97" y="342" width="5" height="34" rx="2.5" fill="#C8C8C8"/>
-            <circle cx="99" cy="337" r="8" fill="#B8B8B8"/>
-            <circle cx="99" cy="337" r="6" fill="#E0E0E0"/>
-            <circle cx="207" cy="347" r="11" fill="#FFCEA0"/>
-            <rect x="143" y="252" width="24" height="27" rx="10" fill="#FFCEA0"/>
-            <ellipse cx="155" cy="232" rx="38" ry="39" fill="#FFCEA0"/>
-            <ellipse cx="155" cy="196" rx="40" ry="20" fill="#4A2010"/>
-            <rect x="115" y="198" width="80" height="22" rx="6" fill="#4A2010"/>
-            <ellipse cx="117" cy="234" rx="8" ry="10" fill="#FFCEA0"/>
-            <ellipse cx="193" cy="234" rx="8" ry="10" fill="#FFCEA0"/>
-            <circle cx="143" cy="232" r="9.5" fill="none" stroke="#555" strokeWidth="2"/>
-            <circle cx="170" cy="232" r="9.5" fill="none" stroke="#555" strokeWidth="2"/>
-            <line x1="152.5" y1="232" x2="160.5" y2="232" stroke="#555" strokeWidth="2"/>
-            <line x1="133.5" y1="230" x2="126" y2="228" stroke="#555" strokeWidth="2"/>
-            <line x1="179.5" y1="230" x2="187" y2="228" stroke="#555" strokeWidth="2"/>
-            <path d="M135,221 Q143,217 151,221" stroke="#4A2010" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-            <path d="M160,221 Q168,217 176,221" stroke="#4A2010" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-            <circle cx="143" cy="232" r="5" fill="#2A1808"/>
-            <circle cx="170" cy="232" r="5" fill="#2A1808"/>
-            <circle cx="144.5" cy="230" r="1.8" fill="white"/>
-            <circle cx="171.5" cy="230" r="1.8" fill="white"/>
-            <line x1="138" y1="224" x2="136.5" y2="221" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
-            <line x1="143" y1="222.5" x2="143" y2="219.5" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
-            <line x1="148" y1="224" x2="149.5" y2="221" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
-            <line x1="165" y1="224" x2="163.5" y2="221" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
-            <line x1="170" y1="222.5" x2="170" y2="219.5" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
-            <line x1="175" y1="224" x2="176.5" y2="221" stroke="#2A1808" strokeWidth="1.2" strokeLinecap="round"/>
-            <path d="M143,250 Q155,262 168,250" stroke="#C07050" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-            <ellipse cx="130" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
-            <ellipse cx="180" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
-            </g>
+            <image href="/zone0.png" x="80" y="178" width="155" height="260" preserveAspectRatio="xMidYMid meet"/>
             <rect x="66" y="462" width="182" height="42" rx="15" fill="#1A5276"/>
             <text x="157" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과 의사의 하루</text>
             <text x="157" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">출근부터 퇴근까지</text>
