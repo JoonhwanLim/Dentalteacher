@@ -1293,6 +1293,13 @@ function CareerSection({ onBack }) {
         </div>
       </div>
 
+      {/* 달리기 트랙 */}
+      <div style={{ position:'relative', height: isMob?85:110, flexShrink:0, overflow:'hidden', background:'rgba(255,255,255,0.07)', borderTop:'1.5px solid rgba(255,255,255,0.13)' }}>
+        <video src="/run.mp4" autoPlay loop muted playsInline
+          style={{ height:'100%', width:'auto', display:'block', margin:'0 auto' }} />
+        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to right,#0A1230 0%,transparent 18%,transparent 82%,#0A1230 100%)', pointerEvents:'none' }}/>
+      </div>
+
       {/* 하단: 도트 + 슬라이더 */}
       <div style={{ padding: isMob?'10px 24px 22px':'14px 60px 28px', display:'flex', flexDirection:'column', alignItems:'center', gap:12, flexShrink:0 }}>
         <div style={{ display:'flex', gap:7 }}>
