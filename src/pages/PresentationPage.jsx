@@ -165,14 +165,14 @@ const careerSteps = [
 
 /* ── SPECIALTIES DATA ── */
 const specialties = [
-  { emoji:'😁', name:'교정과',         desc:'브라켓·와이어·투명교정으로 비뚤어진 치아를 가지런하게!',              color:'#E67E22' },
-  { emoji:'🔪', name:'구강악안면외과', desc:'임플란트 수술, 사랑니, 얼굴뼈 수술 전문',                           color:'#E74C3C' },
-  { emoji:'🦠', name:'치주과',         desc:'잇몸병(치주염) 치료와 잇몸 수술 전문',                              color:'#27AE60' },
-  { emoji:'👶', name:'소아치과',       desc:'어린이·청소년 전문 치과 진료',                                      color:'#3498DB' },
-  { emoji:'👑', name:'보철과',         desc:'임플란트·틀니·크라운 등 인공 치아 전문',                            color:'#8E44AD' },
-  { emoji:'💤', name:'치과마취과',     desc:'전신마취·수면치료 등 통증 없는 치과 전문',                          color:'#16A085' },
-  { emoji:'🦷', name:'보존과',         desc:'충치 치료·신경 치료·치아 미백 등 치아를 최대한 살리는 치료 전문!', color:'#2196F3' },
-  { emoji:'🔬', name:'연구하는 의사',  desc:'치과 재료, 임플란트 설계, 신약 개발 등 치의학 발전을 위해 연구하는 치과의사!', color:'#FF7043' },
+  { name:'교정과',         desc:'브라켓·와이어·투명교정으로 비뚤어진 치아를 가지런하게!',              color:'#E67E22', image:'kyojung.png' },
+  { name:'구강악안면외과', desc:'임플란트 수술, 사랑니, 얼굴뼈 수술 전문',                           color:'#E74C3C', image:'oms.png'     },
+  { name:'치주과',         desc:'잇몸병(치주염) 치료와 잇몸 수술 전문',                              color:'#27AE60', image:'chiju.png'   },
+  { name:'소아치과',       desc:'어린이·청소년 전문 치과 진료',                                      color:'#3498DB', image:'soa.png'     },
+  { name:'보철과',         desc:'임플란트·틀니·크라운 등 인공 치아 전문',                            color:'#8E44AD', image:'bochul.png'  },
+  { name:'치과마취과',     desc:'전신마취·수면치료 등 통증 없는 치과 전문',                          color:'#16A085', image:'machui.png'  },
+  { name:'보존과',         desc:'충치 치료·신경 치료·치아 미백 등 치아를 최대한 살리는 치료 전문!', color:'#2196F3', image:'bojon.png'   },
+  { name:'연구하는 의사',  desc:'치과 재료, 임플란트 설계, 신약 개발 등 치의학 발전을 위해 연구하는 치과의사!', color:'#FF7043', image:'yungu.png'   },
 ]
 
 /* ── TIMELINE DATA ── */
@@ -1382,7 +1382,7 @@ function SpecialtiesSection({ onBack }) {
 
       {/* 카드 스테이지 */}
       <div
-        style={{ flex:1, position:'relative', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center', userSelect:'none', touchAction:'none', cursor:'grab' }}
+        style={{ flex:1, position:'relative', overflow:'visible', display:'flex', alignItems:'center', justifyContent:'center', userSelect:'none', touchAction:'none', cursor:'grab' }}
         onMouseDown={e => onPtrDown(e.clientX)}
         onMouseMove={e => onPtrMove(e.clientX)}
         onMouseUp={e => onPtrUp(e.clientX)}
@@ -1442,46 +1442,69 @@ function SpecialtiesSection({ onBack }) {
                   transform: `translateX(${tx}px) scale(${scale})`,
                   opacity: op,
                   zIndex: zI,
-                  transition:'transform 0.40s cubic-bezier(0.22,0.8,0.36,1), opacity 0.40s, box-shadow 0.40s',
+                  transition:'transform 0.40s cubic-bezier(0.22,0.8,0.36,1), opacity 0.40s',
                   cursor: active ? 'default' : 'pointer',
                   pointerEvents: abs > 2 ? 'none' : 'auto',
+                  overflow:'visible',
+                }}
+              >
+                {/* 카드 배경 레이어 */}
+                <div style={{
+                  position:'absolute', inset:0,
                   background: active ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.06)',
                   backdropFilter:'blur(20px)',
                   borderRadius: isMob ? 24 : 32,
                   border:`2px solid ${active ? sp.color+'66' : 'rgba(255,255,255,0.10)'}`,
                   boxShadow: active ? `0 0 100px ${sp.color}38, 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15)` : 'none',
-                  display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-                  textAlign:'center', padding: isMob?'22px 16px':'36px 44px', gap: isMob?10:16,
                   overflow:'hidden',
-                }}
-              >
-                {/* 번호 뱃지 (활성만) */}
-                <div style={{ opacity: active?1:0, transition:'opacity 0.35s',
-                  background:`${sp.color}28`, border:`1.5px solid ${sp.color}55`,
-                  borderRadius:50, padding: isMob?'3px 12px':'4px 16px',
-                  fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:sp.color }}>
-                  {i+1} / {specialties.length}
-                </div>
+                }} />
 
-                {/* 이모지 */}
+                {/* 캐릭터 이미지 — 카드 위로 튀어나옴 */}
+                <img
+                  src={`/jobs/${sp.image}`}
+                  alt={sp.name}
+                  draggable={false}
+                  style={{
+                    position:'absolute',
+                    bottom: isMob ? cardH * 0.30 : cardH * 0.32,
+                    left:'50%',
+                    transform:'translateX(-50%)',
+                    height: isMob ? cardH * 0.95 : cardH * 1.0,
+                    objectFit:'contain',
+                    zIndex:2,
+                    pointerEvents:'none',
+                    userSelect:'none',
+                    filter: active ? `drop-shadow(0 4px 24px ${sp.color}99)` : 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))',
+                    transition:'filter 0.4s',
+                  }}
+                />
+
+                {/* 카드 하단 컨텐츠 */}
                 <div style={{
-                  fontSize: isMob?'3.8rem':'5.8rem', lineHeight:1,
-                  filter: active ? `drop-shadow(0 0 24px ${sp.color}BB)` : 'none',
-                  transition:'filter 0.4s',
-                }}>{sp.emoji}</div>
-
-                {/* 이름 */}
-                <p style={{
-                  fontWeight:900, margin:0, lineHeight:1.2,
-                  fontSize: active ? (isMob?'1.5rem':'2.1rem') : (isMob?'1.0rem':'1.4rem'),
-                  color: active ? sp.color : 'rgba(255,255,255,0.65)',
-                  transition:'all 0.4s',
-                }}>{sp.name}</p>
-
-                {/* 구분선 + 설명 (활성만 페이드인) */}
-                <div style={{ opacity: active?1:0, maxHeight: active ? 200 : 0, overflow:'hidden', transition:'opacity 0.35s 0.1s, max-height 0.35s', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?8:12 }}>
-                  <div style={{ width:44, height:3, background:sp.color, borderRadius:2, opacity:0.65 }}/>
-                  <p style={{ fontSize: isMob?'0.88rem':'1.02rem', color:'rgba(255,255,255,0.82)', lineHeight:1.70, margin:0 }}>{sp.desc}</p>
+                  position:'absolute',
+                  bottom:0, left:0, right:0,
+                  padding: isMob ? '0 16px 18px' : '0 36px 28px',
+                  display:'flex', flexDirection:'column', alignItems:'center',
+                  gap: isMob ? 6 : 10,
+                  zIndex:3,
+                  textAlign:'center',
+                }}>
+                  <div style={{ opacity: active?1:0, transition:'opacity 0.35s',
+                    background:`${sp.color}28`, border:`1.5px solid ${sp.color}55`,
+                    borderRadius:50, padding: isMob?'3px 12px':'4px 16px',
+                    fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:sp.color }}>
+                    {i+1} / {specialties.length}
+                  </div>
+                  <p style={{
+                    fontWeight:900, margin:0, lineHeight:1.2,
+                    fontSize: active ? (isMob?'1.5rem':'2.1rem') : (isMob?'1.0rem':'1.4rem'),
+                    color: active ? sp.color : 'rgba(255,255,255,0.65)',
+                    transition:'all 0.4s',
+                  }}>{sp.name}</p>
+                  <div style={{ opacity: active?1:0, maxHeight: active ? 200 : 0, overflow:'hidden', transition:'opacity 0.35s 0.1s, max-height 0.35s', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?8:12 }}>
+                    <div style={{ width:44, height:3, background:sp.color, borderRadius:2, opacity:0.65 }}/>
+                    <p style={{ fontSize: isMob?'0.88rem':'1.02rem', color:'rgba(255,255,255,0.82)', lineHeight:1.70, margin:0 }}>{sp.desc}</p>
+                  </div>
                 </div>
               </div>
             )
