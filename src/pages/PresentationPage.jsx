@@ -358,33 +358,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
             {hovered===1 && <ellipse cx="398" cy="404" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <g transform="translate(88, 89) scale(0.78)">
-            <rect x="386" y="358" width="24" height="46" rx="5" fill="#777"/>
-            <ellipse cx="398" cy="404" rx="46" ry="9" fill="#666"/>
-            <rect x="276" y="316" width="188" height="46" rx="16" fill="#3A8DC4"/>
-            <rect x="279" y="319" width="182" height="40" rx="14" fill="#4A9DD4"/>
-            <rect x="438" y="244" width="50" height="88" rx="14" fill="#3A8DC4" transform="rotate(-18 463 288)"/>
-            <rect x="441" y="247" width="44" height="82" rx="12" fill="#4A9DD4" transform="rotate(-18 463 288)"/>
-            <rect x="460" y="218" width="38" height="30" rx="12" fill="#2A7DB4" transform="rotate(-18 479 233)"/>
-            <rect x="246" y="324" width="36" height="34" rx="10" fill="#4A9DD4"/>
-            <rect x="236" y="330" width="16" height="22" rx="8" fill="#3A8DC4"/>
-            <rect x="276" y="306" width="114" height="13" rx="6" fill="#2A7DB4"/>
-            <rect x="460" y="304" width="90" height="13" rx="6" fill="#2A7DB4"/>
-            <rect x="334" y="284" width="8" height="36" rx="4" fill="#999"/>
-            <rect x="304" y="278" width="74" height="10" rx="5" fill="#AAA"/>
-            <rect x="310" y="268" width="5" height="14" rx="2.5" fill="#C8C8C8"/>
-            <rect x="319" y="266" width="5" height="16" rx="2.5" fill="#B0B0B0"/>
-            <rect x="328" y="268" width="5" height="14" rx="2.5" fill="#4A90D9"/>
-            <rect x="337" y="267" width="5" height="15" rx="2.5" fill="#C0C0C0"/>
-            <rect x="346" y="268" width="5" height="14" rx="2.5" fill="#90BADF"/>
-            <line x1="396" y1="22" x2="396" y2="102" stroke="#AAA" strokeWidth="7" strokeLinecap="round"/>
-            <line x1="396" y1="102" x2="356" y2="188" stroke="#AAA" strokeWidth="7" strokeLinecap="round"/>
-            <ellipse cx="344" cy="198" rx="44" ry="27" fill="#CCC" transform="rotate(-20 344 198)"/>
-            <ellipse cx="344" cy="198" rx="31" ry="18" fill="#00CFFF" opacity="0.65" transform="rotate(-20 344 198)"/>
-            <ellipse cx="344" cy="198" rx="17" ry="10" fill="white" opacity="0.88" transform="rotate(-20 344 198)"/>
-            <path d="M316,210 L272,332 L422,332 L382,210 Z" fill="rgba(255,255,205,0.09)"/>
-            <ellipse cx="302" cy="308" rx="26" ry="24" fill="#FFCEA0" opacity="0.75"/>
-            </g>
+            <image href="/zone1.png" x="258" y="18" width="282" height="382" preserveAspectRatio="xMidYMid meet"/>
             <rect x="289" y="412" width="220" height="42" rx="15" fill="#1A5C3A"/>
             <text x="399" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치료와 비밀 무기 →</text>
             <text x="399" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
