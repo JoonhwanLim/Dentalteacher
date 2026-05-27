@@ -258,7 +258,7 @@ export default function PresentationPage({ onGoIntro }) {
 /* ── MAIN HUB ── */
 function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
   const [hovered, setHovered] = useState(null)
-  const labels = ['🦷 치과의사의 하루','⚕️ 치과에서 자주 치료하는 종류는?','🎓 치과의사가 되는 법','🌍 치과의사의 다양한 종류']
+  const labels = ['🦷 치과의사의 하루','⚕️ 치과에서 자주 치료하는 종류는?','🎓 치과의사가 되는 법','🌍 치과의사의 여러 얼굴']
   const glow = id => ({ cursor:'pointer', filter: hovered===id ? 'drop-shadow(0 0 18px rgba(245,200,0,0.95))' : 'none', transition:'filter 0.18s' })
 
   return (
@@ -1335,7 +1335,7 @@ function CareerSection({ onBack }) {
   )
 }
 
-/* ── SECTION 3: 치과의사의 다양한 종류 ── */
+/* ── SECTION 3: 치과의사의 여러 얼굴 ── */
 function SpecialtiesSection({ onBack }) {
   const [idx, setIdx]       = useState(0)
   const [prevIdx, setPrevIdx] = useState(null)
@@ -1398,10 +1398,10 @@ function SpecialtiesSection({ onBack }) {
       {/* 헤더 */}
       <div style={{ padding: isMob?'12px 16px':'16px 40px', display:'flex', alignItems:'center', gap:12, flexShrink:0, color:'white' }}>
         <BackBtn onClick={onBack} />
-        <h1 style={{ fontSize: isMob?'1.2rem':'1.8rem', fontWeight:900, color:'white' }}>
-          치과의사의 다양한 <span style={{ color:'#F5C800' }}>종류</span>
+        <h1 style={{ fontSize: isMob?'1.1rem':'1.8rem', fontWeight:900, color:'white', whiteSpace:'nowrap' }}>
+          치과의사의 <span style={{ color:'#F5C800' }}>여러 얼굴</span>
         </h1>
-        <p style={{ color:'rgba(255,255,255,0.45)', marginLeft:6, fontSize:'0.82rem' }}>8가지 전문 분야</p>
+        <p style={{ color:'rgba(255,255,255,0.45)', marginLeft:6, fontSize:'0.82rem', whiteSpace:'nowrap' }}>8가지 전문 분야</p>
       </div>
 
       {/* 메인 */}
