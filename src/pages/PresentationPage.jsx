@@ -1241,7 +1241,7 @@ function CareerSection({ onBack }) {
                 </div>
 
                 {/* 건물 일러스트 / 스터디 이미지 (치과대학은 마우스로 도망감) */}
-                <div style={{ width:'100%', height: isMob?96:138, flexShrink:0, position:'relative',
+                <div style={{ width:'100%', height: isMob?115:166, flexShrink:0, position:'relative',
                   filter: active ? `drop-shadow(0 4px 16px ${cs.color}66)` : 'none',
                   transition:'filter 0.4s', opacity: active ? 1 : 0.72 }}>
                   {/* 활성 카드: study 이미지 액자 */}
@@ -1296,11 +1296,11 @@ function CareerSection({ onBack }) {
           '좋아 의사다!!',
         ]
         return (
-          <div style={{ position:'relative', height: isMob?110:140, flexShrink:0, overflow:'hidden', background:'white' }}>
+          <div style={{ height: isMob?110:140, flexShrink:0, overflow:'hidden', background:'white', display:'flex', alignItems:'center', justifyContent:'center' }}>
             <video ref={videoRef} src="/run.mp4" autoPlay loop muted playsInline
-              style={{ height:'100%', width:'auto', display:'block', margin:'0 auto', WebkitMaskImage:'linear-gradient(to right,transparent 0%,black 18%,black 82%,transparent 100%)', maskImage:'linear-gradient(to right,transparent 0%,black 18%,black 82%,transparent 100%)' }} />
+              style={{ height:'100%', width:'auto', display:'block', flexShrink:0, WebkitMaskImage:'linear-gradient(to right,transparent 0%,black 18%,black 82%,transparent 100%)', maskImage:'linear-gradient(to right,transparent 0%,black 18%,black 82%,transparent 100%)' }} />
             {/* 말풍선 */}
-            <div key={idx} style={{ position:'absolute', right: isMob?'6%':'13%', top:'50%', transform:'translateY(-50%)', animation:'bubbleIn 0.32s cubic-bezier(0.34,1.56,0.64,1) both', zIndex:10 }}>
+            <div key={idx} style={{ flexShrink:0, marginLeft: isMob?6:10, animation:'bubbleIn 0.32s cubic-bezier(0.34,1.56,0.64,1) both' }}>
               <div style={{ position:'relative', background:'white', borderRadius:12, padding: isMob?'6px 10px':'8px 14px', fontSize: isMob?'0.70rem':'0.85rem', fontWeight:800, color:s.color, border:`2px solid ${s.color}`, boxShadow:`0 4px 16px rgba(0,0,0,0.15)`, whiteSpace:'pre-line', textAlign:'center', lineHeight:1.35 }}>
                 {BUBBLES[idx]}
                 <div style={{ position:'absolute', left:-8, top:'50%', transform:'translateY(-50%) rotate(45deg)', width:12, height:12, background:'white', borderLeft:`2px solid ${s.color}`, borderBottom:`2px solid ${s.color}` }} />
