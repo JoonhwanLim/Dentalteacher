@@ -308,7 +308,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
             {hovered===1 && <ellipse cx="382" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone1.png" x="277" y="266" width="211" height="200" preserveAspectRatio="xMidYMid meet"/>
+            <image href={hovered===1 ? '/zone1_over.png' : '/zone1.png'} x="277" y="266" width="211" height="200" preserveAspectRatio="xMidYMid meet"/>
             <rect x="294" y="460" width="176" height="37" rx="18" fill="#8E6CEB"/>
             <circle cx="312" cy="479" r="13" fill="rgba(0,0,0,0.18)"/>
             <circle cx="312" cy="479" r="10" fill="rgba(255,255,255,0.2)"/>
