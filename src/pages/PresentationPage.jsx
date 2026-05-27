@@ -179,28 +179,36 @@ const specialties = [
 const timeline = [
   { time:'08:30', emoji:'🌅', color:'#FF8A65', title:'출근!', sub:'하루의 시작',
     desc:'오늘 만날 환자들의 차트를 미리 확인해요.',
-    detail:'각 환자마다 어떤 치료가 필요한지, 알레르기는 없는지 살펴봐요. 하루의 시작은 철저한 준비예요.' },
+    detail:'각 환자마다 어떤 치료가 필요한지, 알레르기는 없는지 살펴봐요. 하루의 시작은 철저한 준비예요.',
+    image:'/zone0.png' },
   { time:'09:00', emoji:'🧹', color:'#26A69A', title:'진료실 준비', sub:'도구 소독 & 세팅',
     desc:'모든 도구를 소독하고 진료실을 깨끗이 준비해요.',
-    detail:'환자 오기 전 모든 치료 도구를 고압증기로 소독하고 유닛 체어를 세팅해요. 위생이 가장 중요해요!' },
+    detail:'환자 오기 전 모든 치료 도구를 고압증기로 소독하고 유닛 체어를 세팅해요. 위생이 가장 중요해요!',
+    image:'/jobs/bojon.png' },
   { time:'09:30', emoji:'🦷', color:'#42A5F5', title:'오전 진료 시작!', sub:'치아 구조대 출동',
     desc:'충치 치료, 스케일링, 정기 검진 등 다양한 치료를 해요.',
-    detail:'하루에 보통 15~20명의 환자를 만나요. 집중력이 중요한 시간이에요.' },
+    detail:'하루에 보통 15~20명의 환자를 만나요. 집중력이 중요한 시간이에요.',
+    image:'/zone0.png' },
   { time:'11:00', emoji:'😰', color:'#AB47BC', title:'겁 많은 어린이 환자', sub:'달래고 또 달래고',
     desc:'"괜찮아요, 전혀 안 아파요!" 용기를 북돋아줘요.',
-    detail:'스티커와 칭찬 도장으로 씩씩한 친구로 만들어줘요! 아이들을 잘 다루는 것도 치과의사의 중요한 능력이에요.' },
+    detail:'스티커와 칭찬 도장으로 씩씩한 친구로 만들어줘요! 아이들을 잘 다루는 것도 치과의사의 중요한 능력이에요.',
+    image:'/jobs/soa.png' },
   { time:'12:30', emoji:'🍚', color:'#66BB6A', title:'점심 & 양치질', sub:'선생님도 양치는 필수!',
     desc:'맛있는 점심 후 제일 먼저 하는 건 양치질!',
-    detail:'3분 안에 3면을 꼼꼼히. 아이들에게 솔선수범하는 치과의사 선생님이에요.' },
+    detail:'3분 안에 3면을 꼼꼼히. 아이들에게 솔선수범하는 치과의사 선생님이에요.',
+    image:'/zone0.png' },
   { time:'14:00', emoji:'⚗️', color:'#FFA726', title:'오후 진료 시작', sub:'집중력이 필요한 시간',
     desc:'교정 조정, 신경 치료, 보철 장착 등 복잡한 치료들.',
-    detail:'한 번에 1~2시간 걸리는 치료들이 오후에 집중돼요. 정밀하게, 꼼꼼하게!' },
+    detail:'한 번에 1~2시간 걸리는 치료들이 오후에 집중돼요. 정밀하게, 꼼꼼하게!',
+    image:'/jobs/kyojung.png' },
   { time:'17:30', emoji:'✅', color:'#EF5350', title:'마지막 환자 & 정리', sub:'오늘도 수고했어요!',
     desc:'소독, 기구 정리, 내일 예약 확인까지 꼼꼼히.',
-    detail:'하루 동안 15~20명의 치아를 지킨 진짜 영웅! 마무리까지 완벽하게요.' },
+    detail:'하루 동안 15~20명의 치아를 지킨 진짜 영웅! 마무리까지 완벽하게요.',
+    image:'/jobs/bochul.png' },
   { time:'19:00', emoji:'📚', color:'#5C6BC0', title:'공부는 끝이 없어요', sub:'퇴근 후에도 계속',
     desc:'학회·세미나·논문 읽기로 최신 치의학을 공부해요.',
-    detail:'의학은 매일 발전해요. 치과의사는 평생 공부하는 직업이에요. 그래서 더 멋있어요!' },
+    detail:'의학은 매일 발전해요. 치과의사는 평생 공부하는 직업이에요. 그래서 더 멋있어요!',
+    image:'/jobs/yungu.png' },
 ]
 
 /* ── SHARED BACK BUTTON ── */
@@ -394,8 +402,10 @@ function DaySection({ onBack }) {
                 </div>
                 {selected === i && (
                   <div style={{ marginLeft:56, marginBottom:8, background:'white', borderRadius:14, padding:'14px 16px', boxShadow:`0 4px 16px ${it.color}33`, borderLeft:`4px solid ${it.color}`, animation:'slideIn 0.25s ease' }}>
+                    <img src={it.image} alt={it.title} style={{ float:'right', height:75, objectFit:'contain', marginLeft:10, marginBottom:4, filter:`drop-shadow(0 3px 8px ${it.color}55)` }} />
                     <p style={{ color:'#333', lineHeight:1.7, marginBottom:6, fontSize:'0.88rem' }}>{it.desc}</p>
                     <p style={{ color:'#777', lineHeight:1.65, fontSize:'0.82rem' }}>{it.detail}</p>
+                    <div style={{ clear:'both' }}/>
                   </div>
                 )}
               </div>
@@ -428,9 +438,14 @@ function DaySection({ onBack }) {
               <div style={{ display:'inline-flex', alignItems:'center', gap:10, background:`${item.color}18`, border:`2px solid ${item.color}44`, borderRadius:50, padding:'6px 20px', marginBottom:20 }}>
                 <span style={{ fontSize:'0.88rem', fontWeight:800, color:item.color }}>{item.time}</span>
               </div>
-              <div style={{ fontSize:'5.5rem', lineHeight:1, marginBottom:16 }}>{item.emoji}</div>
-              <h2 style={{ fontSize:'2.2rem', fontWeight:900, color:'#1A1A1A', marginBottom:4, lineHeight:1.2 }}>{item.title}</h2>
-              <p style={{ color:item.color, fontWeight:700, fontSize:'1rem', marginBottom:24 }}>{item.sub}</p>
+              <div style={{ display:'flex', alignItems:'flex-start', gap:20, marginBottom:20 }}>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontSize:'3.5rem', lineHeight:1, marginBottom:10 }}>{item.emoji}</div>
+                  <h2 style={{ fontSize:'2.2rem', fontWeight:900, color:'#1A1A1A', marginBottom:4, lineHeight:1.2 }}>{item.title}</h2>
+                  <p style={{ color:item.color, fontWeight:700, fontSize:'1rem', marginBottom:0 }}>{item.sub}</p>
+                </div>
+                <img src={item.image} alt={item.title} style={{ height:180, objectFit:'contain', filter:`drop-shadow(0 6px 18px ${item.color}66)`, flexShrink:0 }} />
+              </div>
               <div style={{ background:'white', borderRadius:20, padding:'24px 28px', boxShadow:`0 8px 32px ${item.color}22`, borderLeft:`5px solid ${item.color}` }}>
                 <p style={{ color:'#333', fontSize:'1.08rem', lineHeight:1.8, marginBottom:14 }}>{item.desc}</p>
                 <p style={{ color:'#777', fontSize:'0.95rem', lineHeight:1.75 }}>{item.detail}</p>
