@@ -333,8 +333,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <ellipse cx="130" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
             <ellipse cx="180" cy="245" rx="12" ry="7" fill="#FFB0A0" opacity="0.55"/>
             </g>
-            <rect x="66" y="462" width="182" height="42" rx="15" fill="#1A5C3A"/>
-            <text x="157" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 하루 →</text>
+            <rect x="66" y="462" width="182" height="42" rx="15" fill="#1A5276"/>
+            <text x="157" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과 의사의 하루</text>
             <text x="157" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">출근부터 퇴근까지</text>
           </g>
 
@@ -342,8 +342,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
             {hovered===1 && <ellipse cx="398" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone1.png" x="245" y="246" width="307" height="239" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="289" y="462" width="220" height="42" rx="15" fill="#1A5C3A"/>
-            <text x="399" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치료와 비밀 무기 →</text>
+            <rect x="289" y="462" width="220" height="42" rx="15" fill="#922B21"/>
+            <text x="399" y="478" textAnchor="middle" fontSize="11" fill="white" fontWeight="bold">치과에서 자주하는 치료는?</text>
             <text x="399" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
           </g>
 
@@ -351,8 +351,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
             {hovered===3 && <ellipse cx="660" cy="454" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone3.png" x="563" y="206" width="200" height="247" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="564" y="462" width="196" height="42" rx="15" fill="#1A7C5C"/>
-            <text x="662" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 종류 →</text>
+            <rect x="564" y="462" width="196" height="42" rx="15" fill="#1E8449"/>
+            <text x="662" y="478" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과의사에도 전문분야가 있어요</text>
             <text x="662" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">교정과·소아치과 등</text>
           </g>
 
@@ -360,8 +360,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
             {hovered===2 && <ellipse cx="876" cy="454" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone2.png" x="810" y="235" width="134" height="216" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="780" y="462" width="192" height="42" rx="15" fill="#1A3A7C"/>
-            <text x="876" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는 법 →</text>
+            <rect x="780" y="462" width="192" height="42" rx="15" fill="#6C3483"/>
+            <text x="876" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는법</text>
             <text x="876" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">공부와 국가고시</text>
           </g>
         </svg>
