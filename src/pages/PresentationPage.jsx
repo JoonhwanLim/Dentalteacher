@@ -323,7 +323,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 3: 현미경 ── */}
           <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
             {hovered===3 && <ellipse cx="617" cy="454" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone3.png" x="529" y="206" width="176" height="247" preserveAspectRatio="xMidYMid meet"/>
+            <image href="/zone3.png" x="529" y="206" width="176" height="247" preserveAspectRatio="xMidYMid meet"
+              style={{ transformOrigin:'617px 330px', transform: hovered===3 ? 'scale(1.05)' : 'scale(1)', transition:'transform 0.25s ease' }}/>
             <rect x="529" y="460" width="176" height="37" rx="18" fill="#F9C74F"/>
             <circle cx="547" cy="479" r="13" fill="rgba(0,0,0,0.15)"/>
             <circle cx="547" cy="479" r="10" fill="rgba(255,255,255,0.2)"/>
@@ -334,9 +335,11 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <text x="693" y="483" textAnchor="middle" fontSize="8" fill="#5C3A00" opacity="0.35">✧</text>
             {/* 하트 파티클 */}
             {hovered===3 && [
-              {x:595, y:222, dx:-2, sz:7, c:'#FF4D8D', delay:'0s'   },
-              {x:618, y:230, dx: 2, sz:6, c:'#FF6B9D', delay:'0.7s' },
-              {x:638, y:218, dx:-1, sz:5, c:'#E91E8C', delay:'1.3s' },
+              {x:580, y:322, dx:-2, sz:7, c:'#FF4D8D', delay:'0s'   },
+              {x:605, y:330, dx: 2, sz:6, c:'#FF6B9D', delay:'0.5s' },
+              {x:628, y:318, dx:-1, sz:5, c:'#E91E8C', delay:'1.0s' },
+              {x:648, y:326, dx: 2, sz:6, c:'#FF4D8D', delay:'1.5s' },
+              {x:615, y:335, dx:-2, sz:5, c:'#FF6B9D', delay:'2.0s' },
             ].map((h, i) => (
               <text key={i} x={h.x} y={h.y} fontSize={h.sz} textAnchor="middle" fill={h.c} opacity="0">
                 ♥
