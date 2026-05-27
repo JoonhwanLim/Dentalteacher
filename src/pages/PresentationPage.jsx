@@ -1300,9 +1300,9 @@ function CareerSection({ onBack }) {
       </div>
 
       {/* 달리기 트랙 */}
-      <div style={{ position:'relative', height: isMob?110:140, flexShrink:0, overflow:'hidden', background:'white' }}>
+      <div style={{ position:'relative', height: isMob?110:140, flexShrink:0, overflow:'hidden', background:'transparent' }}>
         <video ref={videoRef} src="/run.mp4" autoPlay loop muted playsInline
-          style={{ height:'100%', width:'auto', display:'block', margin:'0 auto', WebkitMaskImage:'linear-gradient(to right,transparent 0%,black 40%,black 60%,transparent 100%)', maskImage:'linear-gradient(to right,transparent 0%,black 40%,black 60%,transparent 100%)' }} />
+          style={{ height:'100%', width:'auto', display:'block', margin:'0 auto', WebkitMaskImage:'linear-gradient(to right,transparent 0%,black 35%,black 65%,transparent 100%)', maskImage:'linear-gradient(to right,transparent 0%,black 35%,black 65%,transparent 100%)' }} />
       </div>
 
       {/* 하단: 도트 + 슬라이더 */}
