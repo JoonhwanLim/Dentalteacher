@@ -278,25 +278,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
         )}
 
         <svg viewBox="0 0 1000 520" style={{ width:'100%', height:'100%', display:'block', minWidth: mob() ? 700 : undefined }} preserveAspectRatio="xMidYMid meet">
-          {/* ── 방 배경 ── */}
-          <rect x="0" y="0" width="1000" height="385" fill="#D5E8F0"/>
-          <rect x="0" y="0" width="1000" height="22" fill="#B0CCDA"/>
-          <rect x="0" y="375" width="1000" height="10" fill="#B09070"/>
-          <rect x="0" y="385" width="1000" height="135" fill="#C4905C"/>
-          {[0,1,2,3,4,5,6,7,8,9].map(i=><line key={i} x1={i*110} y1="385" x2={i*110+180} y2="520" stroke="#B07040" strokeWidth="1" opacity="0.35"/>)}
-          {/* 천장 조명 */}
-          <rect x="464" y="0" width="14" height="58" rx="5" fill="#AAA"/>
-          <rect x="444" y="54" width="114" height="20" rx="5" fill="#CCC"/>
-          <rect x="434" y="71" width="134" height="24" rx="6" fill="#EEE" stroke="#CCC" strokeWidth="1"/>
-          <ellipse cx="501" cy="100" rx="85" ry="28" fill="rgba(255,255,215,0.32)"/>
-          {/* 왼쪽 창문 */}
-          <rect x="22" y="68" width="112" height="148" rx="4" fill="#A8D8F0" stroke="#7AAABB" strokeWidth="3"/>
-          <line x1="78" y1="68" x2="78" y2="216" stroke="#7AAABB" strokeWidth="2"/>
-          <line x1="22" y1="142" x2="134" y2="142" stroke="#7AAABB" strokeWidth="2"/>
-          <rect x="22" y="68" width="112" height="148" fill="rgba(255,255,255,0.15)" rx="4"/>
-          {/* 커튼 */}
-          <path d="M18,64 Q34,106 26,166 Q22,192 30,216" stroke="#E0CC9A" strokeWidth="11" fill="none" strokeLinecap="round" opacity="0.75"/>
-          <path d="M138,64 Q122,106 130,166 Q134,192 126,216" stroke="#E0CC9A" strokeWidth="11" fill="none" strokeLinecap="round" opacity="0.75"/>
+          {/* ── 배경 ── */}
+          <image href="/zonebg.png" x="0" y="0" width="1000" height="520" preserveAspectRatio="xMidYMid slice"/>
 
           {/* ── ZONE 0: 여의사 캐릭터 ── */}
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
