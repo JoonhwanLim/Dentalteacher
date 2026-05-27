@@ -364,25 +364,10 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <text x="399" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
           </g>
 
-          {/* ── ZONE 3: 공룡 액자 + 현미경 ── */}
+          {/* ── ZONE 3: 현미경 ── */}
           <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
             {hovered===3 && <ellipse cx="660" cy="404" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <g transform="translate(145, 88) scale(0.78)">
-            <rect x="556" y="342" width="226" height="56" rx="6" fill="#8A6030"/>
-            <rect x="556" y="342" width="226" height="12" rx="4" fill="#A07848"/>
-            <ellipse cx="628" cy="350" rx="27" ry="7" fill="#444"/>
-            <rect x="617" y="258" width="12" height="94" rx="4" fill="#555"/>
-            <rect x="605" y="304" width="58" height="10" rx="4" fill="#555" transform="rotate(-12 634 309)"/>
-            <rect x="603" y="310" width="54" height="10" rx="4" fill="#666"/>
-            <rect x="616" y="244" width="24" height="20" rx="5" fill="#555"/>
-            <circle cx="628" cy="247" r="8" fill="#3A3A6A"/>
-            <circle cx="628" cy="247" r="5" fill="#1A1A4A"/>
-            <rect x="610" y="315" width="42" height="7" rx="2" fill="#B0C8E0"/>
-            <rect x="680" y="322" width="7" height="26" rx="3.5" fill="#A8C8F8"/>
-            <rect x="692" y="318" width="7" height="30" rx="3.5" fill="#A8F8B8"/>
-            <rect x="704" y="320" width="7" height="28" rx="3.5" fill="#F8C8A8"/>
-            <rect x="675" y="346" width="44" height="6" rx="2" fill="#555"/>
-            </g>
+            <image href="/zone3.png" x="556" y="18" width="212" height="382" preserveAspectRatio="xMidYMid meet"/>
             <rect x="564" y="412" width="196" height="42" rx="15" fill="#1A7C5C"/>
             <text x="662" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사의 종류 →</text>
             <text x="662" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">교정과·소아치과 등</text>
@@ -391,34 +376,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 2: 책장 ── */}
           <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
             {hovered===2 && <ellipse cx="876" cy="404" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <g transform="translate(195, 90) scale(0.78)">
-            <rect x="794" y="78" width="188" height="332" rx="6" fill="#7A4E28"/>
-            <rect x="802" y="86" width="172" height="316" rx="3" fill="#9A6238"/>
-            <rect x="826" y="60" width="130" height="20" rx="4" fill="#1A1A2A"/>
-            <ellipse cx="891" cy="60" rx="58" ry="10" fill="#1A1A2A"/>
-            <rect x="885" y="48" width="12" height="16" rx="4" fill="#1A1A2A"/>
-            <line x1="912" y1="62" x2="935" y2="90" stroke="#F5C800" strokeWidth="3"/>
-            <circle cx="937" cy="94" r="7" fill="#F5C800"/>
-            <rect x="802" y="180" width="172" height="8" rx="2" fill="#7A4E28"/>
-            <rect x="802" y="270" width="172" height="8" rx="2" fill="#7A4E28"/>
-            <rect x="802" y="360" width="172" height="8" rx="2" fill="#7A4E28"/>
-            {[[805,22,90,'#E74C3C'],[829,14,84,'#3498DB'],[845,21,92,'#F5C800'],[868,16,86,'#1A5C3A'],[886,25,90,'#8E44AD'],[913,17,82,'#E67E22'],[932,21,88,'#2C3E50'],[955,14,84,'#C0392B','0.6']].map(([x,w,h,f,op],i)=>(
-              <g key={i}><rect x={x} y={180-h} width={w} height={h} rx="2" fill={f} opacity={op||1}/><rect x={x} y={180-h} width={w} height={6} rx="1" fill="rgba(255,255,255,0.22)"/></g>
-            ))}
-            {[[805,25,90,'#16A085'],[832,16,84,'#C0392B'],[850,21,88,'#2980B9'],[873,17,82,'#7D6608'],[892,23,86,'#E91E63'],[917,16,84,'#4CAF50'],[935,21,88,'#FF5722'],[958,12,80,'#607D8B']].map(([x,w,h,f],i)=>(
-              <g key={i}><rect x={x} y={270-h} width={w} height={h} rx="2" fill={f}/><rect x={x} y={270-h} width={w} height={6} rx="1" fill="rgba(255,255,255,0.22)"/></g>
-            ))}
-            {[[805,28,88,'#9C27B0'],[835,14,82,'#00BCD4'],[851,23,90,'#FF9800'],[876,20,84,'#795548'],[898,17,86,'#607D8B'],[917,25,88,'#F44336'],[944,21,82,'#009688']].map(([x,w,h,f],i)=>(
-              <g key={i}><rect x={x} y={360-h} width={w} height={h} rx="2" fill={f}/><rect x={x} y={360-h} width={w} height={6} rx="1" fill="rgba(255,255,255,0.22)"/></g>
-            ))}
-            <rect x="805" y="364" width="28" height="38" rx="3" fill="#888" opacity="0.8"/>
-            <circle cx="819" cy="362" r="12" fill="#CCC"/>
-            <rect x="840" y="370" width="38" height="28" rx="4" fill="#4A7A4A"/>
-            <text x="859" y="389" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">해부학</text>
-            <rect x="886" y="362" width="22" height="38" rx="4" fill="#6A8ABE"/>
-            <rect x="914" y="366" width="20" height="34" rx="4" fill="#BE6A8A"/>
-            <rect x="940" y="364" width="26" height="36" rx="4" fill="#8ABE6A"/>
-            </g>
+            <image href="/zone2.png" x="774" y="18" width="210" height="382" preserveAspectRatio="xMidYMid meet"/>
             <rect x="780" y="412" width="192" height="42" rx="15" fill="#1A3A7C"/>
             <text x="876" y="428" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는 법 →</text>
             <text x="876" y="444" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">공부와 국가고시</text>
