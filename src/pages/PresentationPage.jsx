@@ -1059,7 +1059,7 @@ function CareerSection({ onBack }) {
   const [escape, setEscape] = useState({ x: 0, caught: false })
   const isMob = mob()
 
-  const RUN_SPEEDS = [0.5, 0.7, 0.9, 1.1, 1.5, 2.0, 2.0]
+  const RUN_SPEEDS = [0.5, 0.7, 0.9, 1.1, 2.0, 3.0, 1.5]
 
   useEffect(() => { setEscape({ x: 0, caught: false }) }, [idx])
   useEffect(() => {
