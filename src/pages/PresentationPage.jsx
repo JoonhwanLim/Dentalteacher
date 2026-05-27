@@ -256,15 +256,15 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
   return (
     <div style={{ width:'100vw', height:'100vh', display:'flex', flexDirection:'column', fontFamily:"'Noto Sans KR', sans-serif", background:'#D5E8F0' }}>
       {/* Top bar */}
-      <div style={{ display:'flex', alignItems:'center', padding:'13px 30px', gap:14, background:'white', boxShadow:'0 2px 12px rgba(0,0,0,0.07)', zIndex:10, flexShrink:0 }}>
-        <img src="/logo2.png" style={{ height:42, cursor:'pointer' }} alt="" onClick={() => window.location.reload()} title="처음으로"/>
-        <div>
-          <p style={{ fontWeight:900, fontSize:'1rem', color:'#1A1A1A', lineHeight:1.2 }}>리라초등학교 5학년 2반 명예교사</p>
-          <p style={{ fontSize:'0.78rem', color:'#888' }}>함께 알아보는 치과의 세계 🦷</p>
+      <div style={{ display:'flex', alignItems:'center', flexWrap:'nowrap', padding: mob()?'8px 12px':'13px 30px', gap: mob()?8:14, background:'white', boxShadow:'0 2px 12px rgba(0,0,0,0.07)', zIndex:10, flexShrink:0 }}>
+        <img src="/logo2.png" style={{ height: mob()?30:42, flexShrink:0, cursor:'pointer' }} alt="" onClick={() => window.location.reload()} title="처음으로"/>
+        <div style={{ minWidth:0, flexShrink:1 }}>
+          <p style={{ fontWeight:900, fontSize: mob()?'0.75rem':'1rem', color:'#1A1A1A', lineHeight:1.2, margin:0, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>리라초등학교 5학년 2반 명예교사</p>
+          {!mob() && <p style={{ fontSize:'0.78rem', color:'#888', margin:0 }}>함께 알아보는 치과의 세계 🦷</p>}
         </div>
         <div style={{ marginLeft:'auto', display:'flex', gap:6, flexShrink:0 }}>
-          <button onClick={onFacts} style={{ background:'#E8F5E9', border:'1.5px solid #A5D6A7', borderRadius:50, padding:'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize:'0.82rem', cursor:'pointer', color:'#1A5C3A' }}>🦷 치아정보</button>
-          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding:'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize:'0.82rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A', whiteSpace:'nowrap' }}>{mob() ? '학생 참여' : '학생 참여 (퀴즈 & 게임)'}</button>
+          <button onClick={onFacts} style={{ background:'#E8F5E9', border:'1.5px solid #A5D6A7', borderRadius:50, padding: mob()?'6px 10px':'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize: mob()?'0.75rem':'0.82rem', cursor:'pointer', color:'#1A5C3A', whiteSpace:'nowrap' }}>{mob()?'🦷':'🦷 치아정보'}</button>
+          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding: mob()?'6px 10px':'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize: mob()?'0.75rem':'0.82rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A', whiteSpace:'nowrap' }}>{mob() ? '참여' : '학생 참여 (퀴즈 & 게임)'}</button>
         </div>
       </div>
 
@@ -1322,7 +1322,7 @@ function SpecialtiesSection({ onBack }) {
 
   useEffect(() => {
     if (prevIdx === null) return
-    const t = setTimeout(() => setPrevIdx(null), 460)
+    const t = setTimeout(() => setPrevIdx(null), 260)
     return () => clearTimeout(t)
   }, [animKey])
 
@@ -1356,10 +1356,10 @@ function SpecialtiesSection({ onBack }) {
       <style>{`
         @keyframes fadeOut {
           from { opacity: 1; transform: scale(1); }
-          to   { opacity: 0; transform: scale(0.90); }
+          to   { opacity: 0; transform: scale(0.93); }
         }
         @keyframes fadeIn {
-          from { opacity: 0; transform: scale(0.90); }
+          from { opacity: 0; transform: scale(0.93); }
           to   { opacity: 1; transform: scale(1); }
         }
         @keyframes textIn {
@@ -1428,14 +1428,14 @@ function SpecialtiesSection({ onBack }) {
               position:'absolute', bottom: cardH*0.08, left:0, right:0,
               display:'flex', justifyContent:'center',
               pointerEvents:'none', zIndex:2,
-              animation:'fadeOut 0.42s ease-out forwards',
+              animation:'fadeOut 0.22s ease-out forwards',
             }}>
               <img
                 src={`/jobs/${specialties[prevIdx].image}`}
                 alt=""
                 draggable={false}
                 style={{
-                  height: isMob ? cardH*1.05 : cardH*1.10,
+                  height: isMob ? cardH*1.26 : cardH*1.32,
                   objectFit:'contain', userSelect:'none',
                   filter:`drop-shadow(0 8px 32px ${specialties[prevIdx].color}99)`,
                 }}
@@ -1448,14 +1448,14 @@ function SpecialtiesSection({ onBack }) {
             position:'absolute', bottom: cardH*0.08, left:0, right:0,
             display:'flex', justifyContent:'center',
             pointerEvents:'none', zIndex:3,
-            animation: animKey > 0 ? 'fadeIn 0.42s ease-out forwards' : 'none',
+            animation: animKey > 0 ? 'fadeIn 0.22s ease-out forwards' : 'none',
           }}>
             <img
               src={`/jobs/${s.image}`}
               alt={s.name}
               draggable={false}
               style={{
-                height: isMob ? cardH*1.05 : cardH*1.10,
+                height: isMob ? cardH*1.26 : cardH*1.32,
                 objectFit:'contain', userSelect:'none',
                 filter:`drop-shadow(0 8px 32px ${s.color}99)`,
               }}
@@ -1466,13 +1466,14 @@ function SpecialtiesSection({ onBack }) {
         {/* 텍스트 — 카드 아래 */}
         <div key={`txt-${idx}`} style={{
           textAlign:'center',
-          maxWidth: cardW + 80,
+          width: isMob ? '88vw' : cardW + 80,
+          maxWidth: 480,
           padding:'0 20px',
-          animation:'textIn 0.38s cubic-bezier(0.22,0.8,0.36,1) 0.08s both',
+          animation:'textIn 0.22s ease-out 0.06s both',
         }}>
           <p style={{ fontSize: isMob?'1.4rem':'1.9rem', fontWeight:900, color:s.color, margin:'0 0 6px' }}>{s.name}</p>
           <div style={{ width:40, height:3, background:s.color, borderRadius:2, opacity:0.65, margin:'0 auto 10px' }}/>
-          <p style={{ fontSize: isMob?'0.86rem':'0.98rem', color:'rgba(255,255,255,0.82)', lineHeight:1.7, margin:0 }}>{s.desc}</p>
+          <p style={{ fontSize: isMob?'0.86rem':'0.98rem', color:'rgba(255,255,255,0.82)', lineHeight:1.75, margin:0, wordBreak:'keep-all', overflowWrap:'break-word' }}>{s.desc}</p>
         </div>
       </div>
 
