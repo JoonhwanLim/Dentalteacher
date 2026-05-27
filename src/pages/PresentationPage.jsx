@@ -208,7 +208,7 @@ const timeline = [
   { time:'19:00', emoji:'📚', color:'#5C6BC0', title:'공부는 끝이 없어요', sub:'퇴근 후에도 계속',
     desc:'학회·세미나·논문 읽기로 최신 치의학을 공부해요.',
     detail:'의학은 매일 발전해요. 치과의사는 평생 공부하는 직업이에요. 그래서 더 멋있어요!',
-    image:'/jobs/yungu.png' },
+    image:'/jobs/study.png' },
 ]
 
 /* ── SHARED BACK BUTTON ── */
