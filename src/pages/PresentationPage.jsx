@@ -335,11 +335,11 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <text x="693" y="483" textAnchor="middle" fontSize="8" fill="#5C3A00" opacity="0.35">✧</text>
             {/* 하트 파티클 */}
             {hovered===3 && [
-              {x:580, y:322, dx:-2, sz:7, c:'#FF4D8D', delay:'0s'   },
-              {x:605, y:330, dx: 2, sz:6, c:'#FF6B9D', delay:'0.5s' },
-              {x:628, y:318, dx:-1, sz:5, c:'#E91E8C', delay:'1.0s' },
-              {x:648, y:326, dx: 2, sz:6, c:'#FF4D8D', delay:'1.5s' },
-              {x:615, y:335, dx:-2, sz:5, c:'#FF6B9D', delay:'2.0s' },
+              {x:580, y:292, dx:-2, sz:7, c:'#FF4D8D', delay:'0s'   },
+              {x:605, y:300, dx: 2, sz:6, c:'#FF6B9D', delay:'0.5s' },
+              {x:628, y:288, dx:-1, sz:5, c:'#E91E8C', delay:'1.0s' },
+              {x:648, y:296, dx: 2, sz:6, c:'#FF4D8D', delay:'1.5s' },
+              {x:615, y:305, dx:-2, sz:5, c:'#FF6B9D', delay:'2.0s' },
             ].map((h, i) => (
               <text key={i} x={h.x} y={h.y} fontSize={h.sz} textAnchor="middle" fill={h.c} opacity="0">
                 ♥
