@@ -284,7 +284,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 0: 여의사 캐릭터 ── */}
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
             {hovered===0 && <ellipse cx="155" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <g transform="translate(34, 90) scale(0.78)">
+            <g transform="translate(34, 140) scale(0.78)">
             <ellipse cx="135" cy="408" rx="19" ry="7" fill="#222"/>
             <ellipse cx="174" cy="408" rx="19" ry="7" fill="#222"/>
             <rect x="125" y="354" width="25" height="58" rx="10" fill="#3A5890"/>
@@ -341,7 +341,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
             {hovered===1 && <ellipse cx="398" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone1.png" x="245" y="236" width="307" height="239" preserveAspectRatio="xMidYMid meet"/>
+            <image href="/zone1.png" x="245" y="246" width="307" height="239" preserveAspectRatio="xMidYMid meet"/>
             <rect x="289" y="462" width="220" height="42" rx="15" fill="#1A5C3A"/>
             <text x="399" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치료와 비밀 무기 →</text>
             <text x="399" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
