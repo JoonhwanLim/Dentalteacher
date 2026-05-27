@@ -1055,10 +1055,16 @@ function CareerSection({ onBack }) {
   const [bounceDir, setBounceDir]   = useState(null)
   const dragRef    = useRef(null)
   const wasDragRef = useRef(false)
+  const videoRef   = useRef(null)
   const [escape, setEscape] = useState({ x: 0, caught: false })
   const isMob = mob()
 
+  const RUN_SPEEDS = [0.5, 0.7, 0.9, 1.1, 1.5, 2.0, 2.0]
+
   useEffect(() => { setEscape({ x: 0, caught: false }) }, [idx])
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.playbackRate = RUN_SPEEDS[idx] ?? 1
+  }, [idx])
 
   const s    = careerSteps[idx]
   const cardW = isMob ? 255 : 420
@@ -1295,7 +1301,7 @@ function CareerSection({ onBack }) {
 
       {/* 달리기 트랙 */}
       <div style={{ position:'relative', height: isMob?110:140, flexShrink:0, overflow:'hidden', background:'white' }}>
-        <video src="/run.mp4" autoPlay loop muted playsInline
+        <video ref={videoRef} src="/run.mp4" autoPlay loop muted playsInline
           style={{ height:'100%', width:'auto', display:'block', margin:'0 auto' }} />
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(to right,white 0%,transparent 18%,transparent 82%,white 100%)', pointerEvents:'none' }}/>
       </div>
