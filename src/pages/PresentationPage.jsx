@@ -1303,7 +1303,7 @@ function CareerSection({ onBack }) {
       <div style={{ position:'relative', height: isMob?110:140, flexShrink:0, overflow:'hidden', background:'white' }}>
         <video ref={videoRef} src="/run.mp4" autoPlay loop muted playsInline
           style={{ height:'100%', width:'auto', display:'block', margin:'0 auto' }} />
-        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to right,white 0%,transparent 18%,transparent 82%,white 100%)', pointerEvents:'none' }}/>
+        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to right,#0A1230 0%,transparent 25%,transparent 75%,#0A1230 100%)', pointerEvents:'none' }}/>
       </div>
 
       {/* 하단: 도트 + 슬라이더 */}
