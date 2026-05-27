@@ -1463,17 +1463,19 @@ function SpecialtiesSection({ onBack }) {
           </div>
         </div>
 
-        {/* 텍스트 — 카드 아래 */}
-        <div key={`txt-${idx}`} style={{
-          textAlign:'center',
+        {/* 텍스트 — 카드 아래 (높이 고정으로 카드 위치 불변) */}
+        <div style={{
           width: isMob ? '88vw' : cardW + 80,
           maxWidth: 480,
           padding:'0 20px',
-          animation:'textIn 0.22s ease-out 0.06s both',
+          minHeight: isMob ? 105 : 120,
+          display:'flex', flexDirection:'column', alignItems:'center',
         }}>
-          <p style={{ fontSize: isMob?'1.4rem':'1.9rem', fontWeight:900, color:s.color, margin:'0 0 6px' }}>{s.name}</p>
-          <div style={{ width:40, height:3, background:s.color, borderRadius:2, opacity:0.65, margin:'0 auto 10px' }}/>
-          <p style={{ fontSize: isMob?'0.86rem':'0.98rem', color:'rgba(255,255,255,0.82)', lineHeight:1.75, margin:0, wordBreak:'keep-all', overflowWrap:'break-word' }}>{s.desc}</p>
+          <div key={`txt-${idx}`} style={{ width:'100%', textAlign:'center', animation:'textIn 0.22s ease-out 0.06s both' }}>
+            <p style={{ fontSize: isMob?'1.4rem':'1.9rem', fontWeight:900, color:s.color, margin:'0 0 6px' }}>{s.name}</p>
+            <div style={{ width:40, height:3, background:s.color, borderRadius:2, opacity:0.65, margin:'0 auto 10px' }}/>
+            <p style={{ fontSize: isMob?'0.86rem':'0.98rem', color:'rgba(255,255,255,0.82)', lineHeight:1.75, margin:0, wordBreak:'keep-all', overflowWrap:'break-word' }}>{s.desc}</p>
+          </div>
         </div>
       </div>
 
