@@ -284,63 +284,63 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
             {hovered===0 && <ellipse cx="147" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone0.png" x="59" y="203" width="176" height="234" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="59" y="460" width="176" height="46" rx="23" fill="#00BCD4"/>
-            <circle cx="82" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
-            <circle cx="82" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
-            <circle cx="82" cy="483" r="5.4" fill="none" stroke="white" strokeWidth="1.2"/>
-            <line x1="82" y1="483" x2="82" y2="478.8" stroke="white" strokeWidth="1.2" strokeLinecap="round"/>
-            <line x1="82" y1="483" x2="85" y2="484.8" stroke="white" strokeWidth="1.2" strokeLinecap="round"/>
-            <circle cx="82" cy="483" r="0.8" fill="white"/>
-            <text x="157" y="479" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과 의사의 하루</text>
-            <text x="157" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">출근부터 퇴근까지</text>
-            <text x="217" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
-            <text x="225" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            <rect x="59" y="460" width="176" height="46" rx="23" fill="#4CC9F0"/>
+            <circle cx="72" cy="483" r="11" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="72" cy="483" r="8" fill="rgba(255,255,255,0.2)"/>
+            <circle cx="72" cy="483" r="5.4" fill="none" stroke="white" strokeWidth="1.2"/>
+            <line x1="72" y1="483" x2="72" y2="478.8" stroke="white" strokeWidth="1.2" strokeLinecap="round"/>
+            <line x1="72" y1="483" x2="75" y2="484.8" stroke="white" strokeWidth="1.2" strokeLinecap="round"/>
+            <circle cx="72" cy="483" r="0.8" fill="white"/>
+            <text x="155" y="479" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과 의사의 하루</text>
+            <text x="155" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">출근부터 퇴근까지</text>
+            <text x="215" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
+            <text x="223" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
           </g>
 
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
             {hovered===1 && <ellipse cx="382" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone1.png" x="277" y="266" width="211" height="200" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="294" y="460" width="176" height="46" rx="23" fill="#42A5F5"/>
-            <circle cx="317" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
-            <circle cx="317" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
-            <rect x="312.2" y="480.6" width="9.6" height="4.8" rx="1.2" fill="white"/>
-            <rect x="314.6" y="478.2" width="4.8" height="9.6" rx="1.2" fill="white"/>
-            <text x="393" y="479" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과에서 자주하는 치료는?</text>
-            <text x="393" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">치료 종류 &amp; 도구</text>
-            <text x="452" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
-            <text x="460" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            <rect x="294" y="460" width="176" height="46" rx="23" fill="#8E6CEB"/>
+            <circle cx="307" cy="483" r="11" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="307" cy="483" r="8" fill="rgba(255,255,255,0.2)"/>
+            <rect x="302.2" y="480.6" width="9.6" height="4.8" rx="1.2" fill="white"/>
+            <rect x="304.6" y="478.2" width="4.8" height="9.6" rx="1.2" fill="white"/>
+            <text x="390" y="479" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과에서 자주하는 치료는?</text>
+            <text x="390" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">치료 종류 &amp; 도구</text>
+            <text x="450" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
+            <text x="458" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
           </g>
 
           {/* ── ZONE 3: 현미경 ── */}
           <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
             {hovered===3 && <ellipse cx="617" cy="454" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone3.png" x="529" y="206" width="176" height="247" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="529" y="460" width="176" height="46" rx="23" fill="#FFA726"/>
-            <circle cx="552" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
-            <circle cx="552" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
-            <polygon points="552,477.6 553.4,481.1 557.1,481.3 554.3,483.7 555.2,487.4 552,485.4 548.8,487.4 549.7,483.7 546.9,481.3 550.6,481.1" fill="white"/>
-            <text x="628" y="479" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과의사에도 전문분야가 있어요</text>
-            <text x="628" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">교정과·소아치과 등</text>
-            <text x="687" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
-            <text x="695" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            <rect x="529" y="460" width="176" height="46" rx="23" fill="#F9C74F"/>
+            <circle cx="542" cy="483" r="11" fill="rgba(0,0,0,0.15)"/>
+            <circle cx="542" cy="483" r="8" fill="rgba(255,255,255,0.2)"/>
+            <polygon points="542,477.6 543.4,481.1 547.1,481.3 544.3,483.7 545.2,487.4 542,485.4 538.8,487.4 539.7,483.7 536.9,481.3 540.6,481.1" fill="white"/>
+            <text x="625" y="479" textAnchor="middle" fontSize="10" fill="#5C3A00" fontWeight="bold">치과의사에도 전문분야가 있어요</text>
+            <text x="625" y="494" textAnchor="middle" fontSize="10" fill="rgba(60,35,0,0.7)">교정과·소아치과 등</text>
+            <text x="685" y="474" textAnchor="middle" fontSize="12" fill="#5C3A00" opacity="0.5">✦</text>
+            <text x="693" y="487" textAnchor="middle" fontSize="8" fill="#5C3A00" opacity="0.35">✧</text>
           </g>
 
           {/* ── ZONE 2: 책장 ── */}
           <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
             {hovered===2 && <ellipse cx="852" cy="454" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone2.png" x="764" y="235" width="176" height="216" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="764" y="460" width="176" height="46" rx="23" fill="#AB47BC"/>
-            <circle cx="787" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
-            <circle cx="787" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
-            <rect x="782.2" y="477.6" width="9.6" height="10.8" rx="1.2" fill="white"/>
-            <line x1="784" y1="480" x2="791" y2="480" stroke="#AB47BC" strokeWidth="1.2"/>
-            <line x1="784" y1="482.4" x2="791" y2="482.4" stroke="#AB47BC" strokeWidth="1.2"/>
-            <line x1="784" y1="484.8" x2="791" y2="484.8" stroke="#AB47BC" strokeWidth="1.2"/>
-            <text x="862" y="479" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과의사가 되는법</text>
-            <text x="862" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">공부와 국가고시</text>
-            <text x="921" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
-            <text x="929" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            <rect x="764" y="460" width="176" height="46" rx="23" fill="#F45B69"/>
+            <circle cx="777" cy="483" r="11" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="777" cy="483" r="8" fill="rgba(255,255,255,0.2)"/>
+            <rect x="772.2" y="477.6" width="9.6" height="10.8" rx="1.2" fill="white"/>
+            <line x1="774" y1="480" x2="781" y2="480" stroke="#F45B69" strokeWidth="1.2"/>
+            <line x1="774" y1="482.4" x2="781" y2="482.4" stroke="#F45B69" strokeWidth="1.2"/>
+            <line x1="774" y1="484.8" x2="781" y2="484.8" stroke="#F45B69" strokeWidth="1.2"/>
+            <text x="858" y="479" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과의사가 되는법</text>
+            <text x="858" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">공부와 국가고시</text>
+            <text x="918" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
+            <text x="926" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
           </g>
         </svg>
       </div>
