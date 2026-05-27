@@ -264,7 +264,6 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
         </div>
         <div style={{ marginLeft:'auto', display:'flex', gap:6, flexShrink:0 }}>
           <button onClick={onFacts} style={{ background:'#E8F5E9', border:'1.5px solid #A5D6A7', borderRadius:50, padding:'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize:'0.82rem', cursor:'pointer', color:'#1A5C3A' }}>🦷 치아정보</button>
-          <button onClick={onGoIntro} style={{ background:'white', border:'1.5px solid #E0E0E0', borderRadius:50, padding:'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize:'0.82rem', cursor:'pointer', color:'#888' }}>🏠 처음으로</button>
           <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding:'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize:'0.82rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A', whiteSpace:'nowrap' }}>{mob() ? '학생 참여' : '학생 참여 (퀴즈 & 게임)'}</button>
         </div>
       </div>
@@ -283,58 +282,65 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
 
           {/* ── ZONE 0: 여의사 캐릭터 ── */}
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
-            {hovered===0 && <ellipse cx="155" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone0.png" x="88" y="203" width="140" height="234" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="15" y="460" width="220" height="46" rx="23" fill="#00BCD4"/>
-            <circle cx="38" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
-            <circle cx="38" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
-            <text x="38" y="489" textAnchor="middle" fontSize="15">🦷</text>
-            <text x="148" y="479" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과 의사의 하루</text>
-            <text x="148" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">출근부터 퇴근까지</text>
-            <text x="215" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
-            <text x="222" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            {hovered===0 && <ellipse cx="147" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <image href="/zone0.png" x="59" y="203" width="176" height="234" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="59" y="460" width="176" height="46" rx="23" fill="#00BCD4"/>
+            <circle cx="82" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="82" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
+            <circle cx="82" cy="483" r="9" fill="none" stroke="white" strokeWidth="1.5"/>
+            <line x1="82" y1="483" x2="82" y2="476" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+            <line x1="82" y1="483" x2="87" y2="486" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+            <circle cx="82" cy="483" r="1.2" fill="white"/>
+            <text x="157" y="479" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과 의사의 하루</text>
+            <text x="157" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">출근부터 퇴근까지</text>
+            <text x="217" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
+            <text x="225" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
           </g>
 
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
-            {hovered===1 && <ellipse cx="398" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone1.png" x="291" y="266" width="215" height="167" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="265" y="460" width="220" height="46" rx="23" fill="#42A5F5"/>
-            <circle cx="288" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
-            <circle cx="288" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
-            <text x="288" y="489" textAnchor="middle" fontSize="15">🦷</text>
-            <text x="398" y="479" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과에서 자주하는 치료는?</text>
-            <text x="398" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">치료 종류 &amp; 도구</text>
-            <text x="465" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
-            <text x="472" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            {hovered===1 && <ellipse cx="382" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <image href="/zone1.png" x="294" y="266" width="176" height="167" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="294" y="460" width="176" height="46" rx="23" fill="#42A5F5"/>
+            <circle cx="317" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="317" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
+            <rect x="309" y="479" width="16" height="8" rx="2" fill="white"/>
+            <rect x="313" y="475" width="8" height="16" rx="2" fill="white"/>
+            <text x="393" y="479" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과에서 자주하는 치료는?</text>
+            <text x="393" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">치료 종류 &amp; 도구</text>
+            <text x="452" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
+            <text x="460" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
           </g>
 
           {/* ── ZONE 3: 현미경 ── */}
           <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
-            {hovered===3 && <ellipse cx="660" cy="454" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone3.png" x="563" y="206" width="200" height="247" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="515" y="460" width="220" height="46" rx="23" fill="#FFA726"/>
-            <circle cx="538" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
-            <circle cx="538" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
-            <text x="538" y="489" textAnchor="middle" fontSize="15">🦷</text>
-            <text x="648" y="479" textAnchor="middle" fontSize="11" fill="white" fontWeight="bold">치과의사에도 전문분야가 있어요</text>
-            <text x="648" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">교정과·소아치과 등</text>
-            <text x="715" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
-            <text x="722" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            {hovered===3 && <ellipse cx="617" cy="454" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <image href="/zone3.png" x="529" y="206" width="176" height="247" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="529" y="460" width="176" height="46" rx="23" fill="#FFA726"/>
+            <circle cx="552" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="552" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
+            <polygon points="552,474 554.4,479.8 560.6,480.2 556,484.8 557.3,490.3 552,487 546.7,490.3 548,484.8 543.4,480.2 549.6,479.8" fill="white"/>
+            <text x="628" y="479" textAnchor="middle" fontSize="9" fill="white" fontWeight="bold">치과의사에도 전문분야가 있어요</text>
+            <text x="628" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">교정과·소아치과 등</text>
+            <text x="687" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
+            <text x="695" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
           </g>
 
           {/* ── ZONE 2: 책장 ── */}
           <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
-            {hovered===2 && <ellipse cx="876" cy="454" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone2.png" x="810" y="235" width="134" height="216" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="765" y="460" width="220" height="46" rx="23" fill="#AB47BC"/>
-            <circle cx="788" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
-            <circle cx="788" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
-            <text x="788" y="489" textAnchor="middle" fontSize="15">🦷</text>
-            <text x="898" y="479" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는법</text>
-            <text x="898" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">공부와 국가고시</text>
-            <text x="965" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
-            <text x="972" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            {hovered===2 && <ellipse cx="852" cy="454" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
+            <image href="/zone2.png" x="764" y="235" width="176" height="216" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="764" y="460" width="176" height="46" rx="23" fill="#AB47BC"/>
+            <circle cx="787" cy="483" r="18" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="787" cy="483" r="14" fill="rgba(255,255,255,0.2)"/>
+            <rect x="779" y="474" width="16" height="18" rx="2" fill="white"/>
+            <line x1="782" y1="479" x2="793" y2="479" stroke="#AB47BC" strokeWidth="1.5"/>
+            <line x1="782" y1="483" x2="793" y2="483" stroke="#AB47BC" strokeWidth="1.5"/>
+            <line x1="782" y1="487" x2="793" y2="487" stroke="#AB47BC" strokeWidth="1.5"/>
+            <text x="862" y="479" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는법</text>
+            <text x="862" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">공부와 국가고시</text>
+            <text x="921" y="474" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
+            <text x="929" y="487" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
           </g>
         </svg>
       </div>
