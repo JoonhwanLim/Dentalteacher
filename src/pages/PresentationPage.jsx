@@ -354,7 +354,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 2: 책장 ── */}
           <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
             {hovered===2 && <ellipse cx="852" cy="454" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone2.png" x="764" y="235" width="176" height="216" preserveAspectRatio="xMidYMid meet"/>
+            <image href="/zone2.png" x="764" y="235" width="176" height="216" preserveAspectRatio="xMidYMid meet"
+              style={{ transformOrigin:'852px 343px', transform: hovered===2 ? 'scale(1.05)' : 'scale(1)', transition:'transform 0.25s ease' }}/>
             <rect x="764" y="460" width="176" height="37" rx="18" fill="#F45B69"/>
             <circle cx="782" cy="479" r="13" fill="rgba(0,0,0,0.18)"/>
             <circle cx="782" cy="479" r="10" fill="rgba(255,255,255,0.2)"/>
@@ -366,6 +367,21 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <text x="858" y="487" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">공부와 국가고시</text>
             <text x="918" y="470" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
             <text x="926" y="483" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
+            {/* 별 파티클 */}
+            {hovered===2 && [
+              {x:790, y:320, dx:-3, sz:7, c:'#FFD700', delay:'0s'   },
+              {x:818, y:310, dx: 2, sz:5, c:'#FFC107', delay:'0.55s'},
+              {x:848, y:318, dx:-1, sz:8, c:'#FFCA28', delay:'1.1s' },
+              {x:876, y:308, dx: 3, sz:5, c:'#FFD700', delay:'1.65s'},
+              {x:904, y:316, dx:-2, sz:6, c:'#FFC107', delay:'2.2s' },
+            ].map((h, i) => (
+              <text key={i} x={h.x} y={h.y} fontSize={h.sz} textAnchor="middle" fill={h.c} opacity="0">
+                ★
+                <animate attributeName="opacity" values="0;0.55;0.3;0" dur="2.5s" begin={h.delay} repeatCount="indefinite"/>
+                <animate attributeName="y" values={`${h.y};${h.y-36}`} dur="2.5s" begin={h.delay} repeatCount="indefinite"/>
+                <animate attributeName="x" values={`${h.x};${h.x+h.dx*5}`} dur="2.5s" begin={h.delay} repeatCount="indefinite"/>
+              </text>
+            ))}
           </g>
         </svg>
       </div>
