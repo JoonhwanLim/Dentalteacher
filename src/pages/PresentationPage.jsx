@@ -1310,25 +1310,16 @@ function CareerSection({ onBack }) {
 
 /* ── SECTION 3: 치과의사의 다양한 종류 ── */
 function SpecialtiesSection({ onBack }) {
-  const [idx, setIdx]               = useState(0)
-  const [hoveredIdx, setHoveredIdx] = useState(null)
-  const [bounceKey, setBounceKey]   = useState(0)
-  const [bounceDir, setBounceDir]   = useState(null)
-  const dragRef    = useRef(null)
-  const wasDragRef = useRef(false)
+  const [idx, setIdx]   = useState(0)
+  const dragRef         = useRef(null)
+  const wasDragRef      = useRef(false)
   const isMob = mob()
-  const s    = specialties[idx]
-  const cardW = isMob ? 230 : 400
-  const cardH = isMob ? 330 : 400
-  const gap   = isMob ? 138 : 250
+  const s     = specialties[idx]
+  const cardW = isMob ? 230 : 340
+  const cardH = isMob ? 280 : 340
 
   function go(n) {
-    if (n < 0 || n >= specialties.length) {
-      setBounceDir(n < 0 ? 'right' : 'left')
-      setBounceKey(k => k + 1)
-      setTimeout(() => setBounceDir(null), 500)
-      return
-    }
+    if (n < 0 || n >= specialties.length) return
     setIdx(n)
   }
 
@@ -1353,21 +1344,13 @@ function SpecialtiesSection({ onBack }) {
   return (
     <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A3A7C,#0A1E40)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
       <style>{`
-        @keyframes bounceLeft {
-          0%   { transform: translateX(0px); }
-          28%  { transform: translateX(-52px); }
-          58%  { transform: translateX(16px); }
-          78%  { transform: translateX(-8px); }
-          92%  { transform: translateX(3px); }
-          100% { transform: translateX(0px); }
+        @keyframes morphIn {
+          from { opacity: 0; transform: scale(0.82) translateY(18px); }
+          to   { opacity: 1; transform: scale(1)    translateY(0);    }
         }
-        @keyframes bounceRight {
-          0%   { transform: translateX(0px); }
-          28%  { transform: translateX(52px); }
-          58%  { transform: translateX(-16px); }
-          78%  { transform: translateX(8px); }
-          92%  { transform: translateX(-3px); }
-          100% { transform: translateX(0px); }
+        @keyframes textIn {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0);    }
         }
       `}</style>
 
@@ -1380,9 +1363,9 @@ function SpecialtiesSection({ onBack }) {
         <p style={{ color:'rgba(255,255,255,0.45)', marginLeft:6, fontSize:'0.82rem' }}>8가지 전문 분야</p>
       </div>
 
-      {/* 카드 스테이지 */}
+      {/* 메인 */}
       <div
-        style={{ flex:1, position:'relative', overflow:'visible', display:'flex', alignItems:'center', justifyContent:'center', userSelect:'none', touchAction:'none', cursor:'grab' }}
+        style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap: isMob?18:24, paddingTop: isMob?60:90, paddingBottom:10, position:'relative', userSelect:'none', touchAction:'none', cursor:'grab' }}
         onMouseDown={e => onPtrDown(e.clientX)}
         onMouseMove={e => onPtrMove(e.clientX)}
         onMouseUp={e => onPtrUp(e.clientX)}
@@ -1391,14 +1374,13 @@ function SpecialtiesSection({ onBack }) {
         onTouchMove={e => onPtrMove(e.touches[0].clientX)}
         onTouchEnd={e => onPtrUp(e.changedTouches[0].clientX)}
       >
-        {/* 화살표 버튼 */}
-        {[[-1,'←',isMob?10:36],[1,'→',isMob?10:36]].map(([dir, label, edge]) => {
-          const target = idx + dir
-          const ok = target >= 0 && target < specialties.length
+        {/* 화살표 */}
+        {[[-1,'←',isMob?12:44],[1,'→',isMob?12:44]].map(([dir, label, edge]) => {
+          const ok = (dir === -1 ? idx > 0 : idx < specialties.length - 1)
           return (
-            <button key={dir} onClick={() => go(target)}
+            <button key={dir} onClick={() => go(idx + dir)}
               style={{
-                position:'absolute', [dir===-1?'left':'right']: edge, zIndex:30,
+                position:'absolute', [dir===-1?'left':'right']: edge, top:'50%', transform:'translateY(-50%)', zIndex:30,
                 width: isMob?42:54, height: isMob?42:54, borderRadius:'50%',
                 background: ok ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
                 border:`1.5px solid rgba(255,255,255,${ok?0.22:0.07})`,
@@ -1413,102 +1395,46 @@ function SpecialtiesSection({ onBack }) {
           )
         })}
 
-        {/* 카드 트랙 — 바운스 wrapper */}
-        <div key={bounceKey} style={{
-          position:'absolute', inset:0,
-          display:'flex', alignItems:'center', justifyContent:'center',
-          animation: bounceDir ? `bounce${bounceDir === 'left' ? 'Left' : 'Right'} 0.50s cubic-bezier(0.36,0.07,0.19,0.97) both` : 'none',
-          pointerEvents:'none',
+        {/* 카드 */}
+        <div style={{ position:'relative', width:cardW, height:cardH, flexShrink:0 }}>
+          {/* 카드 배경 */}
+          <div key={`bg-${idx}`} style={{
+            position:'absolute', inset:0,
+            background:'rgba(255,255,255,0.10)',
+            backdropFilter:'blur(20px)',
+            borderRadius: isMob ? 24 : 32,
+            border:`2px solid ${s.color}66`,
+            boxShadow:`0 0 100px ${s.color}40, 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)`,
+            animation:'morphIn 0.38s cubic-bezier(0.22,0.8,0.36,1)',
+          }} />
+
+          {/* 캐릭터 이미지 — 위로 튀어나옴 */}
+          <div style={{ position:'absolute', bottom: cardH*0.08, left:0, right:0, display:'flex', justifyContent:'center', pointerEvents:'none', zIndex:2 }}>
+            <img key={`img-${idx}`}
+              src={`/jobs/${s.image}`}
+              alt={s.name}
+              draggable={false}
+              style={{
+                height: isMob ? cardH*1.05 : cardH*1.10,
+                objectFit:'contain',
+                userSelect:'none',
+                filter:`drop-shadow(0 8px 32px ${s.color}99)`,
+                animation:'morphIn 0.42s cubic-bezier(0.22,0.8,0.36,1)',
+              }}
+            />
+          </div>
+        </div>
+
+        {/* 텍스트 — 카드 아래 */}
+        <div key={`txt-${idx}`} style={{
+          textAlign:'center',
+          maxWidth: cardW + 80,
+          padding:'0 20px',
+          animation:'textIn 0.38s cubic-bezier(0.22,0.8,0.36,1) 0.08s both',
         }}>
-          {specialties.map((sp, i) => {
-            const diff      = i - idx
-            const abs       = Math.abs(diff)
-            const isHov     = hoveredIdx === i && abs > 0
-            const baseScale = abs === 0 ? 1 : abs === 1 ? 0.72 : abs === 2 ? 0.52 : 0.38
-            const scale     = isHov ? Math.min(baseScale + 0.10, 0.84) : baseScale
-            const tx        = diff * gap
-            const op        = abs === 0 ? 1 : abs === 1 ? 0.60 : abs === 2 ? 0.28 : 0
-            const zI        = 20 - abs * 5
-            const active    = abs === 0
-
-            return (
-              <div key={i}
-                onClick={() => { if (wasDragRef.current) return; !active && go(i) }}
-                onMouseEnter={() => abs > 0 && setHoveredIdx(i)}
-                onMouseLeave={() => setHoveredIdx(null)}
-                style={{
-                  position:'absolute',
-                  width: cardW, height: cardH,
-                  transform: `translateX(${tx}px) scale(${scale})`,
-                  opacity: op,
-                  zIndex: zI,
-                  transition:'transform 0.40s cubic-bezier(0.22,0.8,0.36,1), opacity 0.40s',
-                  cursor: active ? 'default' : 'pointer',
-                  pointerEvents: abs > 2 ? 'none' : 'auto',
-                  overflow:'visible',
-                }}
-              >
-                {/* 카드 배경 레이어 */}
-                <div style={{
-                  position:'absolute', inset:0,
-                  background: active ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.06)',
-                  backdropFilter:'blur(20px)',
-                  borderRadius: isMob ? 24 : 32,
-                  border:`2px solid ${active ? sp.color+'66' : 'rgba(255,255,255,0.10)'}`,
-                  boxShadow: active ? `0 0 100px ${sp.color}38, 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15)` : 'none',
-                  overflow:'hidden',
-                }} />
-
-                {/* 캐릭터 이미지 — 카드 위로 튀어나옴 */}
-                <img
-                  src={`/jobs/${sp.image}`}
-                  alt={sp.name}
-                  draggable={false}
-                  style={{
-                    position:'absolute',
-                    bottom: isMob ? cardH * 0.30 : cardH * 0.32,
-                    left:'50%',
-                    transform:'translateX(-50%)',
-                    height: isMob ? cardH * 0.95 : cardH * 1.0,
-                    objectFit:'contain',
-                    zIndex:2,
-                    pointerEvents:'none',
-                    userSelect:'none',
-                    filter: active ? `drop-shadow(0 4px 24px ${sp.color}99)` : 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))',
-                    transition:'filter 0.4s',
-                  }}
-                />
-
-                {/* 카드 하단 컨텐츠 */}
-                <div style={{
-                  position:'absolute',
-                  bottom:0, left:0, right:0,
-                  padding: isMob ? '0 16px 18px' : '0 36px 28px',
-                  display:'flex', flexDirection:'column', alignItems:'center',
-                  gap: isMob ? 6 : 10,
-                  zIndex:3,
-                  textAlign:'center',
-                }}>
-                  <div style={{ opacity: active?1:0, transition:'opacity 0.35s',
-                    background:`${sp.color}28`, border:`1.5px solid ${sp.color}55`,
-                    borderRadius:50, padding: isMob?'3px 12px':'4px 16px',
-                    fontSize: isMob?'0.68rem':'0.76rem', fontWeight:800, color:sp.color }}>
-                    {i+1} / {specialties.length}
-                  </div>
-                  <p style={{
-                    fontWeight:900, margin:0, lineHeight:1.2,
-                    fontSize: active ? (isMob?'1.5rem':'2.1rem') : (isMob?'1.0rem':'1.4rem'),
-                    color: active ? sp.color : 'rgba(255,255,255,0.65)',
-                    transition:'all 0.4s',
-                  }}>{sp.name}</p>
-                  <div style={{ opacity: active?1:0, maxHeight: active ? 200 : 0, overflow:'hidden', transition:'opacity 0.35s 0.1s, max-height 0.35s', display:'flex', flexDirection:'column', alignItems:'center', gap: isMob?8:12 }}>
-                    <div style={{ width:44, height:3, background:sp.color, borderRadius:2, opacity:0.65 }}/>
-                    <p style={{ fontSize: isMob?'0.88rem':'1.02rem', color:'rgba(255,255,255,0.82)', lineHeight:1.70, margin:0 }}>{sp.desc}</p>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
+          <p style={{ fontSize: isMob?'1.4rem':'1.9rem', fontWeight:900, color:s.color, margin:'0 0 6px' }}>{s.name}</p>
+          <div style={{ width:40, height:3, background:s.color, borderRadius:2, opacity:0.65, margin:'0 auto 10px' }}/>
+          <p style={{ fontSize: isMob?'0.86rem':'0.98rem', color:'rgba(255,255,255,0.82)', lineHeight:1.7, margin:0 }}>{s.desc}</p>
         </div>
       </div>
 
