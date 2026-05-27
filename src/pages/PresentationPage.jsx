@@ -184,7 +184,7 @@ const timeline = [
   { time:'09:00', emoji:'🧹', color:'#26A69A', title:'진료실 준비', sub:'도구 소독 & 세팅',
     desc:'모든 도구를 소독하고 진료실을 깨끗이 준비해요.',
     detail:'환자 오기 전 모든 치료 도구를 고압증기로 소독하고 유닛 체어를 세팅해요. 위생이 가장 중요해요!',
-    image:'/jobs/bojon.png' },
+    image:'/jobs/prepare.png' },
   { time:'09:30', emoji:'🦷', color:'#42A5F5', title:'오전 진료 시작!', sub:'치아 구조대 출동',
     desc:'충치 치료, 스케일링, 정기 검진 등 다양한 치료를 해요.',
     detail:'하루에 보통 15~20명의 환자를 만나요. 집중력이 중요한 시간이에요.',
