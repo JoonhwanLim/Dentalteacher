@@ -1100,6 +1100,10 @@ function CareerSection({ onBack }) {
   return (
     <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A2A6C,#0A1230)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
       <style>{`
+        @keyframes bubbleIn {
+          from { opacity:0; transform:translateY(-50%) scale(0.75); }
+          to   { opacity:1; transform:translateY(-50%) scale(1); }
+        }
         @keyframes careerBounceLeft {
           0%   { transform: translateX(0px); }
           28%  { transform: translateX(-52px); }
@@ -1281,10 +1285,30 @@ function CareerSection({ onBack }) {
       </div>
 
       {/* 달리기 트랙 */}
-      <div style={{ position:'relative', height: isMob?110:140, flexShrink:0, overflow:'hidden', background:'white' }}>
-        <video ref={videoRef} src="/run.mp4" autoPlay loop muted playsInline
-          style={{ height:'100%', width:'auto', display:'block', margin:'0 auto', WebkitMaskImage:'linear-gradient(to right,transparent 0%,black 18%,black 82%,transparent 100%)', maskImage:'linear-gradient(to right,transparent 0%,black 18%,black 82%,transparent 100%)' }} />
-      </div>
+      {(() => {
+        const BUBBLES = [
+          '치과의사를 향해\n달려보자',
+          '열심히 달리는거야!!',
+          '더 빨리',
+          '좀 더 빨리',
+          '이제 슬슬\n끝이 보여',
+          '최대속도!!',
+          '좋아 의사다!!',
+        ]
+        return (
+          <div style={{ position:'relative', height: isMob?110:140, flexShrink:0, overflow:'hidden', background:'white' }}>
+            <video ref={videoRef} src="/run.mp4" autoPlay loop muted playsInline
+              style={{ height:'100%', width:'auto', display:'block', margin:'0 auto', WebkitMaskImage:'linear-gradient(to right,transparent 0%,black 18%,black 82%,transparent 100%)', maskImage:'linear-gradient(to right,transparent 0%,black 18%,black 82%,transparent 100%)' }} />
+            {/* 말풍선 */}
+            <div key={idx} style={{ position:'absolute', right: isMob?'6%':'13%', top:'50%', transform:'translateY(-50%)', animation:'bubbleIn 0.32s cubic-bezier(0.34,1.56,0.64,1) both', zIndex:10 }}>
+              <div style={{ position:'relative', background:'white', borderRadius:12, padding: isMob?'6px 10px':'8px 14px', fontSize: isMob?'0.70rem':'0.85rem', fontWeight:800, color:s.color, border:`2px solid ${s.color}`, boxShadow:`0 4px 16px rgba(0,0,0,0.15)`, whiteSpace:'pre-line', textAlign:'center', lineHeight:1.35 }}>
+                {BUBBLES[idx]}
+                <div style={{ position:'absolute', left:-8, top:'50%', transform:'translateY(-50%) rotate(45deg)', width:12, height:12, background:'white', borderLeft:`2px solid ${s.color}`, borderBottom:`2px solid ${s.color}` }} />
+              </div>
+            </div>
+          </div>
+        )
+      })()}
 
       {/* 하단: 도트 + 슬라이더 */}
       <div style={{ padding: isMob?'10px 24px 22px':'14px 60px 28px', display:'flex', flexDirection:'column', alignItems:'center', gap:12, flexShrink:0 }}>
