@@ -942,8 +942,8 @@ function BuildingIllustration({ step }) {
   const id = `bld${step}`
   const cfgs = [
     { vb:'20 80 112 178', gY:248, gH:12, jsx: <>
-      <rect x="42" y="158" width="74" height="92" rx="2" fill="#FFF176" stroke="#F9A825" strokeWidth="1.5"/>
-      <polygon points="28,160 118,160 73,110" fill="#E53935"/>
+      <rect x="42" y="160" width="74" height="90" rx="2" fill="#FFF176" stroke="#F9A825" strokeWidth="1.5"/>
+      <polygon points="42,160 116,160 79,108" fill="#E53935"/>
       <rect x="92" y="118" width="10" height="24" fill="#BDBDBD"/>
       <rect x="50" y="174" width="20" height="18" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1"/>
       <rect x="88" y="174" width="20" height="18" rx="2" fill="#90CAF9" stroke="#1565C0" strokeWidth="1"/>
@@ -1056,12 +1056,10 @@ function CareerSection({ onBack }) {
   const dragRef    = useRef(null)
   const wasDragRef = useRef(false)
   const videoRef   = useRef(null)
-  const [escape, setEscape] = useState({ x: 0, caught: false })
   const isMob = mob()
 
   const RUN_SPEEDS = [0.7, 1.0, 1.5, 2.0, 3.0, 4.0, 1.5]
 
-  useEffect(() => { setEscape({ x: 0, caught: false }) }, [idx])
   useEffect(() => {
     if (videoRef.current) videoRef.current.playbackRate = RUN_SPEEDS[idx] ?? 1
   }, [idx])
@@ -1255,39 +1253,9 @@ function CareerSection({ onBack }) {
                     </div>
                   )}
                   {/* 비활성 카드 or image 없을 때: 기존 BuildingIllustration 유지 */}
-                  {(!active || !cs.image) && <div
-                    style={{
-                      width:'100%', height:'100%', borderRadius:12, overflow:'hidden',
-                      transform: (active && i === 3) ? `translateX(${escape.x}px)` : 'none',
-                      transition: 'transform 0.20s ease-out',
-                      cursor: (active && i === 3) ? 'pointer' : 'default',
-                    }}
-                    onMouseMove={(active && i === 3) ? (e => {
-                      if (escape.caught) return
-                      const r = e.currentTarget.getBoundingClientRect()
-                      const side = e.clientX < r.left + r.width / 2 ? 1 : -1
-                      setEscape(prev => ({ ...prev, x: side * 28 }))
-                    }) : undefined}
-                    onMouseLeave={(active && i === 3) ? (() => setEscape(prev => ({ ...prev, x: 0 }))) : undefined}
-                    onClick={(active && i === 3) ? (e => {
-                      e.stopPropagation()
-                      setEscape({ x: 0, caught: true })
-                      setTimeout(() => setEscape({ x: 0, caught: false }), 1400)
-                    }) : undefined}
-                  >
-                    <BuildingIllustration step={i} />
-                  </div>}
-                  {active && i === 3 && escape.caught && (
-                    <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
-                      fontSize: isMob?'1.1rem':'1.4rem', fontWeight:900, color:'#F9A825',
-                      textShadow:'0 2px 10px rgba(0,0,0,0.7)', pointerEvents:'none',
-                      animation:'caughtPop 0.35s cubic-bezier(0.34,1.56,0.64,1)' }}>
-                      잡았다! 🎉
-                    </div>
-                  )}
-                  {active && i === 3 && !escape.caught && escape.x === 0 && (
-                    <div style={{ position:'absolute', bottom:6, right:8, fontSize:'0.65rem', color:'rgba(255,255,255,0.45)', pointerEvents:'none' }}>
-                      건물을 잡아봐요 👆
+                  {(!active || !cs.image) && (
+                    <div style={{ width:'100%', height:'100%', borderRadius:12, overflow:'hidden' }}>
+                      <BuildingIllustration step={i} />
                     </div>
                   )}
                 </div>
