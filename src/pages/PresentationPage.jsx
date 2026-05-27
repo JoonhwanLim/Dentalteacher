@@ -1310,17 +1310,27 @@ function CareerSection({ onBack }) {
 
 /* ── SECTION 3: 치과의사의 다양한 종류 ── */
 function SpecialtiesSection({ onBack }) {
-  const [idx, setIdx]   = useState(0)
-  const dragRef         = useRef(null)
-  const wasDragRef      = useRef(false)
+  const [idx, setIdx]       = useState(0)
+  const [prevIdx, setPrevIdx] = useState(null)
+  const [animKey, setAnimKey] = useState(0)
+  const dragRef               = useRef(null)
+  const wasDragRef            = useRef(false)
   const isMob = mob()
   const s     = specialties[idx]
   const cardW = isMob ? 230 : 340
   const cardH = isMob ? 280 : 340
 
+  useEffect(() => {
+    if (prevIdx === null) return
+    const t = setTimeout(() => setPrevIdx(null), 460)
+    return () => clearTimeout(t)
+  }, [animKey])
+
   function go(n) {
     if (n < 0 || n >= specialties.length) return
+    setPrevIdx(idx)
     setIdx(n)
+    setAnimKey(k => k + 1)
   }
 
   function onPtrDown(x) { dragRef.current = { x, moved: false } }
@@ -1344,13 +1354,17 @@ function SpecialtiesSection({ onBack }) {
   return (
     <div style={{ width:'100vw', height:'100vh', background:'linear-gradient(160deg,#1A3A7C,#0A1E40)', display:'flex', flexDirection:'column', overflow:'hidden', fontFamily:"'Noto Sans KR', sans-serif" }}>
       <style>{`
-        @keyframes morphIn {
-          from { opacity: 0; transform: scale(0.82) translateY(18px); }
-          to   { opacity: 1; transform: scale(1)    translateY(0);    }
+        @keyframes fadeOut {
+          from { opacity: 1; transform: scale(1); }
+          to   { opacity: 0; transform: scale(0.90); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.90); }
+          to   { opacity: 1; transform: scale(1); }
         }
         @keyframes textIn {
-          from { opacity: 0; transform: translateY(12px); }
-          to   { opacity: 1; transform: translateY(0);    }
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
@@ -1397,29 +1411,53 @@ function SpecialtiesSection({ onBack }) {
 
         {/* 카드 */}
         <div style={{ position:'relative', width:cardW, height:cardH, flexShrink:0 }}>
-          {/* 카드 배경 */}
-          <div key={`bg-${idx}`} style={{
+          {/* 카드 배경 — 색상만 부드럽게 전환 */}
+          <div style={{
             position:'absolute', inset:0,
             background:'rgba(255,255,255,0.10)',
             backdropFilter:'blur(20px)',
             borderRadius: isMob ? 24 : 32,
             border:`2px solid ${s.color}66`,
             boxShadow:`0 0 100px ${s.color}40, 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)`,
-            animation:'morphIn 0.38s cubic-bezier(0.22,0.8,0.36,1)',
+            transition:'border-color 0.42s ease, box-shadow 0.42s ease',
           }} />
 
-          {/* 캐릭터 이미지 — 위로 튀어나옴 */}
-          <div style={{ position:'absolute', bottom: cardH*0.08, left:0, right:0, display:'flex', justifyContent:'center', pointerEvents:'none', zIndex:2 }}>
-            <img key={`img-${idx}`}
+          {/* 이전 이미지 — 페이드 아웃 */}
+          {prevIdx !== null && (
+            <div key={`prev-${animKey}`} style={{
+              position:'absolute', bottom: cardH*0.08, left:0, right:0,
+              display:'flex', justifyContent:'center',
+              pointerEvents:'none', zIndex:2,
+              animation:'fadeOut 0.42s ease-out forwards',
+            }}>
+              <img
+                src={`/jobs/${specialties[prevIdx].image}`}
+                alt=""
+                draggable={false}
+                style={{
+                  height: isMob ? cardH*1.05 : cardH*1.10,
+                  objectFit:'contain', userSelect:'none',
+                  filter:`drop-shadow(0 8px 32px ${specialties[prevIdx].color}99)`,
+                }}
+              />
+            </div>
+          )}
+
+          {/* 현재 이미지 — 페이드 인 */}
+          <div key={`curr-${animKey}`} style={{
+            position:'absolute', bottom: cardH*0.08, left:0, right:0,
+            display:'flex', justifyContent:'center',
+            pointerEvents:'none', zIndex:3,
+            animation: animKey > 0 ? 'fadeIn 0.42s ease-out forwards' : 'none',
+          }}>
+            <img
               src={`/jobs/${s.image}`}
               alt={s.name}
               draggable={false}
               style={{
                 height: isMob ? cardH*1.05 : cardH*1.10,
-                objectFit:'contain',
-                userSelect:'none',
+                objectFit:'contain', userSelect:'none',
                 filter:`drop-shadow(0 8px 32px ${s.color}99)`,
-                animation:'morphIn 0.42s cubic-bezier(0.22,0.8,0.36,1)',
               }}
             />
           </div>
