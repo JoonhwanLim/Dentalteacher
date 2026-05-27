@@ -284,8 +284,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 0: 여의사 캐릭터 ── */}
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
             {hovered===0 && <ellipse cx="155" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone0.png" x="88" y="198" width="140" height="234" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="66" y="462" width="182" height="42" rx="15" fill="#1A5276"/>
+            <image href="/zone0.png" x="88" y="203" width="140" height="234" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="66" y="462" width="182" height="42" rx="15" fill="#6B8FAE"/>
             <text x="157" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과 의사의 하루</text>
             <text x="157" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">출근부터 퇴근까지</text>
           </g>
@@ -293,8 +293,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
             {hovered===1 && <ellipse cx="398" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone1.png" x="291" y="261" width="215" height="167" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="289" y="462" width="220" height="42" rx="15" fill="#922B21"/>
+            <image href="/zone1.png" x="291" y="266" width="215" height="167" preserveAspectRatio="xMidYMid meet"/>
+            <rect x="289" y="462" width="220" height="42" rx="15" fill="#B07878"/>
             <text x="399" y="478" textAnchor="middle" fontSize="11" fill="white" fontWeight="bold">치과에서 자주하는 치료는?</text>
             <text x="399" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
           </g>
@@ -303,7 +303,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           <g style={glow(3)} onClick={()=>onEnter(3)} onMouseEnter={()=>setHovered(3)} onMouseLeave={()=>setHovered(null)}>
             {hovered===3 && <ellipse cx="660" cy="454" rx="102" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone3.png" x="563" y="206" width="200" height="247" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="564" y="462" width="196" height="42" rx="15" fill="#1E8449"/>
+            <rect x="564" y="462" width="196" height="42" rx="15" fill="#6A9B7E"/>
             <text x="662" y="478" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과의사에도 전문분야가 있어요</text>
             <text x="662" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">교정과·소아치과 등</text>
           </g>
@@ -312,7 +312,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           <g style={glow(2)} onClick={()=>onEnter(2)} onMouseEnter={()=>setHovered(2)} onMouseLeave={()=>setHovered(null)}>
             {hovered===2 && <ellipse cx="876" cy="454" rx="100" ry="13" fill="rgba(245,200,0,0.3)"/>}
             <image href="/zone2.png" x="810" y="235" width="134" height="216" preserveAspectRatio="xMidYMid meet"/>
-            <rect x="780" y="462" width="192" height="42" rx="15" fill="#6C3483"/>
+            <rect x="780" y="462" width="192" height="42" rx="15" fill="#8B7AAF"/>
             <text x="876" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과의사가 되는법</text>
             <text x="876" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">공부와 국가고시</text>
           </g>
