@@ -291,7 +291,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 0: 여의사 캐릭터 ── */}
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
             {hovered===0 && <ellipse cx="147" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone0.png" x="59" y="203" width="176" height="234" preserveAspectRatio="xMidYMid meet"/>
+            <image href="/zone0.png" x="59" y="208" width="176" height="234" preserveAspectRatio="xMidYMid meet"/>
             <rect x="59" y="460" width="176" height="37" rx="18" fill="#4CC9F0"/>
             <circle cx="77" cy="479" r="13" fill="rgba(0,0,0,0.18)"/>
             <circle cx="77" cy="479" r="10" fill="rgba(255,255,255,0.2)"/>
@@ -328,7 +328,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <circle cx="547" cy="479" r="13" fill="rgba(0,0,0,0.15)"/>
             <circle cx="547" cy="479" r="10" fill="rgba(255,255,255,0.2)"/>
             <polygon points="547,473.6 548.4,477.1 552.1,477.3 549.3,479.7 550.2,483.4 547,481.4 543.8,483.4 544.7,479.7 541.9,477.3 545.6,477.1" fill="white"/>
-            <text x="625" y="475" textAnchor="middle" fontSize="10" fill="#5C3A00" fontWeight="bold">치과의사에도 전문분야가 있어요</text>
+            <text x="625" y="475" textAnchor="middle" fontSize="10" fill="#5C3A00" fontWeight="bold">치과의사에도 전문분야가?</text>
             <text x="625" y="487" textAnchor="middle" fontSize="10" fill="rgba(60,35,0,0.7)">교정과·소아치과 등</text>
             <text x="685" y="470" textAnchor="middle" fontSize="12" fill="#5C3A00" opacity="0.5">✦</text>
             <text x="693" y="483" textAnchor="middle" fontSize="8" fill="#5C3A00" opacity="0.35">✧</text>
