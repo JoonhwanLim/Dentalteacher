@@ -258,7 +258,7 @@ export default function PresentationPage({ onGoIntro }) {
 /* ── MAIN HUB ── */
 function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
   const [hovered, setHovered] = useState(null)
-  const labels = ['🦷 치과의사의 하루','⚕️ 치료와 비밀 무기','🎓 치과의사가 되는 법','🌍 치과의사의 다양한 종류']
+  const labels = ['🦷 치과의사의 하루','⚕️ 치과에서 자주 치료하는 종류는?','🎓 치과의사가 되는 법','🌍 치과의사의 다양한 종류']
   const glow = id => ({ cursor:'pointer', filter: hovered===id ? 'drop-shadow(0 0 18px rgba(245,200,0,0.95))' : 'none', transition:'filter 0.18s' })
 
   return (
@@ -472,7 +472,7 @@ function ClinicSection({ onBack }) {
       {/* Header */}
       <div style={{ display:'flex', alignItems:'center', gap:12, padding: isMob ? '12px 16px' : '14px 32px', background:'linear-gradient(135deg,#0A2416,#1A5C3A)', boxShadow:'0 2px 16px rgba(0,0,0,0.2)', flexShrink:0, flexWrap: isMob ? 'wrap' : 'nowrap', color:'white' }}>
         <BackBtn onClick={onBack} />
-        <h1 style={{ fontSize: isMob ? '1.2rem' : '1.7rem', fontWeight:900, color:'white', whiteSpace:'nowrap' }}>치료와 <span style={{ color:'#F5C800' }}>비밀 무기</span></h1>
+        <h1 style={{ fontSize: isMob ? '1.0rem' : '1.5rem', fontWeight:900, color:'white' }}>치과에서 자주 치료하는 <span style={{ color:'#F5C800' }}>종류는?</span></h1>
         <div style={{ marginLeft: isMob ? 0 : 'auto', display:'flex', gap:8, flexShrink:0 }}>
           <button onClick={() => setTab(0)} style={{ background: tab===0 ? '#F5C800' : 'rgba(255,255,255,0.12)', border:'none', borderRadius:50, padding: isMob ? '7px 16px' : '9px 22px', fontFamily:'inherit', fontWeight:800, fontSize: isMob ? '0.8rem' : '0.88rem', cursor:'pointer', color: tab===0 ? '#1A1A1A' : 'rgba(255,255,255,0.8)', transition:'all 0.18s' }}>🦷 치료 종류</button>
           <button onClick={() => setTab(1)} style={{ background: tab===1 ? '#F5C800' : 'rgba(255,255,255,0.12)', border:'none', borderRadius:50, padding: isMob ? '7px 16px' : '9px 22px', fontFamily:'inherit', fontWeight:800, fontSize: isMob ? '0.8rem' : '0.88rem', cursor:'pointer', color: tab===1 ? '#1A1A1A' : 'rgba(255,255,255,0.8)', transition:'all 0.18s' }}>🔧 진료 도구</button>
@@ -681,9 +681,9 @@ function TreatmentsContent() {
               }}
             >
               <div style={{ position:'absolute', top:'10%', left:'18%', width:'38%', height:'26%', borderRadius:'50%', background:'rgba(255,255,255,0.78)', filter:'blur(5px)', transform:'rotate(-26deg)', pointerEvents:'none' }}/>
-              <span style={{ fontSize: csz*0.29, lineHeight:1, position:'relative', zIndex:1, filter:`drop-shadow(0 3px 9px ${bb.glow})` }}>{t.emoji}</span>
+              <span style={{ fontSize: csz*0.38, lineHeight:1, position:'relative', zIndex:1, filter:`drop-shadow(0 3px 9px ${bb.glow})` }}>{t.emoji}</span>
               <p style={{
-                fontSize: isMob?'0.60rem':'0.70rem', fontWeight:900,
+                fontSize: isMob?'0.78rem':'0.91rem', fontWeight:900,
                 color:'rgba(44,28,80,0.82)', marginTop: isMob?4:6,
                 textAlign:'center', lineHeight:1.25, padding:`0 ${isMob?6:10}px`,
                 position:'relative', zIndex:1, textShadow:'0 1px 4px rgba(255,255,255,0.9)',
