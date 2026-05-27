@@ -284,7 +284,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 0: 여의사 캐릭터 ── */}
           <g style={glow(0)} onClick={()=>onEnter(0)} onMouseEnter={()=>setHovered(0)} onMouseLeave={()=>setHovered(null)}>
             {hovered===0 && <ellipse cx="155" cy="454" rx="74" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone0.png" x="80" y="178" width="155" height="260" preserveAspectRatio="xMidYMid meet"/>
+            <image href="/zone0.png" x="96" y="188" width="124" height="208" preserveAspectRatio="xMidYMid meet"/>
             <rect x="66" y="462" width="182" height="42" rx="15" fill="#1A5276"/>
             <text x="157" y="478" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">치과 의사의 하루</text>
             <text x="157" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">출근부터 퇴근까지</text>
@@ -293,7 +293,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {/* ── ZONE 1: 치과 유닛 체어 ── */}
           <g style={glow(1)} onClick={()=>onEnter(1)} onMouseEnter={()=>setHovered(1)} onMouseLeave={()=>setHovered(null)}>
             {hovered===1 && <ellipse cx="398" cy="454" rx="125" ry="13" fill="rgba(245,200,0,0.3)"/>}
-            <image href="/zone1.png" x="245" y="251" width="307" height="239" preserveAspectRatio="xMidYMid meet"/>
+            <image href="/zone1.png" x="291" y="251" width="215" height="167" preserveAspectRatio="xMidYMid meet"/>
             <rect x="289" y="462" width="220" height="42" rx="15" fill="#922B21"/>
             <text x="399" y="478" textAnchor="middle" fontSize="11" fill="white" fontWeight="bold">치과에서 자주하는 치료는?</text>
             <text x="399" y="494" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.78)">치료 종류 &amp; 도구</text>
