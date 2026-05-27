@@ -154,13 +154,13 @@ const facts = [
 
 /* ── CAREER DATA ── */
 const careerSteps = [
-  { emoji:'📚', label:'초등학교',      desc:'수학·과학 기초',      detail:'수학과 과학에 흥미를 갖는 시간이에요.\n호기심이 많고 꼼꼼한 어린이가 되어보세요!',                           color:'#E53935', years:'6년'  },
-  { emoji:'🔭', label:'중학교',        desc:'생물·화학 탐구',      detail:'생물·화학 과목을 열심히 공부해요.\n인체와 세포에 대한 호기심을 키워가는 시간이에요!',                        color:'#1976D2', years:'3년'  },
-  { emoji:'⚗️', label:'고등학교',     desc:'이과·화학·생물',      detail:'이과를 선택하고 화학·생물을 집중 공부해요.\n수능을 열심히 준비하는 중요한 시간이에요!',                       color:'#00897B', years:'3년'  },
-  { emoji:'🦷', label:'치과대학',      desc:'기초·임상·실습',      detail:'치의학의 모든 것을 배워요!\n해부학·치과재료부터\n환자 실습까지 6년 동안 공부해요.',                          color:'#F9A825', years:'6년', highlight:true },
-  { emoji:'📋', label:'국가면허시험',  desc:'치과의사 면허 취득',  detail:'대학 졸업 후 국가고시에 응시해요.\n합격하면 드디어 치과의사 면허증을 받아요!',                               color:'#2E7D32', years:'시험'  },
-  { emoji:'🏥', label:'인턴·레지던트', desc:'전문의 취득 (선택)',  detail:'병원에서 1~4년 더 수련하면 전문의가 돼요.\n교정·소아치과 등 전문 분야를 선택할 수 있어요!',                  color:'#C62828', years:'1~4년' },
-  { emoji:'👨‍⚕️', label:'치과의사!',   desc:'개업 or 취직',        detail:'드디어 치과의사가 됐어요! 🎉\n자신의 치과를 열거나 병원에 취직해요.',                                        color:'#1A8C5A', years:'완성!', final:true },
+  { emoji:'📚', label:'초등학교',      desc:'수학·과학 기초',      detail:'수학과 과학에 흥미를 갖는 시간이에요.\n호기심이 많고 꼼꼼한 어린이가 되어보세요!',                           color:'#E53935', years:'6년',   image:'/study/Elementary.png' },
+  { emoji:'🔭', label:'중학교',        desc:'생물·화학 탐구',      detail:'생물·화학 과목을 열심히 공부해요.\n인체와 세포에 대한 호기심을 키워가는 시간이에요!',                        color:'#1976D2', years:'3년',   image:'/study/middle.png'     },
+  { emoji:'⚗️', label:'고등학교',     desc:'이과·화학·생물',      detail:'이과를 선택하고 화학·생물을 집중 공부해요.\n수능을 열심히 준비하는 중요한 시간이에요!',                       color:'#00897B', years:'3년',   image:'/study/highschool.png' },
+  { emoji:'🦷', label:'치과대학',      desc:'기초·임상·실습',      detail:'치의학의 모든 것을 배워요!\n해부학·치과재료부터\n환자 실습까지 6년 동안 공부해요.',                          color:'#F9A825', years:'6년',   image:'/study/university.png', highlight:true },
+  { emoji:'📋', label:'국가면허시험',  desc:'치과의사 면허 취득',  detail:'대학 졸업 후 국가고시에 응시해요.\n합격하면 드디어 치과의사 면허증을 받아요!',                               color:'#2E7D32', years:'시험',  image:'/study/license.png'   },
+  { emoji:'🏥', label:'인턴·레지던트', desc:'전문의 취득 (선택)',  detail:'병원에서 1~4년 더 수련하면 전문의가 돼요.\n교정·소아치과 등 전문 분야를 선택할 수 있어요!',                  color:'#C62828', years:'1~4년', image:'/study/intern.png'    },
+  { emoji:'👨‍⚕️', label:'치과의사!',   desc:'개업 or 취직',        detail:'드디어 치과의사가 됐어요! 🎉\n자신의 치과를 열거나 병원에 취직해요.',                                        color:'#1A8C5A', years:'완성!', image:'/study/dentist.png',   final:true },
 ]
 
 /* ── SPECIALTIES DATA ── */
@@ -1238,11 +1238,24 @@ function CareerSection({ onBack }) {
                   </div>
                 </div>
 
-                {/* 건물 일러스트 (치과대학은 마우스로 도망감) */}
+                {/* 건물 일러스트 / 스터디 이미지 (치과대학은 마우스로 도망감) */}
                 <div style={{ width:'100%', height: isMob?96:138, flexShrink:0, position:'relative',
                   filter: active ? `drop-shadow(0 4px 16px ${cs.color}66)` : 'none',
                   transition:'filter 0.4s', opacity: active ? 1 : 0.72 }}>
-                  <div
+                  {/* 활성 카드: study 이미지 액자 */}
+                  {active && cs.image && (
+                    <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                      <img src={cs.image} alt={cs.label} style={{
+                        height:'100%', width:'auto', maxWidth:'100%', objectFit:'contain',
+                        background:'white', borderRadius:14,
+                        border:`3px solid ${cs.color}bb`,
+                        padding:6,
+                        boxShadow:`0 6px 28px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.15)`,
+                      }} />
+                    </div>
+                  )}
+                  {/* 비활성 카드 or image 없을 때: 기존 BuildingIllustration 유지 */}
+                  {(!active || !cs.image) && <div
                     style={{
                       width:'100%', height:'100%', borderRadius:12, overflow:'hidden',
                       transform: (active && i === 3) ? `translateX(${escape.x}px)` : 'none',
@@ -1263,7 +1276,7 @@ function CareerSection({ onBack }) {
                     }) : undefined}
                   >
                     <BuildingIllustration step={i} />
-                  </div>
+                  </div>}
                   {active && i === 3 && escape.caught && (
                     <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
                       fontSize: isMob?'1.1rem':'1.4rem', fontWeight:900, color:'#F9A825',
