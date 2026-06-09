@@ -8,54 +8,78 @@ const treatments = [
   {
     emoji: '🦷', name: '충치 치료', english: 'Cavity Treatment',
     badge: '가장 흔한 치료', badgeColor: '#1A5C3A',
-    what: '썩은 치아를 드릴로 제거하고 치아 색 레진으로 채우는 치료예요.',
-    why: '뮤탄스균이 당분을 먹고 산을 만들어 치아가 녹아요. 방치하면 신경까지 손상돼 훨씬 힘든 치료를 받아야 해요!',
-    steps: ['마취 주사로 통증 차단', '드릴(핸드피스)로 충치 제거', '레진 재료로 채우기', '광중합기 파란 빛 20초로 굳히기', '연마기로 매끄럽게 마무리'],
+    image: '/jobs/bojon.png',
+    beforeEmoji: '😱', beforeText: '세균이 이빨에 구멍을 뚫고 있어요!',
+    afterEmoji: '😊', afterText: '레진으로 메꿔 다시 튼튼해졌어요!',
+    what: '썩은 부분을 드릴로 제거하고 치아 색 레진(플라스틱)으로 채우는 치료예요.',
+    whySimple: '입 속 나쁜 세균이 과자, 사탕의 당분을 먹으면 산(acid)을 뿜어요. 이 산이 이빨을 녹여서 구멍을 뚫어요! 오래 두면 구멍이 점점 커져서 신경까지 파고들어요.',
+    steps: ['마취 주사로 통증 차단', '드릴로 썩은 부분 제거', '레진 재료로 채우기', '파란 빛으로 20초만에 굳히기', '매끄럽게 다듬어 완성!'],
+    stepEmojis: ['💉', '🔧', '🪄', '💙', '✨'],
     time: '30분 ~ 1시간',
-    tip: '초기 충치는 쌀알만큼 작게 치료할 수 있어요. 6개월마다 검진받으면 초기에 발견해 간단히 치료해요!',
+    tip: '초기 충치는 쌀알만큼 작아요. 6개월마다 검진받으면 초기에 발견해서 간단히 치료해요!',
   },
   {
     emoji: '🔬', name: '스케일링', english: 'Dental Scaling',
     badge: '예방 치료', badgeColor: '#4A90D9',
+    image: '/jobs/chiju.png',
+    beforeEmoji: '😰', beforeText: '치석이 쌓여 잇몸이 붉고 냄새가 나요!',
+    afterEmoji: '🌟', afterText: '깨끗하게 치석을 제거해서 상쾌해요!',
     what: '초음파 진동과 특수 기구로 치아에 굳어버린 치석을 깔끔하게 제거해요.',
-    why: '치석은 아무리 양치해도 없어지지 않아요! 방치하면 잇몸이 붓고 피가 나는 잇몸병(치주염)으로 이가 흔들려요.',
-    steps: ['초음파 스케일러로 치석 진동·분리', '손 기구로 치석 제거', '물과 흡입기로 구강 청소', '치아 표면 연마', '불소 도포(선택)'],
+    whySimple: '아무리 양치를 잘 해도 치아에 치석(딱딱하게 굳은 노란 찌꺼기)이 쌓여요. 치석을 그냥 두면 잇몸이 빨개지고 붓고 피가 나는 잇몸병이 생겨요. 심하면 이가 흔들릴 수도 있어요!',
+    steps: ['초음파 진동으로 치석 흔들기', '손 기구로 치석 제거', '물로 깨끗이 헹구기', '치아 표면 반들반들 연마', '불소 도포로 치아 보호(선택)'],
+    stepEmojis: ['📳', '🪛', '💧', '✨', '🛡️'],
     time: '30분 ~ 1시간',
-    tip: '1년에 한두 번 받으면 잇몸 건강을 지킬 수 있어요. 20세 이상은 건강보험도 돼요!',
+    tip: '1년에 한두 번 받으면 잇몸 건강을 지킬 수 있어요. 어른이 되면 건강보험도 돼요!',
   },
   {
     emoji: '😁', name: '교정 치료', english: 'Orthodontic Treatment',
     badge: '치아 배열 교정', badgeColor: '#E67E22',
+    image: '/jobs/kyojung.png',
+    beforeEmoji: '😬', beforeText: '이가 삐뚤삐뚤해서 칫솔이 잘 안 닿아요!',
+    afterEmoji: '😁', afterText: '가지런하고 예쁜 치아가 됐어요!',
     what: '브라켓과 와이어, 또는 투명 장치로 비뚤어진 치아를 가지런하게 배열해요.',
-    why: '치아 배열이 나쁘면 충치·잇몸병이 쉽게 생기고, 음식을 제대로 못 씹어 소화에도 영향을 줘요.',
-    steps: ['정밀 X-레이·구강 스캔', '치료 계획 수립', '브라켓 부착 + 와이어 연결', '4~8주마다 조정 방문', '교정 완료 후 유지장치 착용'],
+    whySimple: '치아가 삐뚤삐뚤하면 양치할 때 칫솔이 잘 안 닿아서 충치·잇몸병이 더 잘 생겨요. 또 음식을 제대로 못 씹어서 소화도 잘 안 되고, 말할 때 발음도 어눌해질 수 있어요!',
+    steps: ['X-레이·구강 스캔으로 분석', '치료 계획 세우기', '브라켓 붙이고 와이어 연결', '4~8주마다 조정 방문', '교정 완료 후 유지장치 착용'],
+    stepEmojis: ['📡', '📋', '🔗', '🔄', '🛡️'],
     time: '보통 1 ~ 3년',
     tip: '초등·중학생 성장기가 교정 최적기예요! 턱뼈가 아직 자라는 중이라 치아 이동이 더 빠르고 효과적이에요.',
   },
   {
     emoji: '👑', name: '보철 치료', english: 'Prosthetic Treatment',
     badge: '인공 치아 제작', badgeColor: '#8E44AD',
+    image: '/jobs/bochul.png',
+    beforeEmoji: '😥', beforeText: '이가 빠지거나 너무 많이 망가졌어요!',
+    afterEmoji: '🎉', afterText: '새 인공 치아로 자연치아처럼 씹어요!',
     what: '빠지거나 심하게 손상된 치아에 인공 치아를 만들어 씌우거나 심어요.',
-    why: '치아가 빠지면 옆 치아가 쓰러지고, 음식을 제대로 씹지 못해 위장·영양에도 큰 문제가 생겨요.',
-    steps: ['현재 치아 상태 정밀 검사', '디지털 스캔으로 본 뜨기', '치과기공소에서 제작 (1~2주)', '임시 치아로 생활', '최종 보철물 장착·조정'],
+    whySimple: '치아가 빠진 자리를 그냥 두면 옆 치아들이 그쪽으로 쓰러져요. 또 씹는 힘이 약해져서 영양분을 제대로 못 흡수해요. 인공 치아를 만들어 빈자리를 채워줘요!',
+    steps: ['현재 치아 상태 꼼꼼히 검사', '디지털 스캔으로 본 뜨기', '치과기공소에서 제작 (1~2주)', '임시 치아로 생활하기', '최종 보철물 장착·조정'],
+    stepEmojis: ['🔍', '📡', '🏭', '🦷', '✅'],
     time: '2 ~ 6회 방문 (수 주 ~ 수 개월)',
-    tip: '임플란트는 뼈에 심는 인공 치아 뿌리예요. 틀니와 달리 자연 치아처럼 편하게 씹을 수 있어요!',
+    tip: '임플란트는 뼈에 심는 인공 치아 뿌리예요. 자연 치아처럼 편하게 씹을 수 있는 최신 기술이에요!',
   },
   {
     emoji: '🏥', name: '신경 치료', english: 'Root Canal Treatment',
     badge: '치아 살리기', badgeColor: '#E74C3C',
-    what: '충치가 깊어 신경까지 감염되었을 때, 신경관을 청소·소독해 치아를 살리는 치료예요.',
-    why: '신경 감염을 방치하면 뼈까지 녹아 결국 이를 뽑아야 해요. 치아를 살리는 마지막 방법이에요!',
-    steps: ['마취로 통증 차단', '신경관 입구 개방', '감염된 신경·혈관 제거', '신경관 소독 및 성형', '충전재로 완전히 밀봉', '크라운으로 치아 보호'],
+    image: '/jobs/bojon.png',
+    beforeEmoji: '😭', beforeText: '충치가 깊어 치아 신경이 아파요!',
+    afterEmoji: '💪', afterText: '신경을 깨끗이 치료해 치아를 살렸어요!',
+    what: '충치가 깊어 신경까지 감염됐을 때, 신경관을 청소·소독해서 치아를 살리는 치료예요.',
+    whySimple: '충치를 오래 방치하면 세균이 치아 깊은 곳의 신경까지 닿아요. 신경이 감염되면 엄청 아프고, 치아 뿌리 아래 뼈까지 녹을 수 있어요. 이를 뽑지 않고 살리는 마지막 방법이에요!',
+    steps: ['마취로 통증 완전 차단', '신경관 입구 열기', '감염된 신경·혈관 꺼내기', '신경관 소독 및 성형', '충전재로 빈 공간 밀봉', '크라운(왕관)으로 치아 보호'],
+    stepEmojis: ['💉', '🚪', '🧹', '🧴', '🔒', '👑'],
     time: '보통 2 ~ 4회 방문',
-    tip: '신경 치료 후 치아가 약해져 꼭 크라운(왕관 모양 덮개)을 씌워 보호해야 해요. 안 씌우면 치아가 깨질 수 있어요!',
+    tip: '신경 치료 후 치아가 약해져서 꼭 크라운(왕관 모양 덮개)을 씌워야 해요. 안 씌우면 치아가 깨질 수 있어요!',
   },
   {
     emoji: '💉', name: '발치', english: 'Tooth Extraction',
     badge: '최후의 수단', badgeColor: '#555',
-    what: '너무 심하게 망가졌거나, 교정을 위해, 또는 문제를 일으키는 사랑니를 뽑는 거예요.',
-    why: '치료 불가능한 치아를 방치하면 주변 치아와 뼈까지 손상시켜요. 제때 빼야 더 큰 문제를 막아요.',
-    steps: ['마취 주사', '치주인대 분리 기구 삽입', '치아를 좌우로 흔들어 탈구', '치아 제거', '거즈로 지혈 (30분)', '항생제·진통제 처방'],
+    image: '/jobs/oms.png',
+    beforeEmoji: '😢', beforeText: '너무 심하게 망가져서 살릴 수가 없어요!',
+    afterEmoji: '🛡️', afterText: '아픈 이를 빼서 주변 치아를 보호했어요!',
+    what: '너무 심하게 망가졌거나, 교정 공간이 필요하거나, 문제를 일으키는 사랑니를 뽑는 거예요.',
+    whySimple: '치료가 불가능한 이를 그냥 두면 주변 치아와 뼈까지 손상시켜요. 또 교정 치료를 위해 공간이 필요할 때, 또는 비정상적으로 자라는 사랑니를 뽑아요!',
+    steps: ['마취 주사로 통증 차단', '치아 주변 인대 분리', '치아를 좌우로 흔들어 탈구', '치아를 조심스럽게 제거', '거즈로 30분 지혈', '항생제·진통제 처방'],
+    stepEmojis: ['💉', '🔑', '↔️', '🦷', '🩹', '💊'],
     time: '10분 ~ 1시간',
     tip: '빠진 자리는 임플란트나 브릿지로 채우는 게 좋아요. 그냥 두면 옆 치아가 그쪽으로 기울어져요!',
   },
@@ -728,38 +752,95 @@ function TreatmentsContent() {
 
       {/* 상세 모달 */}
       {selected && (
-        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.55)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:300 }} onClick={() => setSelected(null)}>
-          <div style={{ background:'white', borderRadius:24, padding:'36px', maxWidth:660, width:'90%', maxHeight:'85vh', overflowY:'auto' }} onClick={e => e.stopPropagation()}>
-            <div style={{ display:'flex', alignItems:'flex-start', gap:16, marginBottom:20 }}>
-              <span style={{ fontSize:'3rem' }}>{selected.emoji}</span>
-              <div style={{ flex:1 }}>
-                <span style={{ background:selected.badgeColor, color:'white', fontSize:'0.78rem', fontWeight:700, padding:'3px 12px', borderRadius:20, display:'inline-block', marginBottom:6 }}>{selected.badge}</span>
-                <h2 style={{ fontSize:'1.9rem', fontWeight:900, marginBottom:2 }}>{selected.name}</h2>
-                <p style={{ color:'#aaa', fontSize:'0.88rem' }}>{selected.english}</p>
-              </div>
-              <button onClick={() => setSelected(null)} style={{ background:'#f0f0f0', border:'none', borderRadius:'50%', width:36, height:36, cursor:'pointer', fontSize:'1rem', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>✕</button>
-            </div>
-            <div style={{ display:'grid', gridTemplateColumns: mob() ? '1fr' : '1fr 1fr', gap:12, marginBottom:16 }}>
-              <div style={{ background:'#f8f8f8', borderRadius:14, padding:16 }}>
-                <p style={{ fontWeight:900, marginBottom:6 }}>🤔 왜 필요할까요?</p>
-                <p style={{ color:'#555', lineHeight:1.7, fontSize:'0.9rem' }}>{selected.why}</p>
-              </div>
-              <div style={{ background:'#f8f8f8', borderRadius:14, padding:16 }}>
-                <p style={{ fontWeight:900, marginBottom:6 }}>⏱ 치료 시간</p>
-                <p style={{ color:'#333', fontWeight:700, fontSize:'1.1rem' }}>{selected.time}</p>
-              </div>
-            </div>
-            <div style={{ marginBottom:16 }}>
-              <p style={{ fontWeight:900, marginBottom:12, fontSize:'1rem' }}>📋 치료 과정</p>
-              {selected.steps.map((step, i) => (
-                <div key={i} style={{ display:'flex', alignItems:'center', gap:12, marginBottom:8 }}>
-                  <div style={{ width:26, height:26, borderRadius:'50%', background:selected.badgeColor, color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, fontSize:'0.8rem', flexShrink:0 }}>{i+1}</div>
-                  <span style={{ fontSize:'0.93rem', color:'#333' }}>{step}</span>
+        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:300, padding:'12px' }} onClick={() => setSelected(null)}>
+          <div style={{ background:'white', borderRadius:28, maxWidth:720, width:'100%', maxHeight:'92vh', overflowY:'auto', overflowX:'hidden', boxShadow:'0 24px 80px rgba(0,0,0,0.4)' }} onClick={e => e.stopPropagation()}>
+
+            {/* ── 헤더 ── */}
+            <div style={{ background:`linear-gradient(135deg, ${selected.badgeColor}18 0%, ${selected.badgeColor}30 100%)`, padding: isMob ? '20px 18px 16px' : '28px 32px 20px', borderBottom:`4px solid ${selected.badgeColor}` }}>
+              <div style={{ display:'flex', alignItems:'flex-start', gap:16 }}>
+                <div style={{ flex:1 }}>
+                  <span style={{ background:selected.badgeColor, color:'white', fontSize:'0.78rem', fontWeight:800, padding:'5px 16px', borderRadius:20, display:'inline-block', marginBottom:10, letterSpacing:0.5 }}>{selected.badge}</span>
+                  <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+                    <span style={{ fontSize: isMob ? '3rem' : '4rem', lineHeight:1, filter:`drop-shadow(0 4px 10px ${selected.badgeColor}55)` }}>{selected.emoji}</span>
+                    <div>
+                      <h2 style={{ fontSize: isMob ? '1.6rem' : '2.2rem', fontWeight:900, margin:0, color:'#1A1A1A', lineHeight:1.2 }}>{selected.name}</h2>
+                      <p style={{ color:'#aaa', fontSize:'0.85rem', margin:'4px 0 0', fontWeight:600 }}>{selected.english}</p>
+                    </div>
+                  </div>
                 </div>
-              ))}
+                {!isMob && selected.image && (
+                  <img src={selected.image} alt={selected.name}
+                    style={{ height:110, objectFit:'contain', filter:`drop-shadow(0 6px 16px ${selected.badgeColor}55)`, flexShrink:0 }}
+                    onError={e => { e.target.style.display='none' }}
+                  />
+                )}
+                <button onClick={() => setSelected(null)} style={{ background:'rgba(0,0,0,0.08)', border:'none', borderRadius:'50%', width:40, height:40, cursor:'pointer', fontSize:'1.1rem', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, color:'#555', fontWeight:700 }}>✕</button>
+              </div>
+
+              {/* 한 줄 설명 */}
+              <div style={{ background:'rgba(255,255,255,0.75)', borderRadius:14, padding:'12px 16px', marginTop:14, fontSize: isMob ? '0.9rem' : '1rem', lineHeight:1.75, color:'#333', fontWeight:600 }}>
+                📖 {selected.what}
+              </div>
             </div>
-            <div style={{ background:'#F0FAF5', borderLeft:`4px solid ${selected.badgeColor}`, borderRadius:'0 12px 12px 0', padding:'14px 18px', color:'#1A5C3A', fontSize:'0.9rem', lineHeight:1.6 }}>
-              💡 {selected.tip}
+
+            {/* ── 본문 ── */}
+            <div style={{ padding: isMob ? '18px' : '26px 32px', display:'flex', flexDirection:'column', gap: isMob ? 14 : 18 }}>
+
+              {/* 치료 전 / 후 */}
+              <div>
+                <p style={{ fontWeight:900, fontSize:'1rem', color:'#333', marginBottom:10 }}>🔄 치료 전 vs 치료 후</p>
+                <div style={{ display:'grid', gridTemplateColumns:'1fr auto 1fr', gap:10, alignItems:'center' }}>
+                  <div style={{ background:'#FFF0F0', border:'2px solid #FFCDD2', borderRadius:18, padding: isMob ? '14px 10px' : '18px 16px', textAlign:'center' }}>
+                    <div style={{ fontSize: isMob ? '2.2rem' : '2.8rem', marginBottom:6 }}>{selected.beforeEmoji}</div>
+                    <p style={{ fontSize:'0.78rem', fontWeight:800, color:'#E74C3C', margin:'0 0 6px', background:'#FFCDD2', borderRadius:20, padding:'2px 10px', display:'inline-block' }}>치료 전</p>
+                    <p style={{ fontSize: isMob ? '0.78rem' : '0.85rem', color:'#666', margin:'6px 0 0', lineHeight:1.55 }}>{selected.beforeText}</p>
+                  </div>
+                  <div style={{ fontSize:'1.8rem', color:'#aaa', textAlign:'center' }}>→</div>
+                  <div style={{ background:'#F0FFF4', border:'2px solid #A5D6A7', borderRadius:18, padding: isMob ? '14px 10px' : '18px 16px', textAlign:'center' }}>
+                    <div style={{ fontSize: isMob ? '2.2rem' : '2.8rem', marginBottom:6 }}>{selected.afterEmoji}</div>
+                    <p style={{ fontSize:'0.78rem', fontWeight:800, color:'#1A5C3A', margin:'0 0 6px', background:'#A5D6A7', borderRadius:20, padding:'2px 10px', display:'inline-block' }}>치료 후</p>
+                    <p style={{ fontSize: isMob ? '0.78rem' : '0.85rem', color:'#666', margin:'6px 0 0', lineHeight:1.55 }}>{selected.afterText}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 왜 필요한지 */}
+              <div style={{ background:'#FFFDE7', border:'2.5px dashed #F5C800', borderRadius:18, padding: isMob ? '14px 16px' : '18px 22px' }}>
+                <p style={{ fontWeight:900, fontSize: isMob ? '0.95rem' : '1rem', color:'#B8860B', marginBottom:8 }}>🤔 왜 치료가 필요할까요?</p>
+                <p style={{ fontSize: isMob ? '0.88rem' : '0.95rem', color:'#555', lineHeight:1.8, margin:0 }}>{selected.whySimple}</p>
+              </div>
+
+              {/* 치료 순서 */}
+              <div>
+                <p style={{ fontWeight:900, fontSize:'1rem', color:'#333', marginBottom:12 }}>🏥 치료 순서</p>
+                <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+                  {selected.steps.map((step, i) => (
+                    <div key={i} style={{ display:'flex', alignItems:'center', gap:12, background:'#F8F9FF', borderRadius:14, padding: isMob ? '10px 14px' : '12px 16px', border:'1.5px solid #E8EAFF' }}>
+                      <div style={{ width: isMob ? 36 : 42, height: isMob ? 36 : 42, borderRadius:'50%', background:`linear-gradient(135deg, ${selected.badgeColor}, ${selected.badgeColor}bb)`, display:'flex', alignItems:'center', justifyContent:'center', fontSize: isMob ? '1.2rem' : '1.4rem', flexShrink:0, boxShadow:`0 3px 10px ${selected.badgeColor}44` }}>
+                        {selected.stepEmojis[i]}
+                      </div>
+                      <div style={{ flex:1 }}>
+                        <span style={{ fontSize:'0.68rem', color:'#aaa', fontWeight:700, letterSpacing:1 }}>STEP {i+1}</span>
+                        <p style={{ fontSize: isMob ? '0.88rem' : '0.95rem', color:'#333', fontWeight:700, margin:'2px 0 0', lineHeight:1.4 }}>{step}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 시간 + 팁 */}
+              <div style={{ display:'grid', gridTemplateColumns: isMob ? '1fr' : '1fr 2fr', gap:12 }}>
+                <div style={{ background:`${selected.badgeColor}14`, border:`2px solid ${selected.badgeColor}44`, borderRadius:18, padding:'18px 16px', textAlign:'center' }}>
+                  <div style={{ fontSize:'2.2rem', marginBottom:6 }}>⏱️</div>
+                  <p style={{ fontWeight:800, fontSize:'0.88rem', color:selected.badgeColor, margin:'0 0 6px' }}>치료 시간</p>
+                  <p style={{ fontWeight:900, fontSize: isMob ? '1rem' : '1.15rem', color:'#1A1A1A', margin:0 }}>{selected.time}</p>
+                </div>
+                <div style={{ background:'#F0FAF5', borderLeft:`5px solid ${selected.badgeColor}`, borderRadius:'0 18px 18px 0', padding:'18px 20px' }}>
+                  <p style={{ fontWeight:900, fontSize:'0.95rem', color:'#1A5C3A', marginBottom:8 }}>💡 선생님의 꿀팁!</p>
+                  <p style={{ color:'#444', fontSize: isMob ? '0.88rem' : '0.95rem', lineHeight:1.75, margin:0 }}>{selected.tip}</p>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
