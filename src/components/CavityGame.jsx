@@ -125,7 +125,7 @@ export default function CavityGame({ studentName }) {
   const cleanRef  = useRef(null)
   const scoreRef  = useRef(0)   // 항상 최신 점수 추적
 
-  const ATTEMPT_LIMIT = 50
+  const ATTEMPT_LIMIT = 20
 
   const fetchLeaderboard = useCallback(async () => {
     const data = await api.gameScores.leaderboard(studentName)
