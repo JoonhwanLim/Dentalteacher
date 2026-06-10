@@ -532,7 +532,7 @@ function ClinicSection({ onBack }) {
         <h1 style={{ fontSize: isMob ? '1.0rem' : '1.5rem', fontWeight:900, color:'white' }}>치과에서 자주 치료하는 <span style={{ color:'#F5C800' }}>종류는?</span></h1>
         <div style={{ marginLeft: isMob ? 0 : 'auto', display:'flex', gap:8, flexShrink:0 }}>
           <button onClick={() => setTab(0)} style={{ background: tab===0 ? '#F5C800' : 'rgba(255,255,255,0.12)', border:'none', borderRadius:50, padding: isMob ? '7px 16px' : '9px 22px', fontFamily:'inherit', fontWeight:800, fontSize: isMob ? '0.8rem' : '0.88rem', cursor:'pointer', color: tab===0 ? '#1A1A1A' : 'rgba(255,255,255,0.8)', transition:'all 0.18s' }}>🦷 치료 종류</button>
-          <button onClick={() => setTab(1)} style={{ background: tab===1 ? '#F5C800' : 'rgba(255,255,255,0.12)', border:'none', borderRadius:50, padding: isMob ? '7px 16px' : '9px 22px', fontFamily:'inherit', fontWeight:800, fontSize: isMob ? '0.8rem' : '0.88rem', cursor:'pointer', color: tab===1 ? '#1A1A1A' : 'rgba(255,255,255,0.8)', transition:'all 0.18s' }}>🔧 진료 도구</button>
+          <a href="https://www.career.go.kr/cloud/jm/main/home" target="_blank" rel="noopener noreferrer" style={{ background:'rgba(255,255,255,0.12)', border:'none', borderRadius:50, padding: isMob ? '7px 16px' : '9px 22px', fontFamily:'inherit', fontWeight:800, fontSize: isMob ? '0.8rem' : '0.88rem', cursor:'pointer', color:'rgba(255,255,255,0.8)', transition:'all 0.18s', textDecoration:'none', display:'inline-flex', alignItems:'center' }}>🦷 치아정보</a>
         </div>
       </div>
 
