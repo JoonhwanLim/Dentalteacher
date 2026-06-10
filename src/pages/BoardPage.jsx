@@ -65,12 +65,20 @@ export default function BoardPage() {
             <p className="board-student">접속 중: {studentName}</p>
           </div>
         </div>
-        <button onClick={() => navigate('/homework')} style={{
-          background: 'none', border: '2px solid #ddd', borderRadius: 50, padding: '8px 16px',
-          fontSize: '0.85rem', color: '#888', fontFamily: 'inherit', cursor: 'pointer'
-        }}>
-          이름 변경
-        </button>
+        <div style={{ display:'flex', gap:8 }}>
+          <button onClick={() => navigate('/')} style={{
+            background: 'none', border: '2px solid #ddd', borderRadius: 50, padding: '8px 16px',
+            fontSize: '0.85rem', color: '#888', fontFamily: 'inherit', cursor: 'pointer'
+          }}>
+            🏠 메인으로
+          </button>
+          <button onClick={() => navigate('/homework')} style={{
+            background: 'none', border: '2px solid #ddd', borderRadius: 50, padding: '8px 16px',
+            fontSize: '0.85rem', color: '#888', fontFamily: 'inherit', cursor: 'pointer'
+          }}>
+            이름 변경
+          </button>
+        </div>
       </div>
 
       <div className="board-tabs">

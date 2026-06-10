@@ -12,15 +12,25 @@ export default function HomeworkPage() {
 
   function handleConfirm() {
     sessionStorage.setItem('studentName', selected)
-    if (localStorage.getItem(`completed_${selected}`)) {
-      navigate('/board')
-    } else {
-      navigate('/quiz')
-    }
+    navigate('/board')
+  }
+
+  function handleRetake() {
+    sessionStorage.setItem('studentName', selected)
+    localStorage.removeItem(`completed_${selected}`)
+    sessionStorage.removeItem('quizCompleted')
+    sessionStorage.removeItem('quizScore')
+    navigate('/quiz')
   }
 
   return (
     <div className="hw-page">
+      <button onClick={() => navigate('/')} style={{
+        position:'absolute', top:16, left:16,
+        background:'rgba(0,0,0,0.07)', border:'none', borderRadius:50,
+        padding:'8px 16px', fontSize:'0.82rem', fontWeight:700,
+        cursor:'pointer', fontFamily:'inherit', color:'#555',
+      }}>← 메인으로</button>
       <img src="/logo2.png" alt="리라" className="hw-logo" />
       <p className="hw-school">리라초등학교 5학년 2반</p>
       <h1 className="hw-title">내 이름을 찾아요! 🦷</h1>
@@ -42,15 +52,16 @@ export default function HomeworkPage() {
                 <h2>반가워요! 🎉</h2>
                 <p>
                   <span className="modal-name">{selected}</span>
-                  이미 퀴즈를 수료했어요!<br />
-                  <strong>바로 참여할 수 있어요.</strong>
+                  님은 이미 퀴즈를 수료했어요!<br /><br />
+                  점수가 마음에 안 들면 <strong>다시 도전</strong>할 수 있어요 🔄<br />
+                  아니면 <strong>댓글을 쓰거나 게임</strong>을 즐겨요 🎮
                 </p>
-                <div className="modal-actions">
-                  <button className="btn-cancel" onClick={() => setSelected(null)}>
-                    아니에요
-                  </button>
+                <div className="modal-actions" style={{ flexDirection:'column', gap:8 }}>
                   <button className="btn-yellow" onClick={handleConfirm}>
-                    바로 참여하기 →
+                    댓글 / 게임 참여하기 🎮
+                  </button>
+                  <button className="btn-cancel" onClick={handleRetake}>
+                    퀴즈 다시 풀기 🔄
                   </button>
                 </div>
               </>
