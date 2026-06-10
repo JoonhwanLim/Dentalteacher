@@ -416,6 +416,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
 /* ── SECTION 0: 치과의사의 하루 — 타임라인 ── */
 function DaySection({ onBack }) {
   const [selected, setSelected] = useState(0)
+  const [imgHovered, setImgHovered] = useState(false)
   const item = timeline[selected]
   const isMob = mob()
 
@@ -430,7 +431,22 @@ function DaySection({ onBack }) {
 
   return (
     <div style={{ width:'100vw', height:'100vh', display:'flex', flexDirection:'column', background:'linear-gradient(160deg,#F0FFF4,#E8F5E9)', fontFamily:"'Noto Sans KR',sans-serif" }}>
-      <style>{`@keyframes slideIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }`}</style>
+      <style>{`
+        @keyframes slideIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes mirrorWave {
+          0%   { transform: rotate(0deg); }
+          15%  { transform: rotate(-14deg); }
+          35%  { transform: rotate(12deg); }
+          55%  { transform: rotate(-10deg); }
+          75%  { transform: rotate(8deg); }
+          100% { transform: rotate(0deg); }
+        }
+        @keyframes mirrorShine {
+          0%, 100% { opacity: 0; transform: rotate(0deg) scale(0.8); }
+          30%       { opacity: 0.85; transform: rotate(-30deg) scale(1.15); }
+          70%       { opacity: 0.6; transform: rotate(30deg) scale(1.05); }
+        }
+      `}</style>
 
       {/* Header */}
       <div style={{ display:'flex', alignItems:'center', gap:16, padding: isMob ? '14px 20px' : '16px 40px', flexShrink:0, background:'white', boxShadow:'0 2px 12px rgba(0,0,0,0.06)' }}>
@@ -501,7 +517,30 @@ function DaySection({ onBack }) {
                   <h2 style={{ fontSize:'2.2rem', fontWeight:900, color:'#1A1A1A', marginBottom:4, lineHeight:1.2 }}>{item.title}</h2>
                   <p style={{ color:item.color, fontWeight:700, fontSize:'1rem', marginBottom:0 }}>{item.sub}</p>
                 </div>
-                <img src={item.image} alt={item.title} style={{ height:180, objectFit:'contain', filter:`drop-shadow(0 6px 18px ${item.color}66)`, flexShrink:0 }} />
+                <div
+                  style={{ position:'relative', flexShrink:0, cursor:'pointer' }}
+                  onMouseEnter={() => setImgHovered(true)}
+                  onMouseLeave={() => setImgHovered(false)}
+                >
+                  <img src={item.image} alt={item.title} style={{
+                    height:180, objectFit:'contain',
+                    filter:`drop-shadow(0 6px 18px ${item.color}66)`,
+                    transformOrigin:'72% 50%',
+                    animation: imgHovered ? 'mirrorWave 0.55s ease-in-out 3' : 'none',
+                    transition: 'filter 0.2s',
+                  }} />
+                  {/* 거울 반짝이 오버레이 — 왼손 쪽 */}
+                  {imgHovered && (
+                    <div style={{
+                      position:'absolute', left:'6%', top:'18%',
+                      width:30, height:30, borderRadius:'50%',
+                      background:'conic-gradient(from 0deg, rgba(255,255,255,0.9), rgba(200,230,255,0.4), rgba(255,255,255,0.9))',
+                      boxShadow:'0 0 12px 4px rgba(180,220,255,0.6)',
+                      animation:'mirrorShine 0.55s ease-in-out 3',
+                      pointerEvents:'none',
+                    }} />
+                  )}
+                </div>
               </div>
               <div style={{ background:'white', borderRadius:20, padding:'24px 28px', boxShadow:`0 8px 32px ${item.color}22`, borderLeft:`5px solid ${item.color}` }}>
                 <p style={{ color:'#333', fontSize:'1.08rem', lineHeight:1.8, marginBottom:14 }}>{item.desc}</p>
