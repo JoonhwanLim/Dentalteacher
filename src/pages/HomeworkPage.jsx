@@ -10,9 +10,14 @@ export default function HomeworkPage() {
     setSelected(name)
   }
 
-  function handleConfirm() {
+  function handleGoBoard() {
     sessionStorage.setItem('studentName', selected)
     navigate('/board')
+  }
+
+  function handleStartQuiz() {
+    sessionStorage.setItem('studentName', selected)
+    navigate('/quiz')
   }
 
   function handleRetake() {
@@ -63,7 +68,7 @@ export default function HomeworkPage() {
 
                 {/* 선택지 */}
                 <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-                  <button className="btn-yellow" onClick={handleConfirm} style={{ width:'100%', justifyContent:'center' }}>
+                  <button className="btn-yellow" onClick={handleGoBoard} style={{ width:'100%', justifyContent:'center' }}>
                     🎮 댓글 / 게임 참여하기
                   </button>
                   <div style={{ textAlign:'center', fontSize:'0.78rem', color:'#aaa' }}>점수가 마음에 안들면</div>
@@ -84,7 +89,7 @@ export default function HomeworkPage() {
                   <button className="btn-cancel" onClick={() => setSelected(null)}>
                     아니에요
                   </button>
-                  <button className="btn-yellow" onClick={handleConfirm}>
+                  <button className="btn-yellow" onClick={handleStartQuiz}>
                     맞아요! 시작하기 →
                   </button>
                 </div>
