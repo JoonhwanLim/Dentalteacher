@@ -102,7 +102,7 @@ export default function BoardPage() {
               <span style={{ fontSize:'1.1rem', flexShrink:0 }}>🔴</span>
               <span>
                 <strong>관리자 실시간 모니터링 중</strong> — 댓글은 반드시 <strong>본인 이름({studentName})</strong>으로만 작성해야 합니다.
-                다른 사람 이름으로 작성 시 선생님께 즉시 보고됩니다.
+                다른 사람의 이름으로 댓글 작성시 큰 문제가 될 수도 있습니다.
               </span>
             </div>
             <div className="comment-form">
