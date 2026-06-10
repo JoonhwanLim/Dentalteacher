@@ -526,17 +526,22 @@ function DaySection({ onBack }) {
                     height:180, objectFit:'contain',
                     filter:`drop-shadow(0 6px 18px ${item.color}66)`,
                     transformOrigin:'72% 50%',
-                    animation: imgHovered ? 'mirrorWave 0.55s ease-in-out 3' : 'none',
-                    transition: 'filter 0.2s',
+                    animationName: imgHovered ? 'mirrorWave' : 'none',
+                    animationDuration: '0.5s',
+                    animationTimingFunction: 'ease-in-out',
+                    animationIterationCount: 'infinite',
                   }} />
                   {/* 거울 반짝이 오버레이 — 왼손 쪽 */}
                   {imgHovered && (
                     <div style={{
                       position:'absolute', left:'6%', top:'18%',
-                      width:30, height:30, borderRadius:'50%',
-                      background:'conic-gradient(from 0deg, rgba(255,255,255,0.9), rgba(200,230,255,0.4), rgba(255,255,255,0.9))',
-                      boxShadow:'0 0 12px 4px rgba(180,220,255,0.6)',
-                      animation:'mirrorShine 0.55s ease-in-out 3',
+                      width:34, height:34, borderRadius:'50%',
+                      background:'radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(180,220,255,0.7) 50%, transparent 100%)',
+                      boxShadow:'0 0 16px 6px rgba(200,230,255,0.8)',
+                      animationName:'mirrorShine',
+                      animationDuration:'0.5s',
+                      animationTimingFunction:'ease-in-out',
+                      animationIterationCount:'infinite',
                       pointerEvents:'none',
                     }} />
                   )}
