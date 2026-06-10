@@ -445,6 +445,7 @@ button {
   padding: 12px 28px;
   border-radius: 50px;
   font-size: 1rem;
+  white-space: nowrap;
 }
 
 /* ── Quiz ── */
@@ -609,17 +610,16 @@ button {
   border-radius: 12px;
   text-align: center;
 }
-.cert-logo { height: 64px; margin-bottom: 16px; }
+.cert-logo { height: 72px; }
 .cert-badge {
   display: inline-block;
   background: var(--yellow);
   color: var(--black);
   font-weight: 900;
   font-size: 0.85rem;
-  padding: 5px 18px;
+  padding: 6px 22px;
   border-radius: 20px;
   letter-spacing: 3px;
-  margin-bottom: 24px;
 }
 .cert-title {
   font-size: 3rem;

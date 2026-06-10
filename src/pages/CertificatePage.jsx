@@ -19,8 +19,10 @@ export default function CertificatePage() {
       <div className="cert-wrap" id="certificate">
         <div className="cert-top-bar" />
         <div className="cert-inner">
-          <img src="/logo2.png" alt="리라" className="cert-logo" />
-          <div className="cert-badge">CERTIFICATE</div>
+          <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:10, marginBottom:28 }}>
+            <img src="/logo2.png" alt="리라" className="cert-logo" />
+            <div className="cert-badge">CERTIFICATE</div>
+          </div>
           <h1 className="cert-title">수료증</h1>
           <div className="cert-body">
             <p>리라초등학교 5학년 2반</p>
