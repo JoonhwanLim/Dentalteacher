@@ -31,6 +31,14 @@ export const api = {
   },
 
   quizResults: {
+    async isCompleted(student_name) {
+      try {
+        const r = await fetch(`${BASE}/quiz-results?name=${encodeURIComponent(student_name)}`)
+        if (!r.ok) return false
+        const data = await r.json()
+        return data.completed === true
+      } catch { return false }
+    },
     async insert(student_name, score, total) {
       try {
         await fetch(`${BASE}/quiz-results`, {

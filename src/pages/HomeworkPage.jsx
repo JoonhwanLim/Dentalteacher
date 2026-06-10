@@ -1,13 +1,22 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import students from '../data/students.json'
+import { api } from '../lib/api'
 
 export default function HomeworkPage() {
   const [selected, setSelected] = useState(null)
+  const [completed, setCompleted] = useState(false)
+  const [checking, setChecking] = useState(false)
   const navigate = useNavigate()
 
-  function handleSelect(name) {
+  async function handleSelect(name) {
     setSelected(name)
+    setChecking(true)
+    // DB에서 수료 여부 확인 + localStorage 동기화
+    const dbCompleted = await api.quizResults.isCompleted(name)
+    if (dbCompleted) localStorage.setItem(`completed_${name}`, '1')
+    setCompleted(dbCompleted || !!localStorage.getItem(`completed_${name}`))
+    setChecking(false)
   }
 
   function handleGoBoard() {
@@ -50,9 +59,13 @@ export default function HomeworkPage() {
       </div>
 
       {selected && (
-        <div className="modal-overlay" onClick={() => setSelected(null)}>
+        <div className="modal-overlay" onClick={() => { setSelected(null); setCompleted(false) }}>
           <div className="modal-box" onClick={e => e.stopPropagation()}>
-            {localStorage.getItem(`completed_${selected}`) ? (
+            {checking ? (
+              <div style={{ textAlign:'center', padding:'24px 0', color:'#aaa', fontSize:'0.95rem' }}>
+                확인 중...
+              </div>
+            ) : completed ? (
               <>
                 {/* 이름 + 수료 뱃지 */}
                 <div style={{ textAlign:'center', marginBottom:16 }}>
@@ -86,7 +99,7 @@ export default function HomeworkPage() {
                   <strong>(경고: 다른 사람 이름 접속하면 큰일남!!!!!)</strong>
                 </p>
                 <div className="modal-actions">
-                  <button className="btn-cancel" onClick={() => setSelected(null)}>
+                  <button className="btn-cancel" onClick={() => { setSelected(null); setCompleted(false) }}>
                     아니에요
                   </button>
                   <button className="btn-yellow" onClick={handleStartQuiz}>

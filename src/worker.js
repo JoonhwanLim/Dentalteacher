@@ -35,13 +35,24 @@ async function handleDeleteComment(request, env, id) {
 }
 
 async function handleQuizResults(request, env) {
-  if (request.method !== 'POST') return new Response('Method Not Allowed', { status: 405 })
-  const { student_name, score, total } = await request.json()
-  if (!student_name) return new Response('Bad Request', { status: 400 })
-  await env.DB.prepare(
-    'INSERT INTO quiz_results (student_name, score, total) VALUES (?, ?, ?)'
-  ).bind(student_name, score ?? 0, total ?? 0).run()
-  return Response.json({ ok: true })
+  if (request.method === 'GET') {
+    const url = new URL(request.url)
+    const name = url.searchParams.get('name')
+    if (!name) return new Response('Bad Request', { status: 400 })
+    const row = await env.DB.prepare(
+      'SELECT id FROM quiz_results WHERE student_name = ? LIMIT 1'
+    ).bind(name).first()
+    return Response.json({ completed: !!row })
+  }
+  if (request.method === 'POST') {
+    const { student_name, score, total } = await request.json()
+    if (!student_name) return new Response('Bad Request', { status: 400 })
+    await env.DB.prepare(
+      'INSERT INTO quiz_results (student_name, score, total) VALUES (?, ?, ?)'
+    ).bind(student_name, score ?? 0, total ?? 0).run()
+    return Response.json({ ok: true })
+  }
+  return new Response('Method Not Allowed', { status: 405 })
 }
 
 async function handleGameScores(request, env) {
