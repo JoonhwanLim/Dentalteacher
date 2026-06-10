@@ -49,23 +49,26 @@ export default function HomeworkPage() {
           <div className="modal-box" onClick={e => e.stopPropagation()}>
             {localStorage.getItem(`completed_${selected}`) ? (
               <>
-                <h2>반가워요! 🎉</h2>
-                <p>
-                  <span className="modal-name">{selected}</span>
-                  본인의 이름만 접속해야합니다<br />
-                  <strong>(경고: 다른 사람 이름 접속하면 큰일남!!!!!)</strong>
-                </p>
-                <p style={{ marginTop: 12 }}>
-                  이미 퀴즈를 수료했어요! 🎉<br />
-                  점수가 마음에 안 들면 <strong>다시 도전</strong>할 수 있어요 🔄<br />
-                  아니면 <strong>댓글을 쓰거나 게임</strong>을 즐겨요 🎮
-                </p>
-                <div className="modal-actions" style={{ flexDirection:'column', gap:8 }}>
-                  <button className="btn-yellow" onClick={handleConfirm}>
-                    댓글 / 게임 참여하기 🎮
+                {/* 이름 + 수료 뱃지 */}
+                <div style={{ textAlign:'center', marginBottom:16 }}>
+                  <div style={{ fontSize:'2.4rem', fontWeight:900, color:'#1A1A1A', lineHeight:1.1 }}>{selected}</div>
+                  <div style={{ display:'inline-block', marginTop:8, background:'#E8F5E9', color:'#1A5C3A', fontSize:'0.78rem', fontWeight:800, padding:'4px 14px', borderRadius:20 }}>✅ 퀴즈 수료 완료</div>
+                </div>
+
+                {/* 경고 */}
+                <div style={{ background:'#FFF3CD', border:'1.5px solid #FFC107', borderRadius:12, padding:'10px 14px', marginBottom:14, fontSize:'0.82rem', color:'#7B4F00', textAlign:'center', lineHeight:1.6 }}>
+                  ⚠️ <strong>본인 이름으로만 접속해야 합니다</strong><br />
+                  다른 사람 이름으로 접속하면 큰일남!!!!!
+                </div>
+
+                {/* 선택지 */}
+                <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+                  <button className="btn-yellow" onClick={handleConfirm} style={{ width:'100%', justifyContent:'center' }}>
+                    🎮 댓글 / 게임 참여하기
                   </button>
-                  <button className="btn-cancel" onClick={handleRetake}>
-                    퀴즈 다시 풀기 🔄
+                  <div style={{ textAlign:'center', fontSize:'0.78rem', color:'#aaa' }}>점수가 마음에 안들면</div>
+                  <button className="btn-cancel" onClick={handleRetake} style={{ width:'100%', justifyContent:'center' }}>
+                    🔄 퀴즈 다시 풀기
                   </button>
                 </div>
               </>
