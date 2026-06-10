@@ -52,7 +52,11 @@ export default function HomeworkPage() {
                 <h2>반가워요! 🎉</h2>
                 <p>
                   <span className="modal-name">{selected}</span>
-                  님은 이미 퀴즈를 수료했어요!<br /><br />
+                  본인의 이름만 접속해야합니다<br />
+                  <strong>(경고: 다른 사람 이름 접속하면 큰일남!!!!!)</strong>
+                </p>
+                <p style={{ marginTop: 12 }}>
+                  이미 퀴즈를 수료했어요! 🎉<br />
                   점수가 마음에 안 들면 <strong>다시 도전</strong>할 수 있어요 🔄<br />
                   아니면 <strong>댓글을 쓰거나 게임</strong>을 즐겨요 🎮
                 </p>
