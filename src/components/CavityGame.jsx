@@ -401,7 +401,10 @@ function Leaderboard({ data, studentName }) {
           }}>
             <span style={{ fontSize: '1.2rem', width: 28, textAlign: 'center' }}>{medals[i] || `${i + 1}`}</span>
             <span style={{ flex: 1, fontWeight: isMe ? 900 : 500, fontSize: '0.92rem' }}>{row.student_name}</span>
-            <span style={{ fontWeight: 900, color: '#1A5C3A' }}>{row.score}</span>
+            <div style={{ textAlign:'right' }}>
+              <div style={{ fontWeight: 900, color: '#1A5C3A' }}>{row.score}점</div>
+              {row.attempts > 0 && <div style={{ fontSize:'0.7rem', color:'#aaa' }}>{row.attempts}회 도전</div>}
+            </div>
           </div>
         )
       })}

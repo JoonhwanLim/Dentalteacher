@@ -34,7 +34,7 @@ async function handleQuizResults(request, env) {
 async function handleGameScores(request, env) {
   if (request.method === 'GET') {
     const { results } = await env.DB.prepare(
-      'SELECT student_name, score FROM game_scores ORDER BY score DESC LIMIT 10'
+      'SELECT student_name, score, attempts FROM game_scores ORDER BY score DESC LIMIT 10'
     ).all()
     return Response.json(results)
   }
@@ -44,15 +44,21 @@ async function handleGameScores(request, env) {
     const existing = await env.DB.prepare(
       'SELECT id, score FROM game_scores WHERE student_name = ? ORDER BY score DESC LIMIT 1'
     ).bind(student_name).first()
-    if (existing && score <= existing.score) return Response.json({ updated: false })
     if (existing) {
-      await env.DB.prepare('UPDATE game_scores SET score = ? WHERE id = ?')
-        .bind(score, existing.id).run()
+      if (score > existing.score) {
+        await env.DB.prepare('UPDATE game_scores SET score = ?, attempts = attempts + 1 WHERE id = ?')
+          .bind(score, existing.id).run()
+        return Response.json({ updated: true })
+      } else {
+        await env.DB.prepare('UPDATE game_scores SET attempts = attempts + 1 WHERE id = ?')
+          .bind(existing.id).run()
+        return Response.json({ updated: false })
+      }
     } else {
-      await env.DB.prepare('INSERT INTO game_scores (student_name, score) VALUES (?, ?)')
+      await env.DB.prepare('INSERT INTO game_scores (student_name, score, attempts) VALUES (?, ?, 1)')
         .bind(student_name, score).run()
+      return Response.json({ updated: true })
     }
-    return Response.json({ updated: true })
   }
   return new Response('Method Not Allowed', { status: 405 })
 }
