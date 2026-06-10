@@ -86,7 +86,7 @@ export default function BoardPage() {
           💬 댓글 게시판
         </button>
         <button className={`board-tab ${tab === 'game' ? 'active' : ''}`} onClick={() => setTab('game')}>
-          🎮 충치 처치하리라
+          🎮 충치 처치하<span style={{ color:'#F5C800', fontSize:'1.2em', fontWeight:900 }}>리라</span>
         </button>
       </div>
 
