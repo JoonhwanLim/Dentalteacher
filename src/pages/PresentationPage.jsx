@@ -339,7 +339,7 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
             <circle cx="312" cy="479" r="10" fill="rgba(255,255,255,0.2)"/>
             <rect x="307.2" y="476.6" width="9.6" height="4.8" rx="1.2" fill="white"/>
             <rect x="309.6" y="474.2" width="4.8" height="9.6" rx="1.2" fill="white"/>
-            <text x="390" y="475" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과에서 자주하는 치료는?</text>
+            <text x="390" y="475" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">치과에서 자주 치료는?</text>
             <text x="390" y="487" textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.85)">치료 종류 &amp; 도구</text>
             <text x="450" y="470" textAnchor="middle" fontSize="12" fill="white" opacity="0.75">✦</text>
             <text x="458" y="483" textAnchor="middle" fontSize="8" fill="white" opacity="0.55">✧</text>
@@ -568,7 +568,7 @@ function ClinicSection({ onBack }) {
       {/* Header */}
       <div style={{ display:'flex', alignItems:'center', gap:12, padding: isMob ? '12px 16px' : '14px 32px', background:'linear-gradient(135deg,#0A2416,#1A5C3A)', boxShadow:'0 2px 16px rgba(0,0,0,0.2)', flexShrink:0, flexWrap: isMob ? 'wrap' : 'nowrap', color:'white' }}>
         <BackBtn onClick={onBack} />
-        <h1 style={{ fontSize: isMob ? '1.0rem' : '1.5rem', fontWeight:900, color:'white' }}>치과에서 자주 치료하는 <span style={{ color:'#F5C800' }}>종류는?</span></h1>
+        <h1 style={{ fontSize: isMob ? '1.0rem' : '1.5rem', fontWeight:900, color:'white' }}>치과에서 자주 <span style={{ color:'#F5C800' }}>치료는?</span></h1>
         <div style={{ marginLeft: isMob ? 0 : 'auto', display:'flex', gap:8, flexShrink:0 }}>
           <button onClick={() => setTab(0)} style={{ background: tab===0 ? '#F5C800' : 'rgba(255,255,255,0.12)', border:'none', borderRadius:50, padding: isMob ? '7px 16px' : '9px 22px', fontFamily:'inherit', fontWeight:800, fontSize: isMob ? '0.8rem' : '0.88rem', cursor:'pointer', color: tab===0 ? '#1A1A1A' : 'rgba(255,255,255,0.8)', transition:'all 0.18s' }}>🦷 치료 종류</button>
           <button onClick={() => setTab(2)} style={{ background: tab===2 ? '#F5C800' : 'rgba(255,255,255,0.12)', border:'none', borderRadius:50, padding: isMob ? '7px 16px' : '9px 22px', fontFamily:'inherit', fontWeight:800, fontSize: isMob ? '0.8rem' : '0.88rem', cursor:'pointer', color: tab===2 ? '#1A1A1A' : 'rgba(255,255,255,0.8)', transition:'all 0.18s' }}>🦷 치아정보</button>
