@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  student_name TEXT NOT NULL,
+  content TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS quiz_results (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  student_name TEXT NOT NULL,
+  score INTEGER NOT NULL,
+  total INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS game_scores (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  student_name TEXT NOT NULL,
+  score INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);

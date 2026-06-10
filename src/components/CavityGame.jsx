@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { supabase } from '../lib/supabase'
+import { api } from '../lib/api'
 
 /* 16 고정 이빨 위치 (치아 아치 형태) */
 const SLOTS = [
@@ -125,14 +125,8 @@ export default function CavityGame({ studentName }) {
   const scoreRef  = useRef(0)   // 항상 최신 점수 추적
 
   const fetchLeaderboard = useCallback(async () => {
-    try {
-      const { data } = await supabase
-        .from('game_scores')
-        .select('student_name, score')
-        .order('score', { ascending: false })
-        .limit(10)
-      if (data) setLeaderboard(data)
-    } catch (_) {}
+    const data = await api.gameScores.leaderboard()
+    setLeaderboard(data)
   }, [])
 
   useEffect(() => { fetchLeaderboard() }, [fetchLeaderboard])
@@ -211,27 +205,9 @@ export default function CavityGame({ studentName }) {
   async function saveScore() {
     setSaving(true)
     const finalScore = scoreRef.current
-    try {
-      const { data } = await supabase
-        .from('game_scores')
-        .select('id, score')
-        .eq('student_name', studentName)
-        .order('score', { ascending: false })
-        .limit(1)
-
-      const existing = data && data.length > 0 ? data[0] : null
-      const newRecord = !existing || finalScore > existing.score
-
-      if (newRecord) {
-        if (existing) {
-          await supabase.from('game_scores').update({ score: finalScore }).eq('id', existing.id)
-        } else {
-          await supabase.from('game_scores').insert({ student_name: studentName, score: finalScore })
-        }
-        setIsNewRecord(true)
-      }
-      await fetchLeaderboard()
-    } catch (_) {}
+    const result = await api.gameScores.upsert(studentName, finalScore)
+    if (result.updated) setIsNewRecord(true)
+    await fetchLeaderboard()
     setSaving(false)
   }
 

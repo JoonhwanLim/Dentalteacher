@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { api } from '../lib/api'
 import questions from '../data/quiz.json'
 
 const LETTERS = ['①', '②', '③', '④']
@@ -32,13 +32,7 @@ export default function QuizPage() {
       sessionStorage.setItem('quizCompleted', 'true')
       sessionStorage.setItem('quizScore', finalScore)
 
-      try {
-        await supabase.from('quiz_results').insert({
-          student_name: studentName,
-          score: finalScore,
-          total: questions.length,
-        })
-      } catch (_) {}
+      await api.quizResults.insert(studentName, finalScore, questions.length)
 
       navigate('/certificate')
     }

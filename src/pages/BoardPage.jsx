@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { api } from '../lib/api'
 import CavityGame from '../components/CavityGame'
 
 export default function BoardPage() {
@@ -13,30 +13,20 @@ export default function BoardPage() {
 
   useEffect(() => {
     fetchComments()
-
-    const channel = supabase
-      .channel('comments-realtime')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comments' }, payload => {
-        setComments(prev => [payload.new, ...prev])
-      })
-      .subscribe()
-
-    return () => supabase.removeChannel(channel)
+    const timer = setInterval(fetchComments, 5000)
+    return () => clearInterval(timer)
   }, [])
 
   async function fetchComments() {
-    const { data } = await supabase
-      .from('comments')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(50)
-    if (data) setComments(data)
+    const data = await api.comments.list()
+    setComments(data)
   }
 
   async function handlePost() {
     if (!text.trim() || posting) return
     setPosting(true)
-    await supabase.from('comments').insert({ student_name: studentName, content: text.trim() })
+    const newComment = await api.comments.insert(studentName, text.trim())
+    if (newComment) setComments(prev => [newComment, ...prev])
     setText('')
     setPosting(false)
   }
