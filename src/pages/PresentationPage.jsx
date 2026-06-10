@@ -416,7 +416,6 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
 /* ── SECTION 0: 치과의사의 하루 — 타임라인 ── */
 function DaySection({ onBack }) {
   const [selected, setSelected] = useState(0)
-  const [imgHovered, setImgHovered] = useState(false)
   const item = timeline[selected]
   const isMob = mob()
 
@@ -442,9 +441,29 @@ function DaySection({ onBack }) {
           100% { transform: rotate(0deg); }
         }
         @keyframes mirrorShine {
-          0%, 100% { opacity: 0; transform: rotate(0deg) scale(0.8); }
-          30%       { opacity: 0.85; transform: rotate(-30deg) scale(1.15); }
-          70%       { opacity: 0.6; transform: rotate(30deg) scale(1.05); }
+          0%, 100% { opacity: 0;    transform: rotate(0deg)   scale(0.8); }
+          30%      { opacity: 1;    transform: rotate(-40deg) scale(1.2); }
+          70%      { opacity: 0.75; transform: rotate(40deg)  scale(1.1); }
+        }
+        .day-img-wrap { position: relative; flex-shrink: 0; cursor: pointer; overflow: visible; }
+        .day-img-wrap img {
+          transform-origin: 72% 50%;
+          transition: filter 0.2s;
+        }
+        .day-img-wrap:hover img {
+          animation: mirrorWave 0.5s ease-in-out infinite;
+        }
+        .day-img-wrap .mirror-shine {
+          position: absolute; left: 6%; top: 18%;
+          width: 36px; height: 36px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(160,210,255,0.8) 50%, transparent 100%);
+          box-shadow: 0 0 18px 8px rgba(180,225,255,0.9);
+          opacity: 0;
+          pointer-events: none;
+          z-index: 20;
+        }
+        .day-img-wrap:hover .mirror-shine {
+          animation: mirrorShine 0.5s ease-in-out infinite;
         }
       `}</style>
 
@@ -517,34 +536,12 @@ function DaySection({ onBack }) {
                   <h2 style={{ fontSize:'2.2rem', fontWeight:900, color:'#1A1A1A', marginBottom:4, lineHeight:1.2 }}>{item.title}</h2>
                   <p style={{ color:item.color, fontWeight:700, fontSize:'1rem', marginBottom:0 }}>{item.sub}</p>
                 </div>
-                <div
-                  style={{ position:'relative', flexShrink:0, cursor:'pointer' }}
-                  onMouseEnter={() => setImgHovered(true)}
-                  onMouseLeave={() => setImgHovered(false)}
-                >
+                <div className="day-img-wrap">
                   <img src={item.image} alt={item.title} style={{
                     height:180, objectFit:'contain',
                     filter:`drop-shadow(0 6px 18px ${item.color}66)`,
-                    transformOrigin:'72% 50%',
-                    animationName: imgHovered ? 'mirrorWave' : 'none',
-                    animationDuration: '0.5s',
-                    animationTimingFunction: 'ease-in-out',
-                    animationIterationCount: 'infinite',
                   }} />
-                  {/* 거울 반짝이 오버레이 — 왼손 쪽 */}
-                  {imgHovered && (
-                    <div style={{
-                      position:'absolute', left:'6%', top:'18%',
-                      width:34, height:34, borderRadius:'50%',
-                      background:'radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(180,220,255,0.7) 50%, transparent 100%)',
-                      boxShadow:'0 0 16px 6px rgba(200,230,255,0.8)',
-                      animationName:'mirrorShine',
-                      animationDuration:'0.5s',
-                      animationTimingFunction:'ease-in-out',
-                      animationIterationCount:'infinite',
-                      pointerEvents:'none',
-                    }} />
-                  )}
+                  <div className="mirror-shine" />
                 </div>
               </div>
               <div style={{ background:'white', borderRadius:20, padding:'24px 28px', boxShadow:`0 8px 32px ${item.color}22`, borderLeft:`5px solid ${item.color}` }}>
