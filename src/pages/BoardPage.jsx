@@ -31,6 +31,12 @@ export default function BoardPage() {
     setPosting(false)
   }
 
+  async function handleDelete(id) {
+    if (!window.confirm('내 댓글을 삭제할까요?')) return
+    const ok = await api.comments.remove(id, studentName)
+    if (ok) setComments(prev => prev.filter(c => c.id !== id))
+  }
+
   function formatTime(ts) {
     const d = new Date(ts)
     return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`
@@ -98,14 +104,23 @@ export default function BoardPage() {
               </span>
             </div>
             <div className="comment-form">
-              <input
-                className="comment-input"
-                value={text}
-                onChange={e => setText(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handlePost()}
-                placeholder="오늘 배운 것 중 가장 신기했던 것은?"
-                maxLength={100}
-              />
+              <div style={{ flex:1, position:'relative' }}>
+                <input
+                  className="comment-input"
+                  value={text}
+                  onChange={e => setText(e.target.value.slice(0, 60))}
+                  onKeyDown={e => e.key === 'Enter' && handlePost()}
+                  placeholder="오늘 배운 것 중 가장 신기했던 것은?"
+                  maxLength={60}
+                  style={{ width:'100%' }}
+                />
+                <span style={{
+                  position:'absolute', right:10, bottom:6,
+                  fontSize:'0.7rem', color: text.length >= 55 ? '#E74C3C' : '#bbb',
+                  fontWeight: text.length >= 55 ? 700 : 400,
+                  pointerEvents:'none',
+                }}>{text.length}/60</span>
+              </div>
               <button className="btn-yellow" onClick={handlePost} disabled={posting || !text.trim()}>
                 {posting ? '...' : '올리기'}
               </button>
@@ -122,6 +137,22 @@ export default function BoardPage() {
                   <div className="comment-meta">
                     <span className="comment-author">🦷 {c.student_name}</span>
                     <span className="comment-time">{formatTime(c.created_at)}</span>
+                    {c.student_name === studentName && (
+                      <button
+                        onClick={() => handleDelete(c.id)}
+                        style={{
+                          marginLeft:'auto', background:'none', border:'none',
+                          color:'#ccc', fontSize:'0.75rem', cursor:'pointer',
+                          padding:'2px 6px', borderRadius:6,
+                          transition:'color 0.15s',
+                        }}
+                        onMouseEnter={e => e.target.style.color='#E74C3C'}
+                        onMouseLeave={e => e.target.style.color='#ccc'}
+                        title="내 댓글 삭제"
+                      >
+                        🗑 삭제
+                      </button>
+                    )}
                   </div>
                   <p className="comment-text">{c.content}</p>
                 </div>

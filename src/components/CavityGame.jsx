@@ -118,20 +118,25 @@ export default function CavityGame({ studentName }) {
   const [saving, setSaving]       = useState(false)
   const [isNewRecord, setIsNewRecord] = useState(false)
   const [brushEffects, setBrushEffects] = useState([])
+  const [myAttempts, setMyAttempts] = useState(0)
 
   const timerRef  = useRef(null)
   const spawnRef  = useRef(null)
   const cleanRef  = useRef(null)
   const scoreRef  = useRef(0)   // 항상 최신 점수 추적
 
+  const ATTEMPT_LIMIT = 50
+
   const fetchLeaderboard = useCallback(async () => {
-    const data = await api.gameScores.leaderboard()
-    setLeaderboard(data)
-  }, [])
+    const data = await api.gameScores.leaderboard(studentName)
+    setLeaderboard(data.leaderboard ?? [])
+    setMyAttempts(data.myAttempts ?? 0)
+  }, [studentName])
 
   useEffect(() => { fetchLeaderboard() }, [fetchLeaderboard])
 
   function startGame() {
+    if (myAttempts >= ATTEMPT_LIMIT) return
     scoreRef.current = 0
     setScore(0)
     setTimeLeft(30)
@@ -139,6 +144,7 @@ export default function CavityGame({ studentName }) {
     setFloats([])
     setBrushEffects([])
     setIsNewRecord(false)
+    setMyAttempts(n => n + 1)
     setPhase('playing')
   }
 
@@ -257,9 +263,21 @@ export default function CavityGame({ studentName }) {
                 </div>
               ))}
             </div>
-            <button className="btn-yellow" style={{ fontSize: '1.2rem', padding: '16px 44px' }} onClick={startGame}>
-              게임 시작! 🎮
-            </button>
+            {myAttempts >= ATTEMPT_LIMIT ? (
+              <div style={{ background:'#FFF3CD', border:'1.5px solid #FFC107', borderRadius:14, padding:'14px 20px', color:'#7B4F00', fontWeight:700, fontSize:'0.95rem' }}>
+                🚫 오늘 게임 참여 횟수({ATTEMPT_LIMIT}회)를 모두 사용했어요!<br />
+                <span style={{ fontWeight:400, fontSize:'0.85rem' }}>선생님께 도움을 요청하세요.</span>
+              </div>
+            ) : (
+              <>
+                <div style={{ color:'#aaa', fontSize:'0.82rem', marginBottom:10 }}>
+                  남은 도전 횟수: <strong style={{ color: myAttempts >= 40 ? '#E74C3C' : '#1A5C3A' }}>{ATTEMPT_LIMIT - myAttempts}회</strong>
+                </div>
+                <button className="btn-yellow" style={{ fontSize: '1.2rem', padding: '16px 44px' }} onClick={startGame}>
+                  게임 시작! 🎮
+                </button>
+              </>
+            )}
           </div>
         </div>
         <Leaderboard data={leaderboard} studentName={studentName} />
@@ -371,9 +389,20 @@ export default function CavityGame({ studentName }) {
             </div>
           )}
 
-          <button className="btn-yellow" style={{ fontSize: '1.1rem' }} onClick={startGame}>
-            다시 도전! 🔄
-          </button>
+          {myAttempts >= ATTEMPT_LIMIT ? (
+            <div style={{ background:'#FFF3CD', border:'1.5px solid #FFC107', borderRadius:14, padding:'12px 18px', color:'#7B4F00', fontWeight:700, fontSize:'0.9rem' }}>
+              🚫 도전 횟수({ATTEMPT_LIMIT}회)를 모두 사용했어요!
+            </div>
+          ) : (
+            <>
+              <div style={{ color:'#aaa', fontSize:'0.82rem', marginBottom:8 }}>
+                남은 도전 횟수: <strong style={{ color: myAttempts >= 40 ? '#E74C3C' : '#1A5C3A' }}>{ATTEMPT_LIMIT - myAttempts}회</strong>
+              </div>
+              <button className="btn-yellow" style={{ fontSize: '1.1rem' }} onClick={startGame}>
+                다시 도전! 🔄
+              </button>
+            </>
+          )}
         </div>
       </div>
       <Leaderboard data={leaderboard} studentName={studentName} />

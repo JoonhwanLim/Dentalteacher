@@ -18,6 +18,16 @@ export const api = {
         return r.ok ? r.json() : null
       } catch { return null }
     },
+    async remove(id, student_name) {
+      try {
+        const r = await fetch(`${BASE}/comments/${id}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ student_name }),
+        })
+        return r.ok
+      } catch { return false }
+    },
   },
 
   quizResults: {
@@ -33,11 +43,13 @@ export const api = {
   },
 
   gameScores: {
-    async leaderboard() {
+    async leaderboard(studentName) {
       try {
-        const r = await fetch(`${BASE}/game-scores`)
-        return r.ok ? r.json() : []
-      } catch { return [] }
+        const qs = studentName ? `?me=${encodeURIComponent(studentName)}` : ''
+        const r = await fetch(`${BASE}/game-scores${qs}`)
+        if (!r.ok) return { leaderboard: [], myAttempts: 0 }
+        return r.json()
+      } catch { return { leaderboard: [], myAttempts: 0 } }
     },
     async upsert(student_name, score) {
       try {

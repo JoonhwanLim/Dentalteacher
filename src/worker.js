@@ -1,7 +1,7 @@
 async function handleComments(request, env) {
   if (request.method === 'GET') {
     const { results } = await env.DB.prepare(
-      'SELECT id, student_name, content, created_at FROM comments ORDER BY created_at DESC LIMIT 50'
+      'SELECT id, student_name, content, created_at FROM comments WHERE is_deleted = 0 ORDER BY created_at DESC LIMIT 50'
     ).all()
     return Response.json(results)
   }
@@ -21,6 +21,19 @@ async function handleComments(request, env) {
   return new Response('Method Not Allowed', { status: 405 })
 }
 
+async function handleDeleteComment(request, env, id) {
+  if (request.method !== 'DELETE') return new Response('Method Not Allowed', { status: 405 })
+  const { student_name } = await request.json()
+  if (!student_name || !id) return new Response('Bad Request', { status: 400 })
+  // 본인 댓글만 삭제 가능 (서버에서도 검증)
+  const row = await env.DB.prepare(
+    'SELECT id FROM comments WHERE id = ? AND student_name = ? AND is_deleted = 0'
+  ).bind(id, student_name).first()
+  if (!row) return new Response('Forbidden', { status: 403 })
+  await env.DB.prepare('UPDATE comments SET is_deleted = 1 WHERE id = ?').bind(id).run()
+  return Response.json({ ok: true })
+}
+
 async function handleQuizResults(request, env) {
   if (request.method !== 'POST') return new Response('Method Not Allowed', { status: 405 })
   const { student_name, score, total } = await request.json()
@@ -33,10 +46,19 @@ async function handleQuizResults(request, env) {
 
 async function handleGameScores(request, env) {
   if (request.method === 'GET') {
+    const url = new URL(request.url)
+    const me = url.searchParams.get('me')
     const { results } = await env.DB.prepare(
       'SELECT student_name, score, attempts FROM game_scores ORDER BY score DESC LIMIT 10'
     ).all()
-    return Response.json(results)
+    let myAttempts = 0
+    if (me) {
+      const myRow = await env.DB.prepare(
+        'SELECT attempts FROM game_scores WHERE student_name = ?'
+      ).bind(me).first()
+      myAttempts = myRow?.attempts ?? 0
+    }
+    return Response.json({ leaderboard: results, myAttempts })
   }
   if (request.method === 'POST') {
     const { student_name, score } = await request.json()
@@ -68,6 +90,10 @@ export default {
     const url = new URL(request.url)
 
     if (url.pathname === '/api/comments')     return handleComments(request, env)
+    if (url.pathname.startsWith('/api/comments/') && request.method === 'DELETE') {
+      const id = parseInt(url.pathname.split('/')[3])
+      return handleDeleteComment(request, env, id)
+    }
     if (url.pathname === '/api/quiz-results') return handleQuizResults(request, env)
     if (url.pathname === '/api/game-scores')  return handleGameScores(request, env)
 
