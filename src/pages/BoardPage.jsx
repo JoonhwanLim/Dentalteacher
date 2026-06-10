@@ -93,6 +93,18 @@ export default function BoardPage() {
       <div className="board-content">
         {tab === 'comment' && (
           <div>
+            <div style={{
+              display:'flex', alignItems:'center', gap:10,
+              background:'#FFF3CD', border:'1.5px solid #FFC107',
+              borderRadius:12, padding:'10px 16px', marginBottom:12,
+              fontSize:'0.82rem', color:'#7B4F00',
+            }}>
+              <span style={{ fontSize:'1.1rem', flexShrink:0 }}>🔴</span>
+              <span>
+                <strong>관리자 실시간 모니터링 중</strong> — 댓글은 반드시 <strong>본인 이름({studentName})</strong>으로만 작성해야 합니다.
+                다른 사람 이름으로 작성 시 선생님께 즉시 보고됩니다.
+              </span>
+            </div>
             <div className="comment-form">
               <input
                 className="comment-input"
