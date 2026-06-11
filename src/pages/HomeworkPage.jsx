@@ -102,7 +102,7 @@ export default function HomeworkPage() {
                   }}>퀴즈 다시 풀기</button>
                 </div>
 
-                <p style={{ textAlign:'center', color:'#ddd', fontSize:'0.68rem', marginTop:14, lineHeight:1.5, marginBottom:0 }}>
+                <p style={{ textAlign:'center', color:'#E53935', fontSize:'0.68rem', marginTop:14, lineHeight:1.5, marginBottom:0, fontWeight:700 }}>
                   반드시 본인 이름으로만 접속하세요
                 </p>
               </>
@@ -131,7 +131,7 @@ export default function HomeworkPage() {
                   </button>
                 </div>
 
-                <p style={{ textAlign:'center', color:'#ddd', fontSize:'0.68rem', marginTop:14, lineHeight:1.5, marginBottom:0 }}>
+                <p style={{ textAlign:'center', color:'#E53935', fontSize:'0.68rem', marginTop:14, lineHeight:1.5, marginBottom:0, fontWeight:700 }}>
                   반드시 본인 이름으로만 접속하세요
                 </p>
               </>

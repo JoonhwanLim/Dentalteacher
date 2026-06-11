@@ -295,8 +295,8 @@ function MainHub({ onEnter, onHomework, onGoIntro, onFacts }) {
           {!mob() && <p style={{ fontSize:'0.78rem', color:'#888', margin:0 }}>함께 알아보는 치과의 세계 🦷</p>}
         </div>
         <div style={{ marginLeft:'auto', display:'flex', gap:6, flexShrink:0 }}>
-          <a href="https://www.career.go.kr/cloud/jm/main/home" target="_blank" rel="noopener noreferrer" style={{ background:'#E8F5E9', border:'1.5px solid #A5D6A7', borderRadius:50, padding: mob()?'6px 10px':'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize: mob()?'0.75rem':'0.82rem', cursor:'pointer', color:'#1A5C3A', whiteSpace:'nowrap', textDecoration:'none', display:'inline-flex', alignItems:'center' }}>{mob()?'🌐':'🌐 주니어 커리어넷'}</a>
-          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding: mob()?'6px 10px':'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize: mob()?'0.75rem':'0.82rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A', whiteSpace:'nowrap' }}>{mob() ? '참여' : '학생 참여 (퀴즈 & 게임)'}</button>
+          <a href="https://www.career.go.kr/cloud/jm/main/home" target="_blank" rel="noopener noreferrer" style={{ background:'#E8F5E9', border:'1.5px solid #A5D6A7', borderRadius:50, padding: mob()?'6px 10px':'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize: mob()?'0.75rem':'0.82rem', cursor:'pointer', color:'#1A5C3A', whiteSpace:'nowrap', textDecoration:'none', display:'inline-flex', alignItems:'center' }}>{mob()?'🌐 적성':'🌐 주니어 커리어넷'}</a>
+          <button onClick={onHomework} style={{ background:'#F5C800', border:'none', borderRadius:50, padding: mob()?'6px 10px':'8px 14px', fontFamily:'inherit', fontWeight:700, fontSize: mob()?'0.75rem':'0.82rem', cursor:'pointer', boxShadow:'0 4px 12px rgba(245,200,0,0.4)', color:'#1A1A1A', whiteSpace:'nowrap' }}>{mob() ? '🎮 게임' : '학생 참여 (퀴즈 & 게임)'}</button>
         </div>
       </div>
 
