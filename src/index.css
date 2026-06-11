@@ -770,10 +770,14 @@ button {
   .cert-actions .btn-green { padding: 11px 22px; font-size: 0.9rem; }
 
   /* BoardPage */
-  .board-page { padding: 20px 14px; }
-  .board-header { flex-wrap: wrap; gap: 8px; }
-  .board-tab { font-size: 0.82rem; padding: 10px 6px; }
-  .comment-form { flex-direction: column; }
+  .board-page { padding: 12px 10px; }
+  .board-header { flex-wrap: nowrap; gap: 6px; margin-bottom: 14px; }
+  .board-logo { height: 28px; }
+  .board-title { font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+  .board-student { font-size: 0.75rem; }
+  .board-tabs { margin-bottom: 12px; }
+  .board-tab { font-size: 0.82rem; padding: 9px 6px; }
+  .comment-form { flex-direction: column; padding: 14px; }
   .comment-form .btn-yellow { width: 100%; justify-content: center; }
 
   /* Modal */

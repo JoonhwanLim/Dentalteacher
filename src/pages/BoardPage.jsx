@@ -92,16 +92,13 @@ export default function BoardPage() {
         {tab === 'comment' && (
           <div>
             <div style={{
-              display:'flex', alignItems:'center', gap:10,
-              background:'#FFF3CD', border:'1.5px solid #FFC107',
-              borderRadius:12, padding:'10px 16px', marginBottom:12,
-              fontSize:'0.82rem', color:'#7B4F00',
+              display:'flex', alignItems:'center', justifyContent:'space-between',
+              background:'#fff', border:'1px solid #eee',
+              borderLeft:'3px solid #E53935',
+              borderRadius:8, padding:'9px 14px', marginBottom:12,
+              fontSize:'0.78rem', color:'#555',
             }}>
-              <span style={{ fontSize:'1.1rem', flexShrink:0 }}>🔴</span>
-              <span>
-                <strong>관리자 실시간 모니터링 중</strong> — 댓글은 반드시 <strong>본인 이름({studentName})</strong>으로만 작성해야 합니다.
-                다른 사람의 이름으로 댓글 작성시 큰 문제가 될 수도 있습니다.
-              </span>
+              <span>🛡️ 관리자 모니터링 중 · 반드시 <strong style={{ color:'#1A1A1A' }}>본인 이름({studentName})</strong>으로만 작성하세요</span>
             </div>
             <div className="comment-form">
               <div style={{ flex:1, position:'relative' }}>
