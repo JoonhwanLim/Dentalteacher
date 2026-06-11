@@ -8,14 +8,11 @@ export default function BoardPage() {
   const [comments, setComments] = useState([])
   const [text, setText] = useState('')
   const [posting, setPosting] = useState(false)
-  const [showWarning, setShowWarning] = useState(
-    !sessionStorage.getItem('boardWarningDismissed')
-  )
+  const [showWarning, setShowWarning] = useState(true)
   const navigate = useNavigate()
   const studentName = sessionStorage.getItem('studentName') || '학생'
 
   function dismissWarning() {
-    sessionStorage.setItem('boardWarningDismissed', '1')
     setShowWarning(false)
   }
 
