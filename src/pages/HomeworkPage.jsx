@@ -64,52 +64,76 @@ export default function HomeworkPage() {
 
       {selected && (
         <div className="modal-overlay" onClick={() => { setSelected(null); setCompleted(false) }}>
-          <div className="modal-box" onClick={e => e.stopPropagation()}>
+          <div className="modal-box" onClick={e => e.stopPropagation()} style={{ padding:'36px 32px 28px' }}>
             {checking ? (
-              <div style={{ textAlign:'center', padding:'24px 0', color:'#aaa', fontSize:'0.95rem' }}>
-                확인 중...
+              <div style={{ textAlign:'center', padding:'32px 0', color:'#bbb', fontSize:'0.9rem' }}>
+                확인 중…
               </div>
             ) : completed ? (
               <>
-                {/* 이름 + 수료 뱃지 */}
-                <div style={{ textAlign:'center', marginBottom:16 }}>
-                  <div style={{ fontSize:'2.4rem', fontWeight:900, color:'#1A1A1A', lineHeight:1.1 }}>{selected}</div>
-                  <div style={{ display:'inline-block', marginTop:8, background:'#E8F5E9', color:'#1A5C3A', fontSize:'0.78rem', fontWeight:800, padding:'4px 14px', borderRadius:20 }}>✅ 퀴즈 수료 완료</div>
+                <div style={{ textAlign:'center', marginBottom:24 }}>
+                  <div style={{
+                    width:68, height:68, borderRadius:'50%',
+                    background:'linear-gradient(135deg, #FFE066, #FFC107)',
+                    display:'flex', alignItems:'center', justifyContent:'center',
+                    fontSize:'1.7rem', fontWeight:900, color:'#7B4F00',
+                    margin:'0 auto 14px',
+                  }}>{selected.charAt(0)}</div>
+                  <div style={{ fontSize:'1.7rem', fontWeight:900, color:'#1A1A1A', lineHeight:1.2 }}>{selected}</div>
+                  <div style={{
+                    display:'inline-flex', alignItems:'center', gap:5, marginTop:8,
+                    background:'#E8F5E9', color:'#2E7D32',
+                    fontSize:'0.72rem', fontWeight:800, padding:'3px 12px', borderRadius:20,
+                  }}>✅ 퀴즈 수료 완료</div>
                 </div>
 
-                {/* 경고 */}
-                <div style={{ background:'#FFF3CD', border:'1.5px solid #FFC107', borderRadius:12, padding:'10px 14px', marginBottom:14, fontSize:'0.82rem', color:'#7B4F00', textAlign:'center', lineHeight:1.6 }}>
-                  ⚠️ <strong>본인 이름으로만 접속해야 합니다</strong><br />
-                  다른 사람 이름으로 접속하면 큰일남!!!!!
+                <div style={{ borderTop:'1px solid #f0f0f0', margin:'0 -32px 22px' }} />
+
+                <button className="btn-yellow" onClick={handleGoBoard}
+                  style={{ width:'100%', justifyContent:'center', fontSize:'1rem', padding:'14px' }}>
+                  댓글 쓰고 게임 하러 가기 →
+                </button>
+
+                <div style={{ textAlign:'center', marginTop:16 }}>
+                  <button onClick={handleRetake} style={{
+                    background:'none', border:'none', color:'#bbb',
+                    fontSize:'0.78rem', cursor:'pointer',
+                    textDecoration:'underline', fontFamily:'inherit', padding:0,
+                  }}>퀴즈 다시 풀기</button>
                 </div>
 
-                {/* 선택지 */}
-                <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-                  <button className="btn-yellow" onClick={handleGoBoard} style={{ width:'100%', justifyContent:'center' }}>
-                    🎮 댓글 / 게임 참여하기
-                  </button>
-                  <div style={{ textAlign:'center', fontSize:'0.78rem', color:'#aaa' }}>점수가 마음에 안들면</div>
-                  <button className="btn-cancel" onClick={handleRetake} style={{ width:'100%', justifyContent:'center' }}>
-                    🔄 퀴즈 다시 풀기
-                  </button>
-                </div>
+                <p style={{ textAlign:'center', color:'#ddd', fontSize:'0.68rem', marginTop:14, lineHeight:1.5, marginBottom:0 }}>
+                  반드시 본인 이름으로만 접속하세요
+                </p>
               </>
             ) : (
               <>
-                <h2>내 이름이 맞나요?</h2>
-                <p>
-                  <span className="modal-name">{selected}</span>
-                  본인의 이름만 접속해야합니다<br />
-                  <strong>(경고: 다른 사람 이름 접속하면 큰일남!!!!!)</strong>
-                </p>
-                <div className="modal-actions">
-                  <button className="btn-cancel" onClick={() => { setSelected(null); setCompleted(false) }}>
+                <div style={{ textAlign:'center', marginBottom:22 }}>
+                  <div style={{ fontSize:'0.82rem', color:'#aaa', marginBottom:10, fontWeight:600 }}>
+                    내 이름이 맞나요?
+                  </div>
+                  <div style={{ fontSize:'2.2rem', fontWeight:900, color:'#1A1A1A', lineHeight:1.1 }}>
+                    {selected}
+                  </div>
+                </div>
+
+                <div style={{ borderTop:'1px solid #f0f0f0', margin:'0 -32px 22px' }} />
+
+                <div style={{ display:'flex', gap:10 }}>
+                  <button className="btn-cancel"
+                    onClick={() => { setSelected(null); setCompleted(false) }}
+                    style={{ flex:1, justifyContent:'center', padding:'13px 0' }}>
                     아니에요
                   </button>
-                  <button className="btn-yellow" onClick={handleStartQuiz}>
+                  <button className="btn-yellow" onClick={handleStartQuiz}
+                    style={{ flex:2, justifyContent:'center', padding:'13px 0' }}>
                     맞아요! 시작하기 →
                   </button>
                 </div>
+
+                <p style={{ textAlign:'center', color:'#ddd', fontSize:'0.68rem', marginTop:14, lineHeight:1.5, marginBottom:0 }}>
+                  반드시 본인 이름으로만 접속하세요
+                </p>
               </>
             )}
           </div>
