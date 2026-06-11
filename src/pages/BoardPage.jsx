@@ -81,7 +81,7 @@ export default function BoardPage() {
 
       <div className="board-tabs">
         <button className={`board-tab ${tab === 'comment' ? 'active' : ''}`} onClick={() => setTab('comment')}>
-          💬 댓글 게시판
+          💬 댓글 쓰<span style={{ color:'#F5C800', fontSize:'1.2em', fontWeight:900 }}>리라</span>
         </button>
         <button className={`board-tab ${tab === 'game' ? 'active' : ''}`} onClick={() => setTab('game')}>
           🎮 충치 처치하<span style={{ color:'#F5C800', fontSize:'1.2em', fontWeight:900 }}>리라</span>
