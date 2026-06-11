@@ -77,7 +77,7 @@ export default function BoardPage() {
               fontSize:'0.9rem', color:'#7B4F00', lineHeight:1.7,
             }}>
               반드시 <strong style={{ fontSize:'1.05rem' }}>{studentName}</strong> 이름으로만<br/>
-              댓글을 작성해야 합니다.
+              댓글을 작성하고 게임을 해야 합니다.
             </div>
 
             <button onClick={dismissWarning} style={{
