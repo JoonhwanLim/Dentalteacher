@@ -119,6 +119,14 @@ export default {
     }
     if (url.pathname === '/api/quiz-results') return handleQuizResults(request, env)
     if (url.pathname === '/api/game-scores')  return handleGameScores(request, env)
+    if (url.pathname === '/api/game-logs' && request.method === 'POST') {
+      const { student_name, score } = await request.json()
+      if (!student_name) return new Response('Bad Request', { status: 400 })
+      await env.DB.prepare(
+        'INSERT INTO game_logs (student_name, score) VALUES (?, ?)'
+      ).bind(student_name, score ?? 0).run()
+      return Response.json({ ok: true })
+    }
 
     const res = await env.ASSETS.fetch(request)
     if (res.status === 404) {

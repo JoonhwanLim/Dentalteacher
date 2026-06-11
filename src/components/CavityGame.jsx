@@ -213,11 +213,14 @@ export default function CavityGame({ studentName }) {
     saveScore()
   }, [phase])
 
-  /* 최고점수만 저장 */
+  /* 최고점수만 저장 + 참여 로그 기록 */
   async function saveScore() {
     setSaving(true)
     const finalScore = scoreRef.current
-    const result = await api.gameScores.upsert(studentName, finalScore)
+    const [result] = await Promise.all([
+      api.gameScores.upsert(studentName, finalScore),
+      api.gameLogs.insert(studentName, finalScore),
+    ])
     if (result.updated) setIsNewRecord(true)
     await fetchLeaderboard()
     setSaving(false)

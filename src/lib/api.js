@@ -49,6 +49,18 @@ export const api = {
     },
   },
 
+  gameLogs: {
+    async insert(student_name, score) {
+      try {
+        await fetch(`${BASE}/game-logs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ student_name, score }),
+        })
+      } catch { /* 로그 실패는 게임 진행에 영향 없음 */ }
+    },
+  },
+
   gameScores: {
     async leaderboard(studentName) {
       try {
