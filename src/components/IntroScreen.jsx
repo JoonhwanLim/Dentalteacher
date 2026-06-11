@@ -190,8 +190,17 @@ export default function IntroScreen({ onEnter }) {
           </button>
         </div>
 
+        {/* 강사 전용 숨김 버튼 */}
+        <div style={{ marginTop: 14, textAlign: 'center' }}>
+          <a href="/lira-presenter-only-2026" style={{
+            fontSize: '0.6rem', color: 'rgba(180,180,180,0.35)',
+            textDecoration: 'none', letterSpacing: 2,
+            cursor: 'default', userSelect: 'none',
+          }}>· · ·</a>
+        </div>
+
         {/* 하단 로고 */}
-        <div style={{ marginTop: 32, opacity: 0.4, display:'flex', alignItems:'center', justifyContent:'center', gap: 8 }}>
+        <div style={{ marginTop: 12, opacity: 0.4, display:'flex', alignItems:'center', justifyContent:'center', gap: 8 }}>
           <img src="/logo2.png" style={{ height: 22, opacity: 0.7 }} alt="" onError={e => e.currentTarget.style.display='none'} />
           <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#888' }}>리라초등학교 명예교사</span>
         </div>
