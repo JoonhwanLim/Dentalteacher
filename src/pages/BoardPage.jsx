@@ -61,6 +61,10 @@ export default function BoardPage() {
           78%  { transform: translate(-50%, calc(-50% + 4px)); opacity: 0.8; }
           100% { transform: translate(-50%, -50%); opacity: 0; }
         }
+        @keyframes cctvBlink {
+          0%, 100% { opacity: 1; box-shadow: 0 0 0 3px rgba(229,57,53,0.25); }
+          50%  { opacity: 0.35; box-shadow: 0 0 0 3px rgba(229,57,53,0); }
+        }
       `}</style>
 
       <div className="board-header">
@@ -68,7 +72,16 @@ export default function BoardPage() {
           <img src="/logo2.png" alt="리라" className="board-logo" />
           <div>
             <p className="board-title">리라 초등학교 5학년 2반 명예교사</p>
-            <p className="board-student">접속 중: {studentName}</p>
+            <div style={{ display:'flex', alignItems:'center', gap:6, marginTop:2 }}>
+              <span style={{
+                width:6, height:6, borderRadius:'50%', flexShrink:0,
+                background:'#E53935', display:'inline-block',
+                animation:'cctvBlink 1.4s ease-in-out infinite',
+              }}/>
+              <span className="board-student" style={{ margin:0 }}>{studentName}</span>
+              <span style={{ fontSize:'0.7rem', color:'#bbb' }}>·</span>
+              <span style={{ fontSize:'0.72rem', color:'#aaa', fontWeight:600, whiteSpace:'nowrap' }}>📹 모니터링 중</span>
+            </div>
           </div>
         </div>
         <button onClick={() => navigate('/')} style={{
@@ -91,21 +104,6 @@ export default function BoardPage() {
       <div className="board-content">
         {tab === 'comment' && (
           <div>
-            <div style={{
-              display:'inline-flex', alignItems:'center', gap:8,
-              background:'linear-gradient(135deg,#FFFDF0,#FFF8CC)',
-              border:'1px solid rgba(245,200,0,0.45)',
-              borderRadius:50, padding:'6px 16px', marginBottom:14,
-              fontSize:'0.75rem', color:'#5a4500',
-            }}>
-              <span style={{
-                width:6, height:6, borderRadius:'50%', flexShrink:0,
-                background:'#E53935', boxShadow:'0 0 0 3px rgba(229,57,53,0.18)',
-              }}/>
-              관리자 모니터링 중 &nbsp;·&nbsp; 반드시&nbsp;
-              <strong style={{ color:'#3a2d00' }}>{studentName}</strong>
-              &nbsp;이름으로만 작성하세요
-            </div>
             <div className="comment-form">
               <div style={{ flex:1, position:'relative' }}>
                 <input
