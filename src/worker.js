@@ -122,9 +122,10 @@ export default {
     if (url.pathname === '/api/game-logs' && request.method === 'POST') {
       const { student_name, score } = await request.json()
       if (!student_name) return new Response('Bad Request', { status: 400 })
+      const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown'
       await env.DB.prepare(
-        'INSERT INTO game_logs (student_name, score) VALUES (?, ?)'
-      ).bind(student_name, score ?? 0).run()
+        'INSERT INTO game_logs (student_name, score, ip_address) VALUES (?, ?, ?)'
+      ).bind(student_name, score ?? 0, ip).run()
       return Response.json({ ok: true })
     }
 

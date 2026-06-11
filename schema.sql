@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS game_logs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   student_name TEXT NOT NULL,
   score INTEGER NOT NULL DEFAULT 0,
+  ip_address TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
