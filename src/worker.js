@@ -8,9 +8,10 @@ async function handleComments(request, env) {
   if (request.method === 'POST') {
     const { student_name, content } = await request.json()
     if (!student_name || !content) return new Response('Bad Request', { status: 400 })
+    const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown'
     const result = await env.DB.prepare(
-      'INSERT INTO comments (student_name, content) VALUES (?, ?)'
-    ).bind(student_name, content.slice(0, 200)).run()
+      'INSERT INTO comments (student_name, content, ip_address) VALUES (?, ?, ?)'
+    ).bind(student_name, content.slice(0, 200), ip).run()
     return Response.json({
       id: result.meta.last_row_id,
       student_name,

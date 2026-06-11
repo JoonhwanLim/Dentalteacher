@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS comments (
   student_name TEXT NOT NULL,
   content TEXT NOT NULL,
   is_deleted INTEGER NOT NULL DEFAULT 0,
+  ip_address TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
