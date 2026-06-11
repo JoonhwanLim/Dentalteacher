@@ -1,4 +1,4 @@
-name = "lila-dental"
+name = "dentalteacher"
 main = "src/worker.js"
 compatibility_date = "2024-01-01"
 
