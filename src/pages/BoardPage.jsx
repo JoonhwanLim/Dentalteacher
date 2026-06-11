@@ -8,8 +8,16 @@ export default function BoardPage() {
   const [comments, setComments] = useState([])
   const [text, setText] = useState('')
   const [posting, setPosting] = useState(false)
+  const [showWarning, setShowWarning] = useState(
+    !sessionStorage.getItem('boardWarningDismissed')
+  )
   const navigate = useNavigate()
   const studentName = sessionStorage.getItem('studentName') || '학생'
+
+  function dismissWarning() {
+    sessionStorage.setItem('boardWarningDismissed', '1')
+    setShowWarning(false)
+  }
 
   useEffect(() => {
     fetchComments()
@@ -44,6 +52,51 @@ export default function BoardPage() {
 
   return (
     <div className="board-page">
+      {showWarning && (
+        <div style={{
+          position:'fixed', inset:0, background:'rgba(0,0,0,0.65)',
+          display:'flex', alignItems:'center', justifyContent:'center',
+          zIndex:999, padding:20,
+        }}>
+          <div style={{
+            background:'white', borderRadius:20, padding:'36px 28px',
+            maxWidth:380, width:'100%', textAlign:'center',
+            boxShadow:'0 20px 60px rgba(0,0,0,0.3)',
+          }}>
+            <div style={{ fontSize:'2.8rem', marginBottom:8 }}>📹</div>
+            <div style={{
+              display:'inline-block', background:'#E53935', color:'white',
+              fontSize:'0.7rem', fontWeight:900, padding:'3px 10px',
+              borderRadius:4, letterSpacing:2, marginBottom:16,
+            }}>● LIVE  실시간 모니터링</div>
+
+            <h2 style={{ fontSize:'1.3rem', fontWeight:900, marginBottom:12, color:'#1A1A1A' }}>
+              선생님이 모든 댓글을<br/>실시간으로 보고 있어요
+            </h2>
+
+            <div style={{
+              background:'#FFF3CD', border:'1.5px solid #FFC107',
+              borderRadius:12, padding:'14px 16px', marginBottom:20,
+              fontSize:'0.9rem', color:'#7B4F00', lineHeight:1.7,
+            }}>
+              반드시 <strong style={{ fontSize:'1.05rem' }}>{studentName}</strong> 이름으로만<br/>
+              댓글을 작성해야 합니다.<br/>
+              <span style={{ fontSize:'0.82rem', color:'#b35900' }}>
+                다른 이름으로 작성시 선생님께 바로 보고돼요!
+              </span>
+            </div>
+
+            <button onClick={dismissWarning} style={{
+              width:'100%', background:'#1A5C3A', color:'white',
+              border:'none', borderRadius:50, padding:'14px',
+              fontSize:'1rem', fontWeight:900, cursor:'pointer',
+              fontFamily:'inherit',
+            }}>
+              알겠어요! 내 이름으로만 쓸게요 ✅
+            </button>
+          </div>
+        </div>
+      )}
       <style>{`
         @keyframes floatUp {
           0% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
