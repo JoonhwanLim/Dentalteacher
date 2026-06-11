@@ -108,6 +108,10 @@ export default {
     if (url.pathname === '/api/quiz-results') return handleQuizResults(request, env)
     if (url.pathname === '/api/game-scores')  return handleGameScores(request, env)
 
-    return env.ASSETS.fetch(request)
+    const res = await env.ASSETS.fetch(request)
+    if (res.status === 404) {
+      return env.ASSETS.fetch(new Request(new URL('/', request.url).toString(), request))
+    }
+    return res
   },
 }
