@@ -196,7 +196,7 @@ const specialties = [
   { name:'보철과',         desc:'임플란트·틀니·크라운 등 인공 치아 전문',                            color:'#8E44AD', image:'bochul.png'  },
   { name:'치과마취과',     desc:'전신마취·수면치료 등 통증 없는 치과 전문',                          color:'#16A085', image:'machui.png'  },
   { name:'보존과',         desc:'충치 치료·신경 치료·치아 미백 등 치아를 최대한 살리는 치료 전문!', color:'#2196F3', image:'bojon.png'   },
-  { name:'연구하는 의사',  desc:'치과 재료, 임플란트 설계, 신약 개발 등 치의학 발전을 위해 연구하는 치과의사!', color:'#FF7043', image:'yungu.png'   },
+  { name:'구강내과',       desc:'턱관절 통증·이갈이·코골이부터 입 냄새, 입안 점막 질환까지! 입·얼굴·턱의 다양한 질환을 정밀 검사로 진단하고 치료해요.', color:'#FF7043', image:'yungu.png'   },
 ]
 
 /* ── TIMELINE DATA ── */
