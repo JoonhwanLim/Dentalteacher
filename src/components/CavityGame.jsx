@@ -126,8 +126,9 @@ export default function CavityGame({ studentName }) {
   const cleanRef  = useRef(null)
   const scoreRef  = useRef(0)   // 항상 최신 점수 추적
 
+  const isAdmin      = ['하연엄마', '하연아빠'].includes(studentName)
   const BASE_LIMIT   = 20
-  const ATTEMPT_LIMIT = myBonusUsed ? BASE_LIMIT + 5 : BASE_LIMIT
+  const ATTEMPT_LIMIT = isAdmin ? Infinity : (myBonusUsed ? BASE_LIMIT + 5 : BASE_LIMIT)
 
   const fetchLeaderboard = useCallback(async () => {
     const data = await api.gameScores.leaderboard(studentName)
