@@ -71,7 +71,7 @@ export default function BoardPage() {
             }}>● LIVE  실시간 모니터링</div>
 
             <h2 style={{ fontSize:'1.3rem', fontWeight:900, marginBottom:12, color:'#1A1A1A' }}>
-              선생님이 모든 댓글을<br/>실시간으로 보고 있어요
+              모든 댓글은 시스템에<br/>로그가 기록됩니다
             </h2>
 
             <div style={{
@@ -80,10 +80,7 @@ export default function BoardPage() {
               fontSize:'0.9rem', color:'#7B4F00', lineHeight:1.7,
             }}>
               반드시 <strong style={{ fontSize:'1.05rem' }}>{studentName}</strong> 이름으로만<br/>
-              댓글을 작성해야 합니다.<br/>
-              <span style={{ fontSize:'0.82rem', color:'#b35900' }}>
-                다른 이름으로 작성시 선생님께 바로 보고돼요!
-              </span>
+              댓글을 작성해야 합니다.
             </div>
 
             <button onClick={dismissWarning} style={{
