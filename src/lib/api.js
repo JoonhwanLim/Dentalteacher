@@ -55,9 +55,19 @@ export const api = {
       try {
         const qs = studentName ? `?me=${encodeURIComponent(studentName)}` : ''
         const r = await fetch(`${BASE}/game-scores${qs}`)
-        if (!r.ok) return { leaderboard: [], myAttempts: 0 }
+        if (!r.ok) return { leaderboard: [], myAttempts: 0, myBonusUsed: false }
         return r.json()
-      } catch { return { leaderboard: [], myAttempts: 0 } }
+      } catch { return { leaderboard: [], myAttempts: 0, myBonusUsed: false } }
+    },
+    async useBonus(student_name) {
+      try {
+        const r = await fetch(`${BASE}/game-scores/bonus`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ student_name }),
+        })
+        return r.ok ? r.json() : { ok: false }
+      } catch { return { ok: false } }
     },
     async upsert(student_name, score) {
       try {

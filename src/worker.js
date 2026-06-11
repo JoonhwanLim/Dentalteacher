@@ -62,14 +62,15 @@ async function handleGameScores(request, env) {
     const { results } = await env.DB.prepare(
       'SELECT student_name, score, attempts FROM game_scores ORDER BY score DESC LIMIT 10'
     ).all()
-    let myAttempts = 0
+    let myAttempts = 0, myBonusUsed = false
     if (me) {
       const myRow = await env.DB.prepare(
-        'SELECT attempts FROM game_scores WHERE student_name = ?'
+        'SELECT attempts, bonus_used FROM game_scores WHERE student_name = ?'
       ).bind(me).first()
-      myAttempts = myRow?.attempts ?? 0
+      myAttempts  = myRow?.attempts   ?? 0
+      myBonusUsed = !!(myRow?.bonus_used)
     }
-    return Response.json({ leaderboard: results, myAttempts })
+    return Response.json({ leaderboard: results, myAttempts, myBonusUsed })
   }
   if (request.method === 'POST') {
     const { student_name, score } = await request.json()
@@ -100,6 +101,17 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url)
 
+    if (url.pathname === '/api/game-scores/bonus' && request.method === 'POST') {
+      const { student_name } = await request.json()
+      if (!student_name) return new Response('Bad Request', { status: 400 })
+      const row = await env.DB.prepare(
+        'SELECT id, bonus_used FROM game_scores WHERE student_name = ?'
+      ).bind(student_name).first()
+      if (!row)           return Response.json({ ok: false, reason: 'no_record' })
+      if (row.bonus_used) return Response.json({ ok: false, reason: 'already_used' })
+      await env.DB.prepare('UPDATE game_scores SET bonus_used = 1 WHERE id = ?').bind(row.id).run()
+      return Response.json({ ok: true })
+    }
     if (url.pathname === '/api/comments')     return handleComments(request, env)
     if (url.pathname.startsWith('/api/comments/') && request.method === 'DELETE') {
       const id = parseInt(url.pathname.split('/')[3])

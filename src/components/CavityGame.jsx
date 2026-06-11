@@ -119,18 +119,21 @@ export default function CavityGame({ studentName }) {
   const [isNewRecord, setIsNewRecord] = useState(false)
   const [brushEffects, setBrushEffects] = useState([])
   const [myAttempts, setMyAttempts] = useState(0)
+  const [myBonusUsed, setMyBonusUsed] = useState(false)
 
   const timerRef  = useRef(null)
   const spawnRef  = useRef(null)
   const cleanRef  = useRef(null)
   const scoreRef  = useRef(0)   // 항상 최신 점수 추적
 
-  const ATTEMPT_LIMIT = 20
+  const BASE_LIMIT   = 20
+  const ATTEMPT_LIMIT = myBonusUsed ? BASE_LIMIT + 5 : BASE_LIMIT
 
   const fetchLeaderboard = useCallback(async () => {
     const data = await api.gameScores.leaderboard(studentName)
     setLeaderboard(data.leaderboard ?? [])
     setMyAttempts(data.myAttempts ?? 0)
+    setMyBonusUsed(data.myBonusUsed ?? false)
   }, [studentName])
 
   useEffect(() => { fetchLeaderboard() }, [fetchLeaderboard])
@@ -264,9 +267,21 @@ export default function CavityGame({ studentName }) {
               ))}
             </div>
             {myAttempts >= ATTEMPT_LIMIT ? (
-              <div style={{ background:'#FFF3CD', border:'1.5px solid #FFC107', borderRadius:14, padding:'14px 20px', color:'#7B4F00', fontWeight:700, fontSize:'0.95rem' }}>
-                🚫 오늘 게임 참여 횟수({ATTEMPT_LIMIT}회)를 모두 사용했어요!<br />
-                <span style={{ fontWeight:400, fontSize:'0.85rem' }}>선생님께 도움을 요청하세요.</span>
+              <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:12 }}>
+                <div style={{ background:'#FFF3CD', border:'1.5px solid #FFC107', borderRadius:14, padding:'14px 20px', color:'#7B4F00', fontWeight:700, fontSize:'0.95rem', textAlign:'center' }}>
+                  🚫 게임 참여 횟수({ATTEMPT_LIMIT}회)를 모두 사용했어요!
+                </div>
+                {!myBonusUsed && (
+                  <button
+                    onClick={async () => {
+                      const res = await api.gameScores.useBonus(studentName)
+                      if (res.ok) setMyBonusUsed(true)
+                    }}
+                    style={{ background:'linear-gradient(135deg,#F5C800,#FFB300)', border:'none', borderRadius:50, padding:'12px 28px', fontFamily:'inherit', fontWeight:900, fontSize:'1rem', cursor:'pointer', color:'#1A1A1A', boxShadow:'0 4px 14px rgba(245,200,0,0.4)' }}
+                  >
+                    ⭐ +5판 더 받기
+                  </button>
+                )}
               </div>
             ) : (
               <>
@@ -390,8 +405,21 @@ export default function CavityGame({ studentName }) {
           )}
 
           {myAttempts >= ATTEMPT_LIMIT ? (
-            <div style={{ background:'#FFF3CD', border:'1.5px solid #FFC107', borderRadius:14, padding:'12px 18px', color:'#7B4F00', fontWeight:700, fontSize:'0.9rem' }}>
-              🚫 도전 횟수({ATTEMPT_LIMIT}회)를 모두 사용했어요!
+            <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:10 }}>
+              <div style={{ background:'#FFF3CD', border:'1.5px solid #FFC107', borderRadius:14, padding:'12px 18px', color:'#7B4F00', fontWeight:700, fontSize:'0.9rem', textAlign:'center' }}>
+                🚫 게임 참여 횟수({ATTEMPT_LIMIT}회)를 모두 사용했어요!
+              </div>
+              {!myBonusUsed && (
+                <button
+                  onClick={async () => {
+                    const res = await api.gameScores.useBonus(studentName)
+                    if (res.ok) setMyBonusUsed(true)
+                  }}
+                  style={{ background:'linear-gradient(135deg,#F5C800,#FFB300)', border:'none', borderRadius:50, padding:'10px 24px', fontFamily:'inherit', fontWeight:900, fontSize:'0.95rem', cursor:'pointer', color:'#1A1A1A', boxShadow:'0 4px 14px rgba(245,200,0,0.4)' }}
+                >
+                  ⭐ +5판 더 받기
+                </button>
+              )}
             </div>
           ) : (
             <>
