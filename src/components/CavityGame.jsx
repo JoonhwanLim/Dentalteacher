@@ -108,6 +108,8 @@ function FloatingScore({ value, x, y }) {
   )
 }
 
+const mob = () => window.innerWidth < 640
+
 export default function CavityGame({ studentName }) {
   const [phase, setPhase]         = useState('idle')
   const [score, setScore]         = useState(0)
@@ -249,7 +251,7 @@ export default function CavityGame({ studentName }) {
   /* ── IDLE 화면 ── */
   if (phase === 'idle') {
     return (
-      <div style={{ display: 'flex', gap: 24 }}>
+      <div style={{ display: 'flex', flexDirection: mob() ? 'column' : 'row', gap: 24 }}>
         <div style={{ flex: 1 }}>
           <div style={{ background: 'white', borderRadius: 20, padding: 32, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', textAlign: 'center' }}>
             <div style={{ fontSize: '3.5rem', marginBottom: 12 }}>🦷</div>
@@ -383,7 +385,7 @@ export default function CavityGame({ studentName }) {
 
   /* ── RESULT 화면 ── */
   return (
-    <div style={{ display: 'flex', gap: 24 }}>
+    <div style={{ display: 'flex', flexDirection: mob() ? 'column' : 'row', gap: 24 }}>
       <div style={{ flex: 1 }}>
         <div style={{ background: 'white', borderRadius: 20, padding: 40, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', textAlign: 'center' }}>
           <div style={{ fontSize: '4rem', marginBottom: 12 }}>{isNewRecord ? '🏆' : '🎉'}</div>
@@ -442,7 +444,7 @@ export default function CavityGame({ studentName }) {
 function Leaderboard({ data, studentName }) {
   const medals = ['🥇', '🥈', '🥉']
   return (
-    <div style={{ width: 260, background: 'white', borderRadius: 20, padding: 24, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', flexShrink: 0, alignSelf: 'flex-start' }}>
+    <div style={{ width: mob() ? '100%' : 260, background: 'white', borderRadius: 20, padding: 24, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', flexShrink: 0, alignSelf: 'flex-start', boxSizing: 'border-box' }}>
       <h3 style={{ fontSize: '1.2rem', fontWeight: 900, marginBottom: 16, textAlign: 'center' }}>🏆 명예의 전당</h3>
       {data.length === 0 ? (
         <p style={{ color: '#aaa', textAlign: 'center', fontSize: '0.9rem' }}>
