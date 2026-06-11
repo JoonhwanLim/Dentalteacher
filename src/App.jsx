@@ -6,6 +6,7 @@ import QuizPage from './pages/QuizPage'
 import CertificatePage from './pages/CertificatePage'
 import BoardPage from './pages/BoardPage'
 import IntroScreen from './components/IntroScreen'
+import PresenterScript from './pages/PresenterScript'
 
 function RequireStudent({ children }) {
   const name = sessionStorage.getItem('studentName')
@@ -33,6 +34,7 @@ export default function App() {
       <Route path="/quiz" element={<RequireStudent><QuizPage /></RequireStudent>} />
       <Route path="/certificate" element={<RequireQuiz><CertificatePage /></RequireQuiz>} />
       <Route path="/board" element={<RequireQuiz><BoardPage /></RequireQuiz>} />
+      <Route path="/lira-presenter-only-2026" element={<PresenterScript />} />
     </Routes>
   )
 }
