@@ -12,14 +12,20 @@ export default function HomeworkPage() {
   async function handleSelect(name) {
     setSelected(name)
     setChecking(true)
-    // DB에서 수료 여부 확인 + localStorage 동기화
-    const dbCompleted = await api.quizResults.isCompleted(name)
+    const result = await api.quizResults.isCompleted(name)
+    const dbCompleted = result.completed
     if (dbCompleted) {
       localStorage.setItem(`completed_${name}`, '1')
       sessionStorage.setItem('quizCompleted', '1')
+      sessionStorage.setItem('quizScore', String(result.score ?? 0))
     }
     setCompleted(dbCompleted || !!localStorage.getItem(`completed_${name}`))
     setChecking(false)
+  }
+
+  function handleViewCert() {
+    sessionStorage.setItem('studentName', selected)
+    navigate('/certificate')
   }
 
   function handleGoBoard() {
@@ -80,11 +86,12 @@ export default function HomeworkPage() {
                     margin:'0 auto 14px',
                   }}>{selected.charAt(0)}</div>
                   <div style={{ fontSize:'1.7rem', fontWeight:900, color:'#1A1A1A', lineHeight:1.2 }}>{selected}</div>
-                  <div style={{
+                  <button onClick={handleViewCert} style={{
                     display:'inline-flex', alignItems:'center', gap:5, marginTop:8,
                     background:'#E8F5E9', color:'#2E7D32',
                     fontSize:'0.72rem', fontWeight:800, padding:'3px 12px', borderRadius:20,
-                  }}>✅ 퀴즈 수료 완료</div>
+                    border:'none', cursor:'pointer', fontFamily:'inherit',
+                  }}>✅ 퀴즈 수료 완료</button>
                 </div>
 
                 <div style={{ borderTop:'1px solid #f0f0f0', margin:'0 -32px 22px' }} />

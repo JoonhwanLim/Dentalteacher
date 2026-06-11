@@ -40,9 +40,9 @@ async function handleQuizResults(request, env) {
     const name = url.searchParams.get('name')
     if (!name) return new Response('Bad Request', { status: 400 })
     const row = await env.DB.prepare(
-      'SELECT id FROM quiz_results WHERE student_name = ? LIMIT 1'
+      'SELECT id, score, total FROM quiz_results WHERE student_name = ? ORDER BY id DESC LIMIT 1'
     ).bind(name).first()
-    return Response.json({ completed: !!row })
+    return Response.json({ completed: !!row, score: row?.score ?? 0, total: row?.total ?? 0 })
   }
   if (request.method === 'POST') {
     const { student_name, score, total } = await request.json()
