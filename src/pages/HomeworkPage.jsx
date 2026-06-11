@@ -14,13 +14,17 @@ export default function HomeworkPage() {
     setChecking(true)
     // DB에서 수료 여부 확인 + localStorage 동기화
     const dbCompleted = await api.quizResults.isCompleted(name)
-    if (dbCompleted) localStorage.setItem(`completed_${name}`, '1')
+    if (dbCompleted) {
+      localStorage.setItem(`completed_${name}`, '1')
+      sessionStorage.setItem('quizCompleted', '1')
+    }
     setCompleted(dbCompleted || !!localStorage.getItem(`completed_${name}`))
     setChecking(false)
   }
 
   function handleGoBoard() {
     sessionStorage.setItem('studentName', selected)
+    sessionStorage.setItem('quizCompleted', '1')
     navigate('/board')
   }
 
